@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import "styles/globals.css";
 
 export const metadata = {
@@ -30,7 +31,10 @@ export default function RootLayout({
         <meta property="twitter:image" content="/images/preview.png" />
       </head>
 
-      <body>{children}</body>
+      <body>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

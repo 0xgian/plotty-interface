@@ -6,6 +6,7 @@ import TextGradient from "components/TextGradient";
 import Image from "next/image";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi";
+import { soon } from "utils/toastHelpers";
 
 export default function Home() {
   return (
@@ -33,7 +34,7 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center gap-4">
-            <Button onClick={() => {}}>Enter App</Button>
+            <Button onClick={soon}>Enter App</Button>
             <div className="flex items-center gap-2">
               <Link href="https://discord.gg/XCsmNxgcPP" target="_blank">
                 <Image
@@ -84,7 +85,7 @@ export default function Home() {
                   {`With our platform that supports the largest number of DeFi protocols, chains, and strategies.`}
                 </div>
                 <div className="mt-2 w-fit">
-                  <Button onClick={() => {}}>Try it now</Button>
+                  <Button onClick={soon}>Try it now</Button>
                 </div>
               </div>
             </div>

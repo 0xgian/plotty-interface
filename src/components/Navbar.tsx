@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Button from "components/Button";
+import { soon } from "utils/toastHelpers";
 
 export default function Navbar({
   kind = "top",
@@ -89,7 +90,7 @@ export default function Navbar({
             ))}
           </div>
 
-          <Button onClick={() => {}}>Enter App</Button>
+          <Button onClick={soon}>Enter App</Button>
         </div>
       </div>
     </nav>
