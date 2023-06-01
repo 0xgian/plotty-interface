@@ -36,7 +36,7 @@ export default function Home() {
           <div className="flex justify-center gap-4">
             <Button onClick={soon}>Enter App</Button>
             <div className="flex items-center gap-2">
-              {/* <Link href="https://discord.gg/XCsmNxgcPP" target="_blank">
+              <Link href="https://discord.gg/XCsmNxgcPP" target="_blank">
                 <Image
                   priority
                   src="/images/icons/icon-discord.svg"
@@ -44,7 +44,7 @@ export default function Home() {
                   width={32}
                   alt="Join our community on Discord"
                 />
-              </Link> */}
+              </Link>
               <Link href="https://twitter.com/PlottyFi" target="_blank">
                 <Image
                   priority
@@ -293,7 +293,7 @@ export default function Home() {
             </Link>
 
             <div className="flex items-center gap-2">
-              {/* <Link href="https://discord.gg/XCsmNxgcPP" target="_blank">
+              <Link href="https://discord.gg/XCsmNxgcPP" target="_blank">
                 <Image
                   priority
                   src="/images/icons/icon-discord.svg"
@@ -301,7 +301,7 @@ export default function Home() {
                   width={32}
                   alt="Join our community on Discord"
                 />
-              </Link> */}
+              </Link>
               <Link href="https://twitter.com/PlottyFi" target="_blank">
                 <Image
                   priority
