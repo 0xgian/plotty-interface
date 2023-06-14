@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Button from "components/Button";
-import { soon } from "utils/toastHelpers";
 
 export default function Navbar({
   kind = "top",
@@ -90,7 +89,15 @@ export default function Navbar({
             ))}
           </div>
 
-          <Button onClick={soon}>Enter App</Button>
+          <Link
+            href={`${
+              process.env.NODE_ENV !== "production"
+                ? "http://app.localhost:3000"
+                : "https://app.plotty.fi"
+            }`}
+          >
+            <Button>Enter App</Button>
+          </Link>
         </div>
       </div>
     </nav>

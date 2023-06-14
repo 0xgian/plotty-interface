@@ -14,6 +14,8 @@ module.exports = {
         "main-purple": "#C296FF",
         "main-blue": "#AAEDFD",
         "main-yellow": "#ECE693",
+        "primary-text": "#0B0C13",
+        "secondary-text": "#9092A0",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

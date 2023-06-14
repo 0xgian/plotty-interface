@@ -6,9 +6,8 @@ import TextGradient from "components/TextGradient";
 import Image from "next/image";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi";
-import { soon } from "utils/toastHelpers";
 
-export default function Home() {
+export default function Page() {
   return (
     <main className="flex flex-col items-center min-h-screen">
       <div className="w-full mx-auto max-w-7xl">
@@ -17,7 +16,7 @@ export default function Home() {
 
       <section className="relative pt-32 pb-[160px] w-full">
         <div className="absolute bottom-0 right-0 w-[100vw] aspect-[1280/750]">
-          <Image alt="" src={`/images/bg-ellipse.png`} fill />
+          <Image alt="" src={`/images/landing/bg-ellipse.png`} fill />
         </div>
 
         <div className="max-w-[600px] mx-auto flex flex-col justify-center gap-4 relative px-6 md:px-0">
@@ -28,13 +27,21 @@ export default function Home() {
             With <span className="font-bold">Plotty</span>. The Social Yield
             Farming Platform.
           </div>
-          <div className="py-8 text-center opacity-50">
+          <div className="py-8 text-center text-secondary-text">
             A decentralized platform helping you maximize earnings by creating,
             managing, exploring, or sharing your yield strategy.
           </div>
 
           <div className="flex justify-center gap-4">
-            <Button onClick={soon}>Enter App</Button>
+            <Link
+              href={`${
+                process.env.NODE_ENV !== "production"
+                  ? "http://app.localhost:3000"
+                  : "https://app.plotty.fi"
+              }`}
+            >
+              <Button>Enter App</Button>
+            </Link>
             <div className="flex items-center gap-2">
               <Link href="https://discord.gg/XCsmNxgcPP" target="_blank">
                 <Image
@@ -68,10 +75,10 @@ export default function Home() {
 
       <section className="relative w-full">
         <div className="absolute right-0 w-[62vw] aspect-[817/1568]">
-          <Image alt="" src={`/images/bg-ellipse-2.png`} fill />
+          <Image alt="" src={`/images/landing/bg-ellipse-2.png`} fill />
         </div>
         <div className="absolute left-0 bottom-0 w-[62vw] aspect-[699/1286]">
-          <Image alt="" src={`/images/bg-ellipse-3.png`} fill />
+          <Image alt="" src={`/images/landing/bg-ellipse-3.png`} fill />
         </div>
 
         <div className="relative px-6 mx-auto max-w-7xl xl:px-0">
@@ -81,16 +88,24 @@ export default function Home() {
                 <div className="font-bold font-display text-[42px] leading-tight">
                   {`Discover users' web3 yield farming journey`}
                 </div>
-                <div className="opacity-50">
+                <div className="text-secondary-text">
                   {`With our platform that supports the largest number of DeFi protocols, chains, and strategies.`}
                 </div>
                 <div className="mt-2 w-fit">
-                  <Button onClick={soon}>Try it now</Button>
+                  <Link
+                    href={`${
+                      process.env.NODE_ENV !== "production"
+                        ? "http://app.localhost:3000"
+                        : "https://app.plotty.fi"
+                    }`}
+                  >
+                    <Button>Try it now</Button>
+                  </Link>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col w-full gap-4 lg:w-2/5 lg:max-w-[500px] mx-auto bg-no-repeat bg-cover bg-[url('/images/stats-bg.png')]">
+            <div className="flex flex-col w-full gap-4 lg:w-2/5 lg:max-w-[500px] mx-auto bg-no-repeat bg-cover bg-[url('/images/landing/stats-bg.png')]">
               <div className="flex gap-4">
                 <div className="relative flex flex-col justify-center w-1/2 gap-2 text-center">
                   <div className="spotlight-1 top-[-40%] absolute left-[25%]" />
@@ -133,7 +148,7 @@ export default function Home() {
                 <div className="w-[152px] flex items-center justify-center rounded-full">
                   <Image
                     alt=""
-                    src={"/images/stats-object.png"}
+                    src={"/images/landing/stats-object.png"}
                     width={80}
                     height={80}
                   />
@@ -154,7 +169,7 @@ export default function Home() {
               <div className="absolute hidden w-6 h-6 rotate-45 rounded-lg bg-main-yellow left-6 bottom-6 lg:block" />
 
               <div className="flex flex-col justify-between p-6 border rounded-3xl min-h-[320px]">
-                <div className="opacity-50">
+                <div className="text-secondary-text">
                   PORTFOLIO MANAGEMENT MADE SIMPLE
                 </div>
                 <div className="font-display font-bold text-[28px] py-[50px] sm:w-1/2">
@@ -163,7 +178,7 @@ export default function Home() {
                 <Link href="https://docs.plotty.fi" target="_blank">
                   <div className="relative flex items-center justify-between">
                     <div className="absolute bottom-0 right-0 h-[160px] w-[160px]">
-                      <Image alt="" src={`/images/grid-red.png`} fill />
+                      <Image alt="" src={`/images/landing/grid-red.png`} fill />
                     </div>
                     <div className="font-bold text-main-red">Learn more</div>
                     <HiArrowRight />
@@ -172,7 +187,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col justify-between p-6 border rounded-3xl min-h-[320px] lg:mb-40">
-                <div className="opacity-50">
+                <div className="text-secondary-text">
                   ACCESS A WIDE RANGE OF STRATEGIES
                 </div>
                 <div className="font-display font-bold text-[28px] py-[50px] sm:w-1/2">
@@ -181,7 +196,7 @@ export default function Home() {
                 <Link href="https://docs.plotty.fi" target="_blank">
                   <div className="relative flex items-center justify-between">
                     <div className="absolute bottom-0 right-0 h-[160px] w-[160px]">
-                      <Image alt="" src={`/images/grid-blue.png`} fill />
+                      <Image alt="" src={`/images/landing/grid-blue.png`} fill />
                     </div>
                     <div className="font-bold text-main-blue">Learn more</div>
                     <HiArrowRight />
@@ -195,7 +210,7 @@ export default function Home() {
               <div className="absolute hidden w-6 h-6 rotate-45 rounded-lg bg-main-blue right-6 top-24 lg:block" />
 
               <div className="flex flex-col justify-between p-6 border rounded-3xl min-h-[320px] lg:mt-40">
-                <div className="opacity-50">
+                <div className="text-secondary-text">
                   A NOVEL SOCIAL YIELD FARMING EXPERIENCE
                 </div>
                 <div className="font-display font-bold text-[28px] py-[50px] sm:w-1/2">
@@ -204,7 +219,7 @@ export default function Home() {
                 <Link href="https://docs.plotty.fi" target="_blank">
                   <div className="relative flex items-center justify-between">
                     <div className="absolute bottom-0 right-0 h-[160px] w-[160px]">
-                      <Image alt="" src={`/images/grid-purple.png`} fill />
+                      <Image alt="" src={`/images/landing/grid-purple.png`} fill />
                     </div>
                     <div className="font-bold text-main-purple">Learn more</div>
                     <HiArrowRight />
@@ -213,14 +228,14 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col justify-between p-6 border rounded-3xl min-h-[320px]">
-                <div className="opacity-50">MAXIMIZE YOUR EARNING</div>
+                <div className="text-secondary-text">MAXIMIZE YOUR EARNING</div>
                 <div className="font-display font-bold text-[28px] py-[50px] sm:w-1/2">
                   Creators earn royalties. Investors earn by copying
                 </div>
                 <Link href="https://docs.plotty.fi" target="_blank">
                   <div className="relative flex items-center justify-between">
                     <div className="absolute bottom-0 right-0 h-[160px] w-[160px]">
-                      <Image alt="" src={`/images/grid-yellow.png`} fill />
+                      <Image alt="" src={`/images/landing/grid-yellow.png`} fill />
                     </div>
                     <div className="font-bold text-main-yellow">Learn more</div>
                     <HiArrowRight />
@@ -241,7 +256,7 @@ export default function Home() {
               <div className="flex items-center justify-center w-full bg-main-blue rounded-2xl aspect-[1/1] sm:aspect-[2/1]">
                 <Image
                   alt=""
-                  src="/images/creator-symbol.png"
+                  src="/images/landing/creator-symbol.png"
                   width={142}
                   height={142}
                 />
@@ -250,7 +265,7 @@ export default function Home() {
                 <div className="font-display font-bold text-[28px]">
                   Portfolio Creators
                 </div>
-                <div className="opacity-50">{`Portfolio creators earn rewards when they are copied and during the entire portfolio's journey.`}</div>
+                <div className="text-secondary-text">{`Portfolio creators earn rewards when they are copied and during the entire portfolio's journey.`}</div>
               </div>
             </div>
 
@@ -258,14 +273,14 @@ export default function Home() {
               <div className="flex items-center justify-center w-full bg-main-purple rounded-2xl aspect-[1/1] sm:aspect-[2/1]">
                 <Image
                   alt=""
-                  src="/images/veplotty-symbol.png"
+                  src="/images/landing/veplotty-symbol.png"
                   width={142}
                   height={142}
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <div className="font-display font-bold text-[28px]">PLOTTY</div>
-                <div className="opacity-50">{`PLOTTY and esPLOTTY are the utility and governance token. Accures a share of the platform's generated fees.`}</div>
+                <div className="text-secondary-text">{`PLOTTY and esPLOTTY are the utility and governance token. Accures a share of the platform's generated fees.`}</div>
               </div>
             </div>
           </div>
