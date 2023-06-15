@@ -2,14 +2,24 @@ import clsx from "clsx";
 
 export default function Button({
   kind = "primary",
+  size = "large",
   className,
   children,
   ...props
-}: React.ButtonHTMLAttributes<HTMLDivElement> & { kind?: "primary" | "outline" }) {
+}: React.ButtonHTMLAttributes<HTMLDivElement> & {
+  kind?: "primary" | "solid";
+  size?: "large" | "medium";
+}) {
   return (
     <div
       className={clsx(
-        "flex items-center h-12 cursor-pointer font-display bg-gradient-primary rounded-xl min-w-[132px] justify-center px-6 select-none",
+        "cursor-pointer flex items-center px-[10px] justify-center select-none gap-[6px] font-display",
+        kind === "primary"
+          ? "bg-gradient-primary text-primary-text"
+          : "hover:bg-secondary-text hover:bg-opacity-10",
+        size === "large"
+          ? "h-12 min-w-[132px] rounded-xl"
+          : "h-[32px] rounded-lg",
         className
       )}
       {...props}
