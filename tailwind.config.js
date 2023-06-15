@@ -26,7 +26,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["Manrope", ...defaultTheme.fontFamily.sans],
-        display: ["Suisse Intl", ...defaultTheme.fontFamily.sans],
+        display: ["Suisse Intl", ...defaultTheme.fontFamily.sans,],
       },
       boxShadow: {
         "inset-tr": "inset 1px -1px 1px #0B0C133D, inset -1px 1px 1px #0B0C13",

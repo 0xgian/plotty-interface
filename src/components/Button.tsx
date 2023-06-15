@@ -13,9 +13,9 @@ export default function Button({
   return (
     <div
       className={clsx(
-        "cursor-pointer flex items-center px-[10px] justify-center select-none gap-[6px] font-display ",
+        "cursor-pointer flex items-center px-[10px] justify-center select-none gap-[6px] font-display",
         kind === "primary"
-          ? "bg-gradient-primary"
+          ? "bg-gradient-primary text-primary-text"
           : "hover:bg-secondary-text hover:bg-opacity-10",
         size === "large"
           ? "h-12 min-w-[132px] rounded-xl"
