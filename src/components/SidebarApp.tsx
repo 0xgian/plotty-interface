@@ -63,7 +63,7 @@ export default function SidebarApp({
           <Link href="https://twitter.com/PlottyFi" target="_blank">
             <IoLogoTwitter />
           </Link>
-          <Link href="https://discord.gg/XCsmNxgcPP" target="_blank">
+          <Link href="https://discord.gg/dG2dPpCUKE" target="_blank">
             <IoLogoDiscord />
           </Link>
         </div>

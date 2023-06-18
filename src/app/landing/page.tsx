@@ -43,7 +43,7 @@ export default function Page() {
               <Button>Enter App</Button>
             </Link>
             <div className="flex items-center gap-2">
-              <Link href="https://discord.gg/XCsmNxgcPP" target="_blank">
+              <Link href="https://discord.gg/dG2dPpCUKE" target="_blank">
                 <Image
                   priority
                   src="/images/icons/icon-discord.svg"
@@ -308,7 +308,7 @@ export default function Page() {
             </Link>
 
             <div className="flex items-center gap-2">
-              <Link href="https://discord.gg/XCsmNxgcPP" target="_blank">
+              <Link href="https://discord.gg/dG2dPpCUKE" target="_blank">
                 <Image
                   priority
                   src="/images/icons/icon-discord.svg"
