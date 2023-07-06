@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Button from "components/Button";
+import defaultPublicUrl from "utils/defaultPublicUrl";
 
 export default function Navbar({
   kind = "top",
@@ -90,11 +91,7 @@ export default function Navbar({
           </div>
 
           <Link
-            href={`${
-              process.env.NODE_ENV !== "production"
-                ? "http://app.localhost:3000"
-                : `https://app.${process.env.NEXT_PUBLIC_VERCEL_URL}`
-            }`}
+            href={defaultPublicUrl()}
           >
             <Button>Enter App</Button>
           </Link>

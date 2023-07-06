@@ -6,6 +6,7 @@ import TextGradient from "components/TextGradient";
 import Image from "next/image";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi";
+import defaultPublicUrl from "utils/defaultPublicUrl";
 
 export default function Page() {
   return (
@@ -33,13 +34,7 @@ export default function Page() {
           </div>
 
           <div className="flex justify-center gap-4">
-            <Link
-              href={`${
-                process.env.NODE_ENV !== "production"
-                  ? "http://app.localhost:3000"
-                  : `https://app.${process.env.NEXT_PUBLIC_VERCEL_URL}`
-              }`}
-            >
+            <Link href={defaultPublicUrl()}>
               <Button>Enter App</Button>
             </Link>
             <div className="flex items-center gap-2">
@@ -92,13 +87,7 @@ export default function Page() {
                   {`With our platform that supports the largest number of DeFi protocols, chains, and strategies.`}
                 </div>
                 <div className="mt-2 w-fit">
-                  <Link
-                    href={`${
-                      process.env.NODE_ENV !== "production"
-                        ? "http://app.localhost:3000"
-                        : `https://app.${process.env.NEXT_PUBLIC_VERCEL_URL}`
-                    }`}
-                  >
+                  <Link href={defaultPublicUrl()}>
                     <Button>Try it now</Button>
                   </Link>
                 </div>
@@ -196,7 +185,11 @@ export default function Page() {
                 <Link href="https://docs.plotty.fi" target="_blank">
                   <div className="relative flex items-center justify-between">
                     <div className="absolute bottom-0 right-0 h-[160px] w-[160px]">
-                      <Image alt="" src={`/images/landing/grid-blue.png`} fill />
+                      <Image
+                        alt=""
+                        src={`/images/landing/grid-blue.png`}
+                        fill
+                      />
                     </div>
                     <div className="font-bold text-main-blue">Learn more</div>
                     <HiArrowRight />
@@ -219,7 +212,11 @@ export default function Page() {
                 <Link href="https://docs.plotty.fi" target="_blank">
                   <div className="relative flex items-center justify-between">
                     <div className="absolute bottom-0 right-0 h-[160px] w-[160px]">
-                      <Image alt="" src={`/images/landing/grid-purple.png`} fill />
+                      <Image
+                        alt=""
+                        src={`/images/landing/grid-purple.png`}
+                        fill
+                      />
                     </div>
                     <div className="font-bold text-main-purple">Learn more</div>
                     <HiArrowRight />
@@ -235,7 +232,11 @@ export default function Page() {
                 <Link href="https://docs.plotty.fi" target="_blank">
                   <div className="relative flex items-center justify-between">
                     <div className="absolute bottom-0 right-0 h-[160px] w-[160px]">
-                      <Image alt="" src={`/images/landing/grid-yellow.png`} fill />
+                      <Image
+                        alt=""
+                        src={`/images/landing/grid-yellow.png`}
+                        fill
+                      />
                     </div>
                     <div className="font-bold text-main-yellow">Learn more</div>
                     <HiArrowRight />

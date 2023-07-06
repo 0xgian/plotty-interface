@@ -4,28 +4,36 @@ const nextConfig = {
     appDir: true,
   },
   async rewrites() {
-    return [
-      {
-        has: [
+    const envUrl = process.env.NEXT_PUBLIC_URL;
+    return envUrl
+      ? [
           {
-            type: "host",
-            value: process.env.NEXT_PUBLIC_VERCEL_URL,
+            has: [
+              {
+                type: "host",
+                value: envUrl,
+              },
+            ],
+            source: "/:path*",
+            destination: "/landing/:path*",
           },
-        ],
-        source: "/:path*",
-        destination: "/landing/:path*",
-      },
-      {
-        has: [
           {
-            type: "host",
-            value: `app.${process.env.NEXT_PUBLIC_VERCEL_URL}`,
+            has: [
+              {
+                type: "host",
+                value: `app.${envUrl}`,
+              },
+            ],
+            source: "/:path*",
+            destination: "/app/:path*",
           },
-        ],
-        source: "/:path*",
-        destination: "/app/:path*",
-      },
-    ];
+        ]
+      : [
+          {
+            source: "/app/:path*",
+            destination: "/:path*",
+          },
+        ];
   },
 };
 
