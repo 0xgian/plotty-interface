@@ -65,7 +65,7 @@ const MOREMENUS = [
         alt="ranking-icon"
       />
     ),
-    path: "https://zealy.io/c/plottyfi/leaderboard",
+    path: "https://galxe.com/PlottyFi/leaderboard",
     newtab: true,
   },
 ];

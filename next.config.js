@@ -9,7 +9,7 @@ const nextConfig = {
         has: [
           {
             type: "host",
-            value: "localhost",
+            value: process.env.NEXT_PUBLIC_VERCEL_URL,
           },
         ],
         source: "/:path*",
@@ -19,27 +19,7 @@ const nextConfig = {
         has: [
           {
             type: "host",
-            value: "app.localhost",
-          },
-        ],
-        source: "/:path*",
-        destination: "/app/:path*",
-      },
-      {
-        has: [
-          {
-            type: "host",
-            value: "plotty.fi",
-          },
-        ],
-        source: "/:path*",
-        destination: "/landing/:path*",
-      },
-      {
-        has: [
-          {
-            type: "host",
-            value: "app.plotty.fi",
+            value: `app.${process.env.NEXT_PUBLIC_VERCEL_URL}`,
           },
         ],
         source: "/:path*",

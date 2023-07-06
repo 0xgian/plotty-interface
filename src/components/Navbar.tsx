@@ -93,7 +93,7 @@ export default function Navbar({
             href={`${
               process.env.NODE_ENV !== "production"
                 ? "http://app.localhost:3000"
-                : "https://app.plotty.fi"
+                : `https://app.${process.env.NEXT_PUBLIC_VERCEL_URL}`
             }`}
           >
             <Button>Enter App</Button>
