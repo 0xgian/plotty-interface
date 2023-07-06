@@ -29,9 +29,12 @@ const nextConfig = {
           },
         ]
       : [
+          /** To set the focus path, modify the NEXT_PUBLIC_PREVIEW_PATH */
           {
-            source: "/app/:path*",
-            destination: "/:path*",
+            source: "/:path*",
+            destination: `${
+              process.env.NEXT_PUBLIC_PREVIEW_PATH ?? "/app"
+            }/:path*`,
           },
         ];
   },
