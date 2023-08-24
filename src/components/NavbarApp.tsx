@@ -13,7 +13,7 @@ export default function NavbarApp({
         <div className="flex justify-between items-center max-w-[930px] mx-auto gap-[6px] h-full">
           <Link
             className="flex items-center cursor-pointer sm:hidden min-w-[30px]"
-            href="/"
+            href="/app"
           >
             <div className="flex items-center gap-[6px] h-full">
               <IconPlotty size={30} />

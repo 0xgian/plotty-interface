@@ -41,7 +41,7 @@ export default function SidebarApp({
       <div className="flex flex-row justify-around w-full gap-1 leading-snug sm:flex-col">
         <Link
           className="hidden h-[60px] cursor-pointer sm:flex items-center pl-6"
-          href="/"
+          href="/app"
         >
           <div className="flex items-center gap-[6px] h-full">
             <IconPlotty size={30} />

@@ -44,7 +44,7 @@ export default function AuthButton() {
             {(() => {
               if (!authenticated || !currentAccount) {
                 return (
-                  <Link href="/">
+                  <Link href="/app">
                     <Button size="md">Log in</Button>
                   </Link>
                 );
