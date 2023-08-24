@@ -1,16 +1,19 @@
 "use client";
 
-import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { redirect } from "next/navigation";
-import { useAccount } from "wagmi";
+import { useMemo } from "react";
+import { useAuthModal } from "state/authModal";
+import { useAuthStatusStore } from "state/authStatus";
 
 export default function Page() {
-  const { address, isConnected } = useAccount();
-  const { openConnectModal } = useConnectModal();
+  const { account } = useAuthStatusStore();
+  const { openAuthModal, showAuthModal } = useAuthModal();
 
-  if (isConnected) {
-    redirect(`/${address}`);
-  } else {
-    openConnectModal && openConnectModal();
-  }
+  useMemo(() => {
+    if (!!account) {
+      redirect(`/${account}`);
+    } else if (!showAuthModal) {
+      openAuthModal && openAuthModal();
+    }
+  }, [account, showAuthModal, openAuthModal]);
 }

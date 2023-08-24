@@ -7,7 +7,7 @@ export default function TextGradient({
   return (
     <span
       className={clsx(
-        "relative font-bold font-display bg-gradient-primary bg-clip-text",
+        "relative font-semibold bg-gradient-primary bg-clip-text",
         className
       )}
       style={{ WebkitTextFillColor: "transparent" }}

@@ -15,16 +15,6 @@ const nextConfig = {
               },
             ],
             source: "/:path*",
-            destination: "/landing/:path*",
-          },
-          {
-            has: [
-              {
-                type: "host",
-                value: `app.${envUrl}`,
-              },
-            ],
-            source: "/:path*",
             destination: "/app/:path*",
           },
         ]
@@ -37,6 +27,14 @@ const nextConfig = {
             }/:path*`,
           },
         ];
+  },
+  images: {
+    remotePatterns: [
+      {
+        hostname: process.env.NEXT_PUBLIC_API_HOST,
+        pathname: "/media/**",
+      },
+    ],
   },
 };
 

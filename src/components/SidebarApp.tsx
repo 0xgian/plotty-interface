@@ -1,6 +1,7 @@
 "use client";
 
 import clsx from "clsx";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -15,49 +16,95 @@ import {
   HiOutlineUser,
   HiUser,
 } from "react-icons/hi";
+import { RiQuillPenLine } from "react-icons/ri";
 import { IoLogoDiscord, IoLogoTwitter } from "react-icons/io5";
-import { useAccount } from "wagmi";
+import { useAuthStatusStore } from "state/authStatus";
+import Button from "components/Button";
+import { usePlotModal } from "state/plotModal";
+import { IconPlotty } from "custom-icons";
 
 export default function SidebarApp({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const pathname = usePathname();
-  const { address } = useAccount();
+  const pathname = usePathname() as string;
+  const { account } = useAuthStatusStore();
+  const { openPlotModal } = usePlotModal();
 
   return (
     <div
       className={clsx(
-        "px-3 border-secondary-text border-opacity-10 flex flex-col gap-6 justify-between",
-        "w-full sm:w-auto lg:w-[255px] sm:h-[calc(100vh-61px)] fixed bottom-0 sm:relative",
-        "border-t sm:border-r"
+        "pr-3 border-secondary-text border-opacity-10 flex flex-col gap-6 justify-between",
+        "w-full sm:w-auto lg:w-[255px] sm:h-[100dvh] fixed bottom-0 sm:sticky sm:top-0 z-[1]",
+        "border-t sm:border-t-0 sm:border-r bg-white select-none"
       )}
     >
-      <div className="flex flex-row justify-around w-full gap-1 leading-6 sm:flex-col sm:mt-3 font-display">
-        {SIDEMENUS.map((menu, i) => {
-          const active =
-            menu.path === "/"
-              ? pathname.toLowerCase() === `/${address?.toLowerCase()}`
-              : pathname === menu.path;
-          return (
-            <Link
-              key={i}
-              href={menu.path}
-              className={clsx(
-                "flex items-center gap-3 p-3 rounded-xl cursor-pointer",
-                "sm:hover:bg-secondary-text sm:hover:bg-opacity-10",
-                active ? "text-main-purple" : "text-secondary-text"
-              )}
-            >
-              {active ? menu.activeIcon : menu.icon}
-              <div className="hidden text-lg font-medium lg:block">
-                {menu.title}
-              </div>
-            </Link>
-          );
-        })}
+      <div className="flex flex-row justify-around w-full gap-1 leading-snug sm:flex-col">
+        <Link
+          className="hidden h-[60px] cursor-pointer sm:flex items-center pl-6"
+          href="/"
+        >
+          <div className="flex items-center gap-[6px] h-full">
+            <IconPlotty size={30} />
+          </div>
+        </Link>
+        {SIDEMENUS.filter((m) => (m.authRequired ? !!account : true)).map(
+          (menu, i) => {
+            const active =
+              menu.path === "/"
+                ? pathname.toLowerCase() === `/${account?.toLowerCase()}`
+                : pathname === menu.path;
+            return (
+              <Link
+                key={i}
+                href={menu.path}
+                className="flex items-center gap-2 sm:w-full"
+              >
+                <div
+                  className={clsx(
+                    "hidden sm:block min-w-[4px] h-7 rounded-r-full",
+                    active && "bg-primary"
+                  )}
+                />
+                <div
+                  className={clsx(
+                    "flex items-center justify-center lg:justify-start gap-3 py-3 lg:p-3 w-full",
+                    "sm:hover:bg-secondary-text sm:hover:bg-opacity-10 transition-all",
+                    "rounded-xl sm:rounded-full cursor-pointer",
+                    active && "font-semibold"
+                  )}
+                >
+                  {active ? menu.activeIcon : menu.icon}
+                  <div
+                    className={clsx(
+                      "hidden text-lg lg:flex items-center",
+                      active ? "font-semibold" : "font-medium"
+                    )}
+                  >
+                    {menu.title}
+                  </div>
+                </div>
+              </Link>
+            );
+          }
+        )}
+
+        {account && (
+          <Button
+            className={clsx(
+              "min-w-0 sm:ml-3 sm:mt-3 aspect-square lg:aspect-auto",
+              "absolute sm:static bottom-16 right-4 h-14 sm:h-12"
+            )}
+            px="px-0"
+            kind="primary"
+            onClick={() => openPlotModal()}
+          >
+            <span className="hidden lg:block">New Plot</span>
+            <RiQuillPenLine className="lg:hidden" size={24} />
+          </Button>
+        )}
       </div>
 
-      <div className="items-center justify-between hidden w-full p-3 text-secondary-text sm:flex">
+      <div className="items-center justify-between hidden w-full p-3 pl-6 text-secondary-text sm:flex">
         <div className="hidden text-xs lg:block">Find us on</div>
         <div className="flex flex-col items-center gap-3 mx-auto lg:mx-0 lg:flex-row">
           <Link href="https://twitter.com/PlottyFi" target="_blank">
@@ -73,34 +120,39 @@ export default function SidebarApp({
 }
 
 const SIDEMENUS = [
-  // {
-  //   title: "Home",
-  //   icon: <HiOutlineHome size={24} />,
-  //   activeIcon: <HiHome size={24} />,
-  //   path: "/home",
-  // },
+  {
+    title: "Home",
+    icon: <HiOutlineHome size={24} />,
+    activeIcon: <HiHome size={24} />,
+    path: "/home",
+    authRequired: true,
+  },
   // {
   //   title: "Explore",
   //   icon: <HiOutlineGlobe size={24} />,
   //   activeIcon: <HiGlobe size={24} />,
   //   path: "/explore",
+  //   authRequired: true,
   // },
   // {
   //   title: "Notifications",
   //   icon: <HiOutlineBell size={24} />,
   //   activeIcon: <HiBell size={24} />,
   //   path: "/notifications",
+  //   authRequired: true,
   // },
   {
     title: "Profile",
     icon: <HiOutlineUser size={24} />,
     activeIcon: <HiUser size={24} />,
     path: "/",
+    authRequired: true,
   },
   {
     title: "More",
     icon: <HiOutlineDotsCircleHorizontal size={24} />,
     activeIcon: <HiDotsCircleHorizontal size={24} />,
     path: "/more",
+    authRequired: false,
   },
 ];

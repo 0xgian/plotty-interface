@@ -1,8 +1,7 @@
 "use client";
 
-import * as React from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
-  AvatarComponent,
   RainbowKitProvider,
   Theme,
   connectorsForWallets,
@@ -21,9 +20,12 @@ import {
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { arbitrum, goerli } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
-import { binancedWallet } from "utils/customWallets";
+import { binancedWallet } from "lib/customWallets";
 import { merge } from "lodash";
-import Image from "next/image";
+import { Avatar } from "components/Avatar";
+import AuthContext from "./AuthContext";
+import PlotModal from "./PlotModal";
+import AuthModal from "./AuthModal";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -41,14 +43,19 @@ const demoAppInfo = {
 
 const connectors = connectorsForWallets([
   {
-    groupName: "Wallet",
+    groupName: "Please select sign-in method",
     wallets: [
       metaMaskWallet({ projectId, chains }),
+      walletConnectWallet({ projectId, chains }),
+    ],
+  },
+  {
+    groupName: "or more options",
+    wallets: [
       injectedWallet({ chains }),
       coinbaseWallet({ chains, appName: "Plotty App" }),
       binancedWallet({ chains }),
       trustWallet({ projectId, chains }),
-      walletConnectWallet({ projectId, chains }),
       argentWallet({ projectId, chains }),
       ledgerWallet({ projectId, chains }),
       rainbowWallet({ projectId, chains }),
@@ -65,44 +72,36 @@ const wagmiConfig = createConfig({
 
 const light = merge(lightTheme({ borderRadius: "medium" }), {
   // blurs: {
-  //   modalOverlay: "blur(5px)",
+  //   modalOverlay: "blur(12px)",
   // },
   colors: {
-    accentColor: "#C296FF",
-    modalBackground: "rgba(255, 255, 255, 1)",
-    modalBackdrop: "rgba(255, 255, 255, 0.3)",
+    accentColor: "#5B6BDF",
+    modalBackground: "#FFFEF8",
+    modalBackdrop: "#13121740",
   },
   shadows: {
-    dialog: "0px 0px 1px #9092A0",
+    dialog: "0px 0px 1px #6D6C6F",
   },
 } as Theme);
 
-export const Avatar: AvatarComponent = ({ address, ensImage, size }) => {
-  return (
-    <Image
-      alt="profile"
-      src="/images/app/no-handle.png"
-      className="rounded-full"
-      width={size}
-      height={size}
-    />
-  );
-};
-
-export function Providers({ children }: { children: React.ReactNode }) {
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
+export default function Providers({ children }: { children: ReactNode }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider
-        chains={chains}
-        appInfo={demoAppInfo}
-        theme={light}
-        modalSize="compact"
-        avatar={Avatar}
-      >
-        {mounted && children}
-      </RainbowKitProvider>
+      <AuthContext>
+        <RainbowKitProvider
+          chains={chains}
+          appInfo={demoAppInfo}
+          theme={light}
+          modalSize="compact"
+          avatar={Avatar}
+        >
+          {mounted && children}
+          <AuthModal />
+          <PlotModal />
+        </RainbowKitProvider>
+      </AuthContext>
     </WagmiConfig>
   );
 }

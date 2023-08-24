@@ -1,93 +1,48 @@
 "use client";
 
-import clsx from "clsx";
-import Button from "components/Button";
-import { Avatar } from "components/Providers";
-import { useParams } from "next/navigation";
-import { toast } from "react-hot-toast";
-import {
-  HiOutlineDocumentDuplicate,
-  HiOutlinePlus,
-  HiOutlineQrcode,
-} from "react-icons/hi";
-import QRCode from "react-qr-code";
-import { formatAddress } from "utils/formatAddress";
+import { useProfile } from "hooks/useProfile";
+import { useProfilePlots } from "hooks/useProfilePlots";
+import _ from "lodash";
+import PlottedCard from "components/PlottedCard";
+import InfiniteScroll from "react-infinite-scroll-component";
+import BrandLoading from "components/BrandLoading";
+import { Fragment } from "react";
+import Empty from "components/Empty";
 
-export default function Page() {
-  const { u } = useParams();
-  const handle = "No Handle";
-
-  return (
-    <div className="flex flex-col gap-6">
-      <div className="flex justify-between gap-[30px] flex-col sm:flex-row">
-        <Avatar address={u} size={132} />
-        <div className="flex flex-col sm:text-right">
-          <div className="text-4xl font-bold font-display">$20,061,648</div>
-          <div className="font-medium text-red-500 font-display">
-            -2.4% ($488,858.11)
-          </div>
-        </div>
-      </div>
-
-      <div className="flex gap-[30px] justify-between">
-        <div className="w-full sm:max-w-[600px]">
-          <div className="flex flex-col">
-            <div className="flex items-center gap-3 mb-[6px]">
-              <div
-                className={clsx(
-                  "font-bold font-display text-xl",
-                  handle === "No Handle" && "text-secondary-text"
-                )}
-              >
-                {handle}
-              </div>
-              <Button size="medium">
-                <HiOutlinePlus size={16} />
-                <span className="ml-[6px] hidden sm:block">Mint Handle</span>
-              </Button>
-            </div>
-            <div className="flex gap-3 text-secondary-text">
-              <div className="hidden md:block">{u}</div>
-              <div className="md:hidden">{formatAddress(u)}</div>
-              <div className="flex gap-1">
-                <div
-                  className="flex items-center justify-center w-6 h-6 rounded-full cursor-pointer bg-secondary-text bg-opacity-10"
-                  onClick={() => {
-                    navigator.clipboard.writeText(u);
-                    toast.success("Copied");
-                  }}
-                >
-                  <HiOutlineDocumentDuplicate size={16} />
-                </div>
-                <div
-                  className={clsx(
-                    "relative flex items-center justify-center w-6 h-6 rounded-full",
-                    "cursor-pointer bg-secondary-text bg-opacity-10 group"
-                  )}
-                  onClick={() => {}}
-                >
-                  <HiOutlineQrcode size={16} />
-                  <div
-                    className={clsx(
-                      "bg-white border border-opacity-10 rounded-xl border-secondary-text transition-all",
-                      "absolute top-8 h-0 w-0 opacity-0 group-hover:h-32 group-hover:w-32 group-hover:p-3 group-hover:opacity-100"
-                    )}
-                  >
-                    <QRCode
-                      size={132}
-                      value={u}
-                      viewBox={`0 0 256 256`}
-                      className="w-full h-full"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <Button>Follow</Button>
-      </div>
-    </div>
+export default function Page({ params: { u } }: { params: { u: string } }) {
+  const { profile } = useProfile(u);
+  const uid = profile?.uid;
+  const { plotsPages, fetchNextPage, hasNextPage, status, queryKey } =
+    useProfilePlots(uid);
+  return status === "loading" ? (
+    <BrandLoading listView />
+  ) : plotsPages.some((page) => !_.isEmpty(page)) ? (
+    <InfiniteScroll
+      dataLength={plotsPages.length}
+      next={() => fetchNextPage()}
+      hasMore={!!hasNextPage}
+      loader={<BrandLoading listView />}
+    >
+      {plotsPages.map((plots, pageIndex) => (
+        <Fragment key={pageIndex}>
+          {plots &&
+            plots.map((item: any, i: number) => {
+              return (
+                <PlottedCard
+                  key={i}
+                  nodeItem={item}
+                  pageIndex={pageIndex}
+                  queryKey={queryKey}
+                />
+              );
+            })}
+        </Fragment>
+      ))}
+    </InfiniteScroll>
+  ) : (
+    <Empty
+      title={`No plots for "${u.substring(0, 6)}"`}
+      desc="When you plot some things, they will show up here."
+    />
   );
 }

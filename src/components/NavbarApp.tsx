@@ -1,41 +1,28 @@
-import Image from "next/image";
 import Link from "next/link";
-import { HiOutlineSearch } from "react-icons/hi";
-import ConnectButton from "components/ConnectButton";
+import Image from "next/image";
+import AuthButton from "components/AuthButton";
+import Search from "components/Search";
+import { IconPlotty } from "custom-icons";
 
 export default function NavbarApp({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <nav className="flex h-[60px] items-center border-b border-secondary-text border-opacity-10">
-      <div className="w-[73px] lg:w-[255px] px-6">
-        <Link className="cursor-pointer" href="/">
-          <div className="flex items-center gap-[6px]">
-            <Image
-              src={"/images/logo-black.png"}
-              width={30}
-              height={30}
-              alt="Plotty Logo"
-            />
-            <span className="text-[20px] font-bold font-display hidden lg:block">
-              Plotty
-            </span>
-          </div>
-        </Link>
-      </div>
+    <nav className="flex h-[60px] items-center">
+      <div className="w-full lg:w-[calc(100vw-255px)] px-4 border-b border-secondary-text border-opacity-10 h-full">
+        <div className="flex justify-between items-center max-w-[930px] mx-auto gap-[6px] h-full">
+          <Link
+            className="flex items-center cursor-pointer sm:hidden min-w-[30px]"
+            href="/"
+          >
+            <div className="flex items-center gap-[6px] h-full">
+              <IconPlotty size={30} />
+            </div>
+          </Link>
 
-      <div className="w-[calc(100vw-73px)] lg:w-[calc(100vw-255px)] pr-6 sm:px-6">
-        <div className="flex justify-between items-center max-w-[930px] mx-auto gap-[6px]">
-          <div className="flex items-center gap-3 bg-opacity-10 bg-secondary-text h-[42px] max-w-[348px] w-full px-3 rounded-full">
-            <HiOutlineSearch size={20} className="text-secondary-text" />
-            <input
-              type="text"
-              className="w-full bg-transparent outline-none text-ellipsis"
-              placeholder="Search address / handle"
-            />
-          </div>
+          <Search />
 
-          <ConnectButton />
+          <AuthButton />
         </div>
       </div>
     </nav>

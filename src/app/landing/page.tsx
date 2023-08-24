@@ -6,7 +6,8 @@ import TextGradient from "components/TextGradient";
 import Image from "next/image";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi";
-import defaultPublicUrl from "utils/defaultPublicUrl";
+import defaultPublicUrl from "lib/defaultPublicUrl";
+import { IconPlotty } from "custom-icons";
 
 export default function Page() {
   return (
@@ -16,7 +17,7 @@ export default function Page() {
       </div>
 
       <section className="relative pt-32 pb-[160px] w-full">
-        <div className="absolute bottom-0 right-0 w-[100vw] aspect-[1280/750]">
+        <div className="absolute bottom-0 right-0 w-screen aspect-[1280/750]">
           <Image alt="" src={`/images/landing/bg-ellipse.png`} fill />
         </div>
 
@@ -24,8 +25,8 @@ export default function Page() {
           <TextGradient className="text-[56px] text-center">
             Invest. Manage. Inspire. Earn.
           </TextGradient>
-          <div className="text-2xl text-center font-display">
-            With <span className="font-bold">Plotty</span>. The Social Yield
+          <div className="text-2xl text-center">
+            With <span className="font-semibold">Plotty</span>. The Social Yield
             Farming Platform.
           </div>
           <div className="py-8 text-center text-secondary-text">
@@ -35,7 +36,7 @@ export default function Page() {
 
           <div className="flex justify-center gap-4">
             <Link href={defaultPublicUrl()}>
-              <Button>Enter App</Button>
+              <Button className="min-w-[132px]">Enter App</Button>
             </Link>
             <div className="flex items-center gap-2">
               <Link href="https://discord.gg/dG2dPpCUKE" target="_blank">
@@ -80,7 +81,7 @@ export default function Page() {
           <div className="flex flex-col w-full gap-8 pt-32 md:items-center md:flex-row">
             <div className="w-full lg:w-3/5">
               <div className="flex flex-col max-w-[450px] gap-4">
-                <div className="font-bold font-display text-[42px] leading-tight">
+                <div className="font-semibold text-[42px] leading-tight">
                   {`Discover users' web3 yield farming journey`}
                 </div>
                 <div className="text-secondary-text">
@@ -88,7 +89,7 @@ export default function Page() {
                 </div>
                 <div className="mt-2 w-fit">
                   <Link href={defaultPublicUrl()}>
-                    <Button>Try it now</Button>
+                    <Button className="min-w-[132px]">Try it now</Button>
                   </Link>
                 </div>
               </div>
@@ -98,7 +99,7 @@ export default function Page() {
               <div className="flex gap-4">
                 <div className="relative flex flex-col justify-center w-1/2 gap-2 text-center">
                   <div className="spotlight-1 top-[-40%] absolute left-[25%]" />
-                  <div className="text-[28px] font-bold sm:text-[32px] font-display">
+                  <div className="text-[28px] font-semibold sm:text-[32px]">
                     {`[Soon]`}
                   </div>
                   <div className="text-sm opacity-60 sm:text-base">
@@ -107,7 +108,7 @@ export default function Page() {
                 </div>
                 <div className="flex flex-col items-center w-1/2 gap-4">
                   <div className="flex flex-col justify-center w-full sm:h-40 h-[120px] gap-2 text-center">
-                    <div className="text-[28px] font-bold sm:text-[32px] font-display">
+                    <div className="text-[28px] font-semibold sm:text-[32px]">
                       {`[Soon]`}
                     </div>
                     <div className="text-sm opacity-60 sm:text-base">
@@ -115,7 +116,7 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="flex flex-col justify-center w-full sm:h-40 h-[120px] gap-2 text-center">
-                    <div className="text-[28px] font-bold sm:text-[32px] font-display">
+                    <div className="text-[28px] font-semibold sm:text-[32px]">
                       {`[Soon]`}
                     </div>
                     <div className="text-sm opacity-60 sm:text-base">
@@ -126,7 +127,7 @@ export default function Page() {
               </div>
               <div className="relative flex w-full sm:h-40 h-[120px] gap-2 px-12 overflow-hidden justify-between">
                 <div className="flex flex-col justify-center gap-2">
-                  <div className="text-[28px] font-bold sm:text-[32px] font-display">
+                  <div className="text-[28px] font-semibold sm:text-[32px]">
                     {`[Soon]`}
                   </div>
                   <div className="text-sm opacity-60 sm:text-base">
@@ -148,7 +149,7 @@ export default function Page() {
         </div>
 
         <div className="relative px-6 pt-32 mx-auto max-w-7xl xl:px-0">
-          <div className="font-bold font-display text-[42px] leading-tight">
+          <div className="font-semibold text-[42px] leading-tight">
             Why Plotty?
           </div>
 
@@ -161,7 +162,7 @@ export default function Page() {
                 <div className="text-secondary-text">
                   PORTFOLIO MANAGEMENT MADE SIMPLE
                 </div>
-                <div className="font-display font-bold text-[28px] py-[50px] sm:w-1/2">
+                <div className="font-semibold text-[28px] py-[50px] sm:w-1/2">
                   Create, manage and track any yield portfolios
                 </div>
                 <Link href="https://docs.plotty.fi" target="_blank">
@@ -169,7 +170,9 @@ export default function Page() {
                     <div className="absolute bottom-0 right-0 h-[160px] w-[160px]">
                       <Image alt="" src={`/images/landing/grid-red.png`} fill />
                     </div>
-                    <div className="font-bold text-main-red">Learn more</div>
+                    <div className="font-semibold text-main-red">
+                      Learn more
+                    </div>
                     <HiArrowRight />
                   </div>
                 </Link>
@@ -179,7 +182,7 @@ export default function Page() {
                 <div className="text-secondary-text">
                   ACCESS A WIDE RANGE OF STRATEGIES
                 </div>
-                <div className="font-display font-bold text-[28px] py-[50px] sm:w-1/2">
+                <div className="font-semibold text-[28px] py-[50px] sm:w-1/2">
                   Supports the largest number of DeFi protocols and chains
                 </div>
                 <Link href="https://docs.plotty.fi" target="_blank">
@@ -191,7 +194,9 @@ export default function Page() {
                         fill
                       />
                     </div>
-                    <div className="font-bold text-main-blue">Learn more</div>
+                    <div className="font-semibold text-main-blue">
+                      Learn more
+                    </div>
                     <HiArrowRight />
                   </div>
                 </Link>
@@ -206,7 +211,7 @@ export default function Page() {
                 <div className="text-secondary-text">
                   A NOVEL SOCIAL YIELD FARMING EXPERIENCE
                 </div>
-                <div className="font-display font-bold text-[28px] py-[50px] sm:w-1/2">
+                <div className="font-semibold text-[28px] py-[50px] sm:w-1/2">
                   Copy from another or share the best-performing strategy
                 </div>
                 <Link href="https://docs.plotty.fi" target="_blank">
@@ -218,7 +223,9 @@ export default function Page() {
                         fill
                       />
                     </div>
-                    <div className="font-bold text-main-purple">Learn more</div>
+                    <div className="font-semibold text-main-purple">
+                      Learn more
+                    </div>
                     <HiArrowRight />
                   </div>
                 </Link>
@@ -226,7 +233,7 @@ export default function Page() {
 
               <div className="flex flex-col justify-between p-6 border rounded-3xl min-h-[320px]">
                 <div className="text-secondary-text">MAXIMIZE YOUR EARNING</div>
-                <div className="font-display font-bold text-[28px] py-[50px] sm:w-1/2">
+                <div className="font-semibold text-[28px] py-[50px] sm:w-1/2">
                   Creators earn royalties. Investors earn by copying
                 </div>
                 <Link href="https://docs.plotty.fi" target="_blank">
@@ -238,7 +245,9 @@ export default function Page() {
                         fill
                       />
                     </div>
-                    <div className="font-bold text-main-yellow">Learn more</div>
+                    <div className="font-semibold text-main-yellow">
+                      Learn more
+                    </div>
                     <HiArrowRight />
                   </div>
                 </Link>
@@ -248,7 +257,7 @@ export default function Page() {
         </div>
 
         <div className="relative flex flex-col gap-12 px-6 pt-32 mx-auto max-w-7xl xl:px-0">
-          <div className="font-bold font-display text-[42px] leading-tight text-center">
+          <div className="font-semibold text-[42px] leading-tight text-center">
             Token System & Revenue Model
           </div>
 
@@ -263,7 +272,7 @@ export default function Page() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <div className="font-display font-bold text-[28px]">
+                <div className="font-semibold text-[28px]">
                   Portfolio Creators
                 </div>
                 <div className="text-secondary-text">{`Portfolio creators earn rewards when they are copied and during the entire portfolio's journey.`}</div>
@@ -280,7 +289,7 @@ export default function Page() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <div className="font-display font-bold text-[28px]">PLOTTY</div>
+                <div className="font-semibold text-[28px]">PLOTTY</div>
                 <div className="text-secondary-text">{`PLOTTY and esPLOTTY are the utility and governance token. Accures a share of the platform's generated fees.`}</div>
               </div>
             </div>
@@ -298,13 +307,8 @@ export default function Page() {
           <div className="relative flex items-center justify-between gap-4 px-6 py-8 select-none xl:px-0">
             <Link className="cursor-pointer" href="/">
               <div className="flex items-center gap-2 w-[124px] h-12 pt-2">
-                <Image
-                  src={"/images/logo.png"}
-                  width={45}
-                  height={45}
-                  alt="Plotty Logo"
-                />
-                <span className="text-2xl font-bold font-display">Plotty</span>
+                <IconPlotty size={45} />
+                <span className="text-2xl font-semibold">Plotty</span>
               </div>
             </Link>
 

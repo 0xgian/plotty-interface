@@ -1,0 +1,12 @@
+diff --git a/node_modules/@types/twitter-text/index.d.ts b/node_modules/@types/twitter-text/index.d.ts
+index 4917a6a..c185ef0 100755
+--- a/node_modules/@types/twitter-text/index.d.ts
++++ b/node_modules/@types/twitter-text/index.d.ts
+@@ -145,6 +145,7 @@ export function getTweetLength(text: string, options?: TweetLengthOptions): numb
+ 
+ export function isValidUsername(username: string): boolean;
+ export function isValidList(usernameList: string): boolean;
++export function isValidCashtag(cashtag: string): boolean;
+ export function isValidHashtag(hashtag: string): boolean;
+ // Note: unicodeDomainsa and requireProtocol can be null
+ export function isValidUrl(url: string, unicodeDomains: boolean, requireProtocol: boolean): boolean;

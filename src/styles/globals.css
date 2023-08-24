@@ -4,15 +4,15 @@
 
 @font-face {
   font-family: "Suisse Intl";
-  src: url("/fonts/SuisseIntl-Bold.otf") format("truetype");
+  src: url("/fonts/SuisseIntl-Bold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Suisse Intl";
-  src: url("/fonts/SuisseIntl-Medium.ttf") format("truetype");
-  font-weight: medium;
+  src: url("/fonts/SuisseIntl-SemiBold.ttf") format("truetype");
+  font-weight: semibold;
   font-style: normal;
 }
 
@@ -38,25 +38,26 @@
 }
 
 :root {
-  --font-sans: "Manrope", -apple-system, system-ui, BlinkMacSystemFont,
+  --font-sans: "Suisse Intl", -apple-system, system-ui, BlinkMacSystemFont,
     "Helvetica Neue", "Helvetica", sans-serif;
-  --foreground: #0b0c13;
+  --foreground: #131217;
   --background: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --font-sans: "Manrope", -apple-system, system-ui, BlinkMacSystemFont,
       "Helvetica Neue", "Helvetica", sans-serif;
     --foreground: #ffffff;
-    --background: #0b0c13;
+    --background: #131217;
   }
-}
+} */
 
 *,
 *:before,
 *:after {
   box-sizing: inherit;
+  outline: none;
 }
 
 html {
@@ -74,9 +75,124 @@ html {
 html,
 body {
   font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.375;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--foreground);
   background: var(--background);
+}
+
+.ellipsis-loading::after {
+  display: inline-block;
+  animation: dotty steps(1, end) 1s infinite;
+  content: "";
+}
+
+@keyframes dotty {
+  0% {
+    content: "";
+  }
+  25% {
+    content: ".";
+  }
+  50% {
+    content: "..";
+  }
+  75% {
+    content: "...";
+  }
+  100% {
+    content: "";
+  }
+}
+
+div.rtedt-mt div.imel:nth-of-type(1) {
+  margin-top: 1rem;
+}
+
+.rtedt-1 div.imel {
+  width: 100%;
+}
+
+.rtedt-1 div.imel img {
+  width: 100%;
+  height: auto;
+  max-height: 518px;
+}
+
+.rtedt-2 div.imel {
+  width: 100%;
+}
+
+.rtedt-2 div.imel:nth-of-type(1) {
+  width: 50%;
+  padding-right: 0.5px;
+}
+
+.rtedt-2 div.imel:nth-of-type(2) {
+  width: 50%;
+  padding-left: 0.5px;
+}
+
+.rtedt-2 div.imel img {
+  width: 100%;
+  aspect-ratio: 0.868;
+}
+
+.rtedt-3 div.imel:nth-of-type(1) {
+  width: 100%;
+  padding-bottom: 0.5px;
+}
+
+.rtedt-3 div.imel:nth-of-type(1) img {
+  width: 100%;
+  aspect-ratio: 1.812;
+}
+
+.rtedt-3 div.imel:nth-of-type(2) {
+  width: 50%;
+  padding: 0.5px 0.5px 0 0;
+}
+
+.rtedt-3 div.imel:nth-of-type(2) img {
+  width: 100%;
+  aspect-ratio: 1.812;
+}
+
+.rtedt-3 div.imel:nth-of-type(3) {
+  width: 50%;
+  padding: 0.5px 0 0 0.5px;
+}
+
+.rtedt-3 div.imel:nth-of-type(3) img {
+  width: 100%;
+  aspect-ratio: 1.812;
+}
+
+.rtedt-4 div.imel {
+  width: 50%;
+}
+
+.rtedt-4 div.imel:nth-of-type(1) {
+  padding: 0 0.5px 0.5px 0;
+}
+
+.rtedt-4 div.imel:nth-of-type(2) {
+  padding: 0 0 0.5px 0.5px;
+}
+
+.rtedt-4 div.imel:nth-of-type(3) {
+  padding: 0.5px 0.5px 0 0;
+}
+
+.rtedt-4 div.imel:nth-of-type(4) {
+  padding-left: 6px;
+  padding: 0.5px 0 0 0.5px;
+}
+
+.rtedt-4 div.imel img {
+  width: 100%;
+  aspect-ratio: 1.812;
 }

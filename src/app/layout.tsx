@@ -1,23 +1,22 @@
+import { Metadata } from "next";
+import { ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
 import "styles/globals.css";
 
-export const metadata = {
-  title: "Plotty | Invest, Manage, Inspire and Earn",
-  description:
-    "A decentralized suite of products helping you maximize earnings by creating, managing, exploring, or sharing your yield strategy.",
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Plotty",
+    default: "Plotty | Plot Approachable On-chain Data",
+  },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#0B0C13" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <meta name="theme-color" content="#131217" />
+        {/* <link rel="preconnect" href="https://fonts.gstatic.com" /> */}
         {/* <link rel="manifest" href="/manifest.json" /> */}
 
         {/* <!-- facebook --> */}
@@ -33,7 +32,16 @@ export default function RootLayout({
 
       <body>
         {children}
-        <Toaster />
+        <Toaster
+          position="bottom-center"
+          toastOptions={{
+            style: {
+              borderRadius: "0.5rem",
+              color: "#fff",
+              background: "#5B6BDF",
+            },
+          }}
+        />
       </body>
     </html>
   );
