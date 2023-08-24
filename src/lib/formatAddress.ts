@@ -1,11 +1,8 @@
-import { isAddress } from "viem";
-
 export function formatAddress(
   address?: string,
   options?: { leading?: number; trailing?: number }
 ): string {
   if (!address) return "";
-  if (!isAddress(address)) return address;
 
   const leadingChars =
     typeof options?.leading === "number" ? options.leading : 6;

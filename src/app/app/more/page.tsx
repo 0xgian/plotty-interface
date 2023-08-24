@@ -6,7 +6,7 @@ import { BiBarChartAlt2 } from "react-icons/bi";
 
 export default function Page() {
   return (
-    <div className={clsx("flex flex-col gap-6 justify-between w-full h-full mt-3")}>
+    <div className={clsx("flex flex-col gap-6 justify-between w-full h-full mt-3 px-4 sm:px-0")}>
       <div className="flex flex-col w-full gap-1 mb-6">
         <div className="mb-6 text-[20px] font-semibold">More</div>
         {MOREMENUS.map((menu, i) => {
