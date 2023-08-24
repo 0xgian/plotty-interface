@@ -28,6 +28,7 @@ export default function AuthModal() {
                 <div className="flex flex-col items-center justify-center w-full lg:w-1/2">
                   <div className="flex flex-col w-full max-w-[348px] px-4 lg:w-fit lg:max-w-full lg:px-0">
                     <div className="flex flex-col w-full text-3xl font-semibold mb-7 md:mb-12 sm:text-5xl lg:text-6xl lg:w-fit">
+                      <IconPlotty size={45} className="flex justify-center w-full h-[38vh] lg:hidden" />
                       <div className="block truncate">Approachable</div>
                       <div className="flex items-center gap-[6px] sm:gap-3 text-primary w-fit">
                         <IconIntelligence size={28} />
