@@ -1,7 +1,6 @@
 "use client";
 
 import clsx from "clsx";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -27,7 +26,7 @@ export default function SidebarApp({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   const pathname = usePathname() as string;
-  const { account } = useAuthStatusStore();
+  const  { account } = useAuthStatusStore();
   const { openPlotModal } = usePlotModal();
 
   return (
@@ -50,7 +49,7 @@ export default function SidebarApp({
         {SIDEMENUS.filter((m) => (m.authRequired ? !!account : true)).map(
           (menu, i) => {
             const active =
-              menu.path === "/"
+              menu.path === "/app"
                 ? pathname.toLowerCase() === `/${account?.toLowerCase()}`
                 : pathname === menu.path;
             return (
@@ -145,7 +144,7 @@ const SIDEMENUS = [
     title: "Profile",
     icon: <HiOutlineUser size={24} />,
     activeIcon: <HiUser size={24} />,
-    path: "/",
+    path: "/app",
     authRequired: true,
   },
   {
