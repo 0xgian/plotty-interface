@@ -43,28 +43,24 @@ export default function AuthModal() {
                       <div>Data</div>
                     </div>
 
-                    {isMobile &&
+                    {/* {isMobile &&
                     !window.matchMedia("(display-mode: standalone)").matches ? (
                       <div className="flex flex-col gap-3">
                         <div>📲 See Plotty in...</div>
                         <InstallAppButton />
                       </div>
-                    ) : (
-                      <div className="flex flex-col">
-                        <Button kind="outline-black" onClick={openConnectModal}>
-                          Log in
-                        </Button>
-                        <div className="relative flex items-center justify-center h-7 md:h-12">
-                          <div className="h-[1px] bg-secondary-text w-full bg-opacity-10"></div>
-                          <div className="absolute px-4 bg-primary-white">
-                            or
-                          </div>
-                        </div>
-                        <Button onClick={openConnectModal}>
-                          Create Account
-                        </Button>
+                    ) : ( */}
+                    <div className="flex flex-col">
+                      <Button kind="outline-black" onClick={openConnectModal}>
+                        Log in
+                      </Button>
+                      <div className="relative flex items-center justify-center h-7 md:h-12">
+                        <div className="h-[1px] bg-secondary-text w-full bg-opacity-10"></div>
+                        <div className="absolute px-4 bg-primary-white">or</div>
                       </div>
-                    )}
+                      <Button onClick={openConnectModal}>Create Account</Button>
+                    </div>
+                    {/* )} */}
                   </div>
                 </div>
               </Dialog.Panel>
