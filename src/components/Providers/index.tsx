@@ -35,7 +35,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [publicProvider()]
 );
 
-const projectId = process.env.NEXT_WC_PROJECT_ID ?? "PLOTTY_APP";
+const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID ?? "PLOTTY_APP";
 
 const appInfo = {
   appName: "Plotty App",
