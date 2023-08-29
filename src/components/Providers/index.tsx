@@ -35,9 +35,9 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [publicProvider()]
 );
 
-const projectId = "PLOTTY_APP";
+const projectId = process.env.NEXT_WC_PROJECT_ID ?? "PLOTTY_APP";
 
-const demoAppInfo = {
+const appInfo = {
   appName: "Plotty App",
 };
 
@@ -92,7 +92,7 @@ export default function Providers({ children }: { children: ReactNode }) {
       <AuthContext>
         <RainbowKitProvider
           chains={chains}
-          appInfo={demoAppInfo}
+          appInfo={appInfo}
           theme={light}
           modalSize="compact"
           avatar={Avatar}

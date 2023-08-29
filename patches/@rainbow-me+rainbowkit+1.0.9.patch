@@ -1,0 +1,48 @@
+diff --git a/node_modules/@rainbow-me/rainbowkit/dist/chunk-LAWPQJXA.js b/node_modules/@rainbow-me/rainbowkit/dist/chunk-LAWPQJXA.js
+index 753f2d0..fa4bcb9 100644
+--- a/node_modules/@rainbow-me/rainbowkit/dist/chunk-LAWPQJXA.js
++++ b/node_modules/@rainbow-me/rainbowkit/dist/chunk-LAWPQJXA.js
+@@ -4779,6 +4779,8 @@ ConnectButton.Custom = ConnectButtonRenderer;
+ 
+ export {
+   createAuthenticationAdapter,
++  useAuthenticationAdapter,
++  useAuthenticationStatus,
+   RainbowKitAuthenticationProvider,
+   isAndroid,
+   isIOS,
+diff --git a/node_modules/@rainbow-me/rainbowkit/dist/index.d.ts b/node_modules/@rainbow-me/rainbowkit/dist/index.d.ts
+index ae87a41..aae4b3f 100644
+--- a/node_modules/@rainbow-me/rainbowkit/dist/index.d.ts
++++ b/node_modules/@rainbow-me/rainbowkit/dist/index.d.ts
+@@ -4,7 +4,7 @@ export { getWalletConnectConnector } from './wallets/getWalletConnectConnector';
+ export { connectorsForWallets } from './wallets/connectorsForWallets';
+ export { useAccountModal, useChainModal, useConnectModal, } from './components/RainbowKitProvider/ModalContext';
+ export { useAddRecentTransaction } from './transactions/useAddRecentTransaction';
+-export { RainbowKitAuthenticationProvider, createAuthenticationAdapter, } from './components/RainbowKitProvider/AuthenticationContext';
++export { RainbowKitAuthenticationProvider, createAuthenticationAdapter, useAuthenticationAdapter, useAuthenticationStatus } from './components/RainbowKitProvider/AuthenticationContext';
+ export type { Wallet, WalletList } from './wallets/Wallet';
+ export type { Chain } from './components/RainbowKitProvider/RainbowKitChainContext';
+ export type { Theme } from './components/RainbowKitProvider/RainbowKitProvider';
+diff --git a/node_modules/@rainbow-me/rainbowkit/dist/index.js b/node_modules/@rainbow-me/rainbowkit/dist/index.js
+index 9405e2e..d9fb602 100644
+--- a/node_modules/@rainbow-me/rainbowkit/dist/index.js
++++ b/node_modules/@rainbow-me/rainbowkit/dist/index.js
+@@ -12,6 +12,8 @@ import {
+   RainbowKitAuthenticationProvider,
+   RainbowKitProvider,
+   createAuthenticationAdapter,
++  useAuthenticationAdapter,
++  useAuthenticationStatus,
+   cssObjectFromTheme,
+   cssStringFromTheme,
+   dialogContent,
+@@ -695,6 +697,8 @@ export {
+   __private__,
+   connectorsForWallets,
+   createAuthenticationAdapter,
++  useAuthenticationAdapter,
++  useAuthenticationStatus,
+   cssObjectFromTheme,
+   cssStringFromTheme,
+   darkTheme,

@@ -1,6 +1,9 @@
 "use client";
 
-import { ConnectButton as RKConnectButton } from "@rainbow-me/rainbowkit";
+import {
+  ConnectButton as RKConnectButton,
+  useAuthenticationAdapter,
+} from "@rainbow-me/rainbowkit";
 import Button from "components/Button";
 import {
   HiCheckCircle,
@@ -18,6 +21,7 @@ import AvatarCard from "components/AvatarCard";
 export default function AuthButton() {
   const { account: currentAccount } = useAuthStatusStore();
   const { disconnect } = useDisconnect();
+  const { signOut } = useAuthenticationAdapter();
   return (
     <RKConnectButton.Custom>
       {({
@@ -83,7 +87,7 @@ export default function AuthButton() {
                         <div
                           className="flex items-center gap-3 px-4 py-3 select-none hover:bg-secondary-text hover:bg-opacity-5"
                           onClick={() => {
-                            !!rkAccount ? disconnect() : openConnectModal();
+                            !!rkAccount ? disconnect() : signOut && signOut();
                           }}
                         >
                           <HiOutlineLogout className="text-secondary-text" />

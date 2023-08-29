@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     template: "%s | Plotty",
     default: "Plotty | Plot Approachable On-chain Data",
   },
+  description: "Plot Approachable On-chain Data",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -15,9 +16,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#131217" />
         {/* <link rel="preconnect" href="https://fonts.gstatic.com" /> */}
-        {/* <link rel="manifest" href="/manifest.json" /> */}
+        <link rel="manifest" href="/manifest.json" />
 
         {/* <!-- facebook --> */}
         <meta property="og:type" content="website" />

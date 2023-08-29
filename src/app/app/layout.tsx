@@ -21,7 +21,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
               <PageContainer py="pt-0" px="lg:px-4">
                 <div className="flex gap-[30px]">
                   <div className="w-full max-w-[600px]">{children}</div>
-                  <div className="hidden w-full max-w-[300px] lg:block">
+                  <div className="hidden w-full max-w-[300px] lg:block relative">
                     <ProfileSuggestions />
                   </div>
                 </div>
