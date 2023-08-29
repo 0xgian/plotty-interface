@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import clsx from "clsx";
-import { Fragment } from "react";
+import { Fragment, useMemo } from "react";
 import { useAuthModal } from "state/authModal";
 import { IconIntelligence, IconPlotty } from "custom-icons";
 import Button from "components/Button";
@@ -8,10 +8,18 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { slideUpAnimate } from "config/transitions";
 import { isMobile } from "react-device-detect";
 import InstallAppButton from "components/InstallAppButton";
+import { useAccount } from "wagmi";
+import { useAuthStatusStore } from "state/authStatus";
 
 export default function AuthModal() {
+  const { address } = useAccount();
+  const { account } = useAuthStatusStore();
+
   const { showAuthModal, closeAuthModal } = useAuthModal();
   const { openConnectModal } = useConnectModal();
+
+  const connected = useMemo(() => address && !account, [address, account]);
+
   return (
     <Transition appear show={showAuthModal} as={Fragment}>
       <Dialog as="div" className="relative z-[1]" onClose={closeAuthModal}>
@@ -51,17 +59,24 @@ export default function AuthModal() {
                       </div>
                     ) : (
                       <div className="flex flex-col">
-                        <Button kind="outline-black" onClick={openConnectModal}>
-                          Log in
-                        </Button>
-                        <div className="relative flex items-center justify-center h-7 md:h-12">
-                          <div className="h-[1px] bg-secondary-text w-full bg-opacity-10"></div>
-                          <div className="absolute px-4 bg-primary-white">
-                            or
-                          </div>
-                        </div>
+                        {!connected && (
+                          <>
+                            <Button
+                              kind="outline-black"
+                              onClick={openConnectModal}
+                            >
+                              Log in
+                            </Button>
+                            <div className="relative flex items-center justify-center h-7 md:h-12">
+                              <div className="h-[1px] bg-secondary-text w-full bg-opacity-10"></div>
+                              <div className="absolute px-4 bg-primary-white">
+                                or
+                              </div>
+                            </div>
+                          </>
+                        )}
                         <Button onClick={openConnectModal}>
-                          Create Account
+                          {!connected ? "Create Account" : "Verify"}
                         </Button>
                       </div>
                     )}

@@ -31,6 +31,7 @@ export default function AuthButton() {
         openConnectModal,
       }) => {
         const ready = mounted && authenticationStatus !== "loading";
+        const connected = ready && rkAccount;
         const authenticated =
           ready &&
           (!authenticationStatus || authenticationStatus === "authenticated");
@@ -49,7 +50,9 @@ export default function AuthButton() {
               if (!authenticated || !currentAccount) {
                 return (
                   <Link href="/app">
-                    <Button size="md">Log in</Button>
+                    <Button size="md">
+                      {!connected ? "Log in" : "Verify"}
+                    </Button>
                   </Link>
                 );
               }
