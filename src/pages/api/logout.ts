@@ -35,21 +35,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       if (Object.values(session?.accounts ?? {}).length <= 1) {
         req.session.destroy();
-        console.log("after", req.session);
-        return res.send({ ok: true });
+      } else {
+        const prev = session;
+        const nextAccounts = Object.assign({}, prev.accounts);
+        delete nextAccounts[address as Address];
+        // @ts-ignore
+        req.session[ironOptions.cookieName] = {
+          currentAccount: Object.keys(nextAccounts).map((key) => key)[0],
+          accounts: {
+            ...nextAccounts,
+          },
+        };
+        await req.session.save();
       }
-
-      const prev = session;
-      const nextAccounts = Object.assign({}, prev.accounts);
-      delete nextAccounts[address as Address];
-      // @ts-ignore
-      req.session[ironOptions.cookieName] = {
-        currentAccount: Object.keys(nextAccounts).map((key) => key)[0],
-        accounts: {
-          ...nextAccounts,
-        },
-      };
-      await req.session.save();
 
       if (!json.success)
         return res.status(422).json({ message: "Invalid token." });
