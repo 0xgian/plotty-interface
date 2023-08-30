@@ -15,6 +15,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (!session)
         return res.status(422).json({ message: "Invalid session." });
 
+      console.log("beforeFetch");
+
       const resFetch = await fetch(
         `${process.env.NEXT_AUTH_API_URL}/api/revoke`,
         {
@@ -33,14 +35,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
       const json = await resFetch.json();
 
+      console.log("beforeDetroy if only 1 accounts", session?.accounts);
+
       if (Object.values(session?.accounts ?? {}).length <= 1) {
+        console.log("inside if only 1 accounts", session?.accounts);
         req.session.destroy();
         return res.send({ ok: true });
       }
 
       const prev = session;
       const nextAccounts = Object.assign({}, prev.accounts);
+      console.log(0, "nextAccounts", nextAccounts);
       delete nextAccounts[address as Address];
+      console.log(1, "nextAccounts", nextAccounts);
       // @ts-ignore
       req.session[ironOptions.cookieName] = {
         currentAccount: Object.keys(nextAccounts).map((key) => key)[0],
@@ -48,7 +55,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           ...nextAccounts,
         },
       };
+      // @ts-ignore
+      console.log(0, "req.session", req.session[ironOptions.cookieName]);
       await req.session.save();
+      // @ts-ignore
+      console.log(1, "req.session", req.session[ironOptions.cookieName]);
 
       if (!json.success)
         return res.status(422).json({ message: "Invalid token." });
