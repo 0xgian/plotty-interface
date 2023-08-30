@@ -62,6 +62,7 @@ export default function RichTextRenderer({
                       href={`/search?q=${encodeURIComponent(
                         "#".concat(entity.hashtag)
                       )}`}
+                      prefetch={false}
                       {...baseProps}
                     >
                       #{entity.hashtag}
@@ -69,7 +70,11 @@ export default function RichTextRenderer({
                   );
                 } else if (entity.screenName) {
                   entityEl = (
-                    <Link href={`/${entity.screenName}`} {...baseProps}>
+                    <Link
+                      href={`/${entity.screenName}`}
+                      prefetch={false}
+                      {...baseProps}
+                    >
                       @{entity.screenName}
                     </Link>
                   );
@@ -79,6 +84,7 @@ export default function RichTextRenderer({
                       href={`/search?q=${encodeURIComponent(
                         "$".concat(entity.cashtag)
                       )}`}
+                      prefetch={false}
                       {...baseProps}
                     >
                       ${entity.cashtag}
