@@ -19,6 +19,7 @@ export async function getRequestCookie(
   const ck = await unsealData(found.value, {
     password: process.env.NEXT_IRON_PASSWORD as string,
   });
+  console.log("getRequestCookie", ck);
 
   return susToSu(ck[cookieName] as SessionUserServer);
 }

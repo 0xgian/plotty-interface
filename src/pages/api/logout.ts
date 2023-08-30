@@ -34,7 +34,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const json = await resFetch.json();
 
       if (Object.values(session?.accounts ?? {}).length <= 1) {
-        console.log("before", req.session);
         req.session.destroy();
         console.log("after", req.session);
         return res.send({ ok: true });
