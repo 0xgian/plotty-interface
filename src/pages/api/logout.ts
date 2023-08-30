@@ -2,6 +2,7 @@ import { ironOptions } from "config/iron";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
 import { SessionUserServer } from "state/types";
+import { Address } from "viem";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method, query } = req;
@@ -32,28 +33,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
       const json = await resFetch.json();
 
-      req.session.destroy();
+      if (Object.values(session?.accounts ?? {}).length <= 1) {
+        req.session.destroy();
+        return res.send({ ok: true });
+      }
 
-      // if (
-      //   // @ts-ignore
-      //   Object.values(req.session[ironOptions.cookieName]?.accounts).length <= 1
-      // ) {
-      //   req.session.destroy();
-      //   return res.send({ ok: true });
-      // }
-
-      // // @ts-ignore
-      // const prev = req.session[ironOptions.cookieName];
-      // const nextAccounts = prev.accounts;
-      // delete nextAccounts[address];
-      // // @ts-ignore
-      // req.session[ironOptions.cookieName] = {
-      //   currentAccount: Object.keys(nextAccounts).map((key) => key)[0],
-      //   accounts: {
-      //     ...nextAccounts,
-      //   },
-      // };
-      // await req.session.save();
+      const prev = session;
+      const nextAccounts = Object.assign({}, prev.accounts);
+      delete nextAccounts[address as Address];
+      // @ts-ignore
+      req.session[ironOptions.cookieName] = {
+        currentAccount: Object.keys(nextAccounts).map((key) => key)[0],
+        accounts: {
+          ...nextAccounts,
+        },
+      };
+      await req.session.save();
 
       if (!json.success)
         return res.status(422).json({ message: "Invalid token." });
