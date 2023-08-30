@@ -32,26 +32,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
       const json = await resFetch.json();
 
-      if (
-        // @ts-ignore
-        Object.values(req.session[ironOptions.cookieName]?.accounts).length <= 1
-      ) {
-        req.session.destroy();
-        return res.send({ ok: true });
-      }
+      req.session.destroy();
 
-      // @ts-ignore
-      const prev = req.session[ironOptions.cookieName];
-      const nextAccounts = prev.accounts;
-      delete nextAccounts[address];
-      // @ts-ignore
-      req.session[ironOptions.cookieName] = {
-        currentAccount: Object.keys(nextAccounts).map((key) => key)[0],
-        accounts: {
-          ...nextAccounts,
-        },
-      };
-      await req.session.save();
+      // if (
+      //   // @ts-ignore
+      //   Object.values(req.session[ironOptions.cookieName]?.accounts).length <= 1
+      // ) {
+      //   req.session.destroy();
+      //   return res.send({ ok: true });
+      // }
+
+      // // @ts-ignore
+      // const prev = req.session[ironOptions.cookieName];
+      // const nextAccounts = prev.accounts;
+      // delete nextAccounts[address];
+      // // @ts-ignore
+      // req.session[ironOptions.cookieName] = {
+      //   currentAccount: Object.keys(nextAccounts).map((key) => key)[0],
+      //   accounts: {
+      //     ...nextAccounts,
+      //   },
+      // };
+      // await req.session.save();
 
       if (!json.success)
         return res.status(422).json({ message: "Invalid token." });
