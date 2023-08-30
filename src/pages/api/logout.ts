@@ -32,9 +32,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
       const json = await resFetch.json();
 
-      if (!json.success)
-        return res.status(422).json({ message: "Invalid token." });
-
       if (
         // @ts-ignore
         Object.values(req.session[ironOptions.cookieName]?.accounts).length <= 1
@@ -55,6 +52,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       };
       await req.session.save();
+
+      if (!json.success)
+        return res.status(422).json({ message: "Invalid token." });
+
       res.send({ ok: true });
       break;
     default:
