@@ -20,14 +20,12 @@ export default function RichTextRenderer({
           return a.indices[0] - b.indices[0];
         });
 
-        if (entities.length === 0) {
-          return line;
-        }
-
         return (
           <div key={i}>
-            {line.length === 0 && i !== lines.length - 1 ? (
+            {line.length === 0 && i !== 0 && i !== lines.length - 1 ? (
               <br />
+            ) : entities.length === 0 ? (
+              line
             ) : (
               entities.reduce((memo: JSX.Element[], entity: any, i: number) => {
                 const textBefore = line.substring(
