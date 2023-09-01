@@ -26,7 +26,7 @@ export default function SidebarApp({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   const pathname = usePathname() as string;
-  const  { account } = useAuthStatusStore();
+  const { account } = useAuthStatusStore();
   const { openPlotModal } = usePlotModal();
 
   return (
@@ -66,9 +66,9 @@ export default function SidebarApp({
                 />
                 <div
                   className={clsx(
-                    "flex items-center justify-center lg:justify-start gap-3 py-3 lg:p-3 w-full",
+                    "flex items-center justify-center lg:justify-start gap-3 py-4 sm:py-3 lg:p-3",
                     "sm:hover:bg-secondary-text sm:hover:bg-opacity-10 transition-all",
-                    "rounded-xl sm:rounded-full cursor-pointer",
+                    "rounded-xl sm:rounded-full cursor-pointer w-full",
                     active && "font-semibold"
                   )}
                 >
@@ -91,7 +91,7 @@ export default function SidebarApp({
           <Button
             className={clsx(
               "min-w-0 sm:ml-3 sm:mt-3 aspect-square lg:aspect-auto",
-              "absolute sm:static bottom-16 right-4 h-14 sm:h-12"
+              "absolute sm:static bottom-[72px] right-4 h-14 sm:h-12"
             )}
             px="px-0"
             kind="primary"

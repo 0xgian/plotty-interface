@@ -60,6 +60,12 @@ export default function PlottedCard({
     node.profile?.handle ??
     formatAddress(node.profile?.public_address, { trailing: 0 });
 
+  const ownerReplottedName =
+    nodeItem.node.profile?.handle ??
+    formatAddress(nodeItem.node.profile?.public_address, {
+      trailing: 0,
+    });
+
   const { feedback, replot } = useFeedback(queryKey);
 
   const onUseful = withAuthHandler(
@@ -127,7 +133,7 @@ export default function PlottedCard({
             <HiOutlineArrowPathRoundedSquare size={16} />
           </div>
           <div className="flex items-center text-xs font-semibold">
-            You Replotted
+            {`${isOwnerPlot ? "You" : ownerReplottedName} Replotted`}
           </div>
         </div>
       )}
