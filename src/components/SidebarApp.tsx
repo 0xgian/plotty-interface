@@ -21,7 +21,6 @@ import { useAuthStatusStore } from "state/authStatus";
 import Button from "components/Button";
 import { usePlotModal } from "state/plotModal";
 import { IconPlotty } from "custom-icons";
-import { isIOS, isMobileOnly } from "react-device-detect";
 
 export default function SidebarApp({
   ...props
@@ -30,12 +29,9 @@ export default function SidebarApp({
   const { account } = useAuthStatusStore();
   const { openPlotModal } = usePlotModal();
 
-  const safeAreaBottom =
-    isIOS &&
-    isMobileOnly &&
-    window.matchMedia("(display-mode: standalone)").matches
-      ? "9px"
-      : "0px";
+  const safeAreaBottom = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--sab");
 
   return (
     <div

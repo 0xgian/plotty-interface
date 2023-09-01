@@ -42,6 +42,10 @@
     "Helvetica Neue", "Helvetica", sans-serif;
   --foreground: #131217;
   --background: #ffffff;
+  --sat: env(safe-area-inset-top);
+  --sar: env(safe-area-inset-right);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
 }
 
 /* @media (prefers-color-scheme: dark) {
