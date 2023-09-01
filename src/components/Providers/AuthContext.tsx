@@ -46,6 +46,10 @@ export default function AuthContext({ children }: AuthContextProps) {
       try {
         const response = await fetch("/api/me");
         const json = await response.json();
+        if (json.needsUpdate) {
+          window.location.reload();
+          return;
+        }
         json.currentAccount ? wrappedOnLogIn() : wrappedOnLogOut();
       } catch (_error) {
         wrappedOnLogOut();

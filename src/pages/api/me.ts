@@ -21,14 +21,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         )
       ) {
         req.session.destroy();
-        return res.send({});
+        return res.send({ needsUpdate: true });
       }
 
-      if (
-        Object.values(session.accounts).some((account) =>
-          isTokenExpired(account.access_token)
-        )
-      ) {
+      const needsUpdate = Object.values(session.accounts).some((account) =>
+        isTokenExpired(account.access_token)
+      );
+
+      if (needsUpdate) {
         const newTokens = await Promise.all(
           Object.values(session.accounts).map((account) =>
             fetch(`${process.env.NEXT_AUTH_API_URL}/api/token`, {
@@ -64,6 +64,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       res.send({
         currentAccount: session?.currentAccount,
+        needsUpdate,
       });
       break;
     default:
