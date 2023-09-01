@@ -21,7 +21,6 @@ import { useAuthStatusStore } from "state/authStatus";
 import Button from "components/Button";
 import { usePlotModal } from "state/plotModal";
 import { IconPlotty } from "custom-icons";
-import { isMobile } from "react-device-detect";
 
 export default function SidebarApp({
   ...props
@@ -33,10 +32,9 @@ export default function SidebarApp({
   return (
     <div
       className={clsx(
-        "pr-0 sm:pr-3 border-secondary-text border-opacity-10 flex flex-col gap-6 justify-between",
+        "pr-0 pb-[env(safe-area-inset-bottom)] sm:pr-3 flex flex-col gap-6 justify-between bg-white select-none",
         "w-full sm:w-auto lg:w-[255px] sm:h-[100dvh] fixed bottom-0 sm:sticky sm:top-0 z-[1]",
-        "border-t sm:border-t-0 sm:border-r bg-white select-none",
-        isMobile && "bottom-navbar"
+        "border-secondary-text border-opacity-10 border-t sm:border-t-0 sm:border-r"
       )}
     >
       <div className="flex flex-row justify-around w-full gap-1 leading-snug sm:flex-col">
@@ -93,7 +91,7 @@ export default function SidebarApp({
           <Button
             className={clsx(
               "min-w-0 sm:ml-3 sm:mt-3 aspect-square lg:aspect-auto",
-              "absolute sm:static bottom-[72px] right-4 h-14 sm:h-12"
+              "absolute sm:static bottom-[calc(72px+env(safe-area-inset-bottom))] right-4 h-14 sm:h-12"
             )}
             px="px-0"
             kind="primary"
