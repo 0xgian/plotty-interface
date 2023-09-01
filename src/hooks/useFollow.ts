@@ -1,4 +1,4 @@
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import { getAPI } from "lib/getAPI";
 import { useInfiniteQuery, useMutation, useQueryClient } from "wagmi";
 import { useEffect, useMemo } from "react";
@@ -10,7 +10,7 @@ export interface FollowParams {
 }
 
 export const useFollow = (queryKey?: any[]) => {
-  const { session, account } = useAuthStatusStore();
+  const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
 
   const token = session?.accounts?.[account ?? "0x0"]?.access_token;
@@ -41,7 +41,7 @@ export const useFollow = (queryKey?: any[]) => {
 };
 
 export const useFollowing = (uid?: number) => {
-  const { session, account } = useAuthStatusStore();
+  const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
 
   const token = session?.accounts?.[account ?? "0x0"]?.access_token;
@@ -85,7 +85,7 @@ export const useFollowing = (uid?: number) => {
 };
 
 export const useFollowers = (uid?: number) => {
-  const { session, account } = useAuthStatusStore();
+  const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
 
   const token = session?.accounts?.[account ?? "0x0"]?.access_token;

@@ -23,7 +23,7 @@ import { formatTime } from "lib/formatTime";
 import PlotCard from "components/PlotCard";
 import Button from "components/Button";
 import PlotDropdownMenu from "components/PlotDropdownMenu";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import MediaRenderer from "components/MediaRenderer";
 import { useCallback } from "react";
 import { useFeedback } from "hooks/useFeedback";
@@ -38,7 +38,7 @@ export default function PlottedCardFocused({
 }) {
   const { withAuthHandler } = useWithAuth();
 
-  const { account } = useAuthStatusStore();
+  const { account } = useAuthStore();
   const { openPlotModal } = usePlotModal();
 
   const isOwnerPlot =

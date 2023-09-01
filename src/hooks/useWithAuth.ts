@@ -1,10 +1,10 @@
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 
 export const useWithAuth = () => {
   const router = useRouter();
-  const { account } = useAuthStatusStore();
+  const { account } = useAuthStore();
 
   const withAuthHandler = useCallback(
     <T extends (...args: any[]) => any>(func: T) => {

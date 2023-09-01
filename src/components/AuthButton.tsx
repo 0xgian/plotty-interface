@@ -11,7 +11,7 @@ import {
   HiOutlineLogout,
 } from "react-icons/hi";
 import { Avatar } from "components/Avatar";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import { formatAddress } from "lib/formatAddress";
 import { useDisconnect } from "wagmi";
 import Dropdown from "components/Dropdown";
@@ -19,7 +19,7 @@ import Link from "next/link";
 import AvatarCard from "components/AvatarCard";
 
 export default function AuthButton() {
-  const { account: currentAccount } = useAuthStatusStore();
+  const { account: currentAccount } = useAuthStore();
   const { disconnect } = useDisconnect();
   const { signOut } = useAuthenticationAdapter();
   return (

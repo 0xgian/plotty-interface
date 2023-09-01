@@ -4,11 +4,11 @@ import { usePlotDetails } from "hooks/usePlotDetails";
 import _ from "lodash";
 import PlottedCard from "components/PlottedCard";
 import PlottedCardFocused from "components/PlottedCardFocused";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 
 export default function Page({ params: { id } }: { params: { id: string } }) {
   const { plotDetails, queryKey } = usePlotDetails(id);
-  const { account } = useAuthStatusStore();
+  const { account } = useAuthStore();
 
   return plotDetails ? (
     <div className="flex flex-col mt-3">

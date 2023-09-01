@@ -1,11 +1,11 @@
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import { getAPI } from "lib/getAPI";
 import { getAddress, isAddress } from "viem";
 import { useMutation, useQuery, useQueryClient } from "wagmi";
 import { useMemo } from "react";
 
 export const useProfile = (param: string | undefined) => {
-  const { session, account } = useAuthStatusStore();
+  const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
 
   const token = session?.accounts?.[account ?? "0x0"]?.access_token;

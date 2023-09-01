@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { Fragment, useMemo } from "react";
-import { useAuthModal } from "state/authModal";
+import { useModal } from "state/modal";
 import { IconIntelligence, IconPlotty } from "custom-icons";
 import Button from "components/Button";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
@@ -9,20 +9,20 @@ import { slideUpAnimate } from "config/transitions";
 import { isMobile } from "react-device-detect";
 import InstallAppButton from "components/InstallAppButton";
 import { useAccount } from "wagmi";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 
 export default function AuthModal() {
   const { address } = useAccount();
-  const { account } = useAuthStatusStore();
+  const { account } = useAuthStore();
 
-  const { showAuthModal, closeAuthModal } = useAuthModal();
+  const { isShowing, closeModal } = useModal();
   const { openConnectModal } = useConnectModal();
 
   const connected = useMemo(() => address && !account, [address, account]);
 
   return (
-    <Transition appear show={showAuthModal} as={Fragment}>
-      <Dialog as="div" className="relative z-[1]" onClose={closeAuthModal}>
+    <Transition appear show={isShowing("auth")} as={Fragment}>
+      <Dialog as="div" className="relative z-[1]" onClose={closeModal}>
         <div className="fixed inset-0">
           <div className="flex justify-center min-h-full text-center">
             <Transition.Child as={Fragment} {...slideUpAnimate}>

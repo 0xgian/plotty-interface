@@ -2,18 +2,18 @@
 
 import { redirect } from "next/navigation";
 import { useMemo } from "react";
-import { useAuthModal } from "state/authModal";
-import { useAuthStatusStore } from "state/authStatus";
+import { useModal } from "state/modal";
+import { useAuthStore } from "state/auth";
 
 export default function Page() {
-  const { account } = useAuthStatusStore();
-  const { openAuthModal, showAuthModal } = useAuthModal();
+  const { account } = useAuthStore();
+  const { isShowing, openModal } = useModal();
 
   useMemo(() => {
     if (!!account) {
       redirect(`/${account}`);
-    } else if (!showAuthModal) {
-      openAuthModal && openAuthModal();
+    } else if (!isShowing("auth")) {
+      openModal && openModal("auth");
     }
-  }, [account, showAuthModal, openAuthModal]);
+  }, [account, isShowing, openModal]);
 }

@@ -1,11 +1,11 @@
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import { getAPI } from "lib/getAPI";
 import { useInfiniteQuery, useQueryClient } from "wagmi";
 import { useEffect, useMemo } from "react";
 import _ from "lodash";
 
 export const useProfilePlots = (uid?: string) => {
-  const { session, account } = useAuthStatusStore();
+  const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
 
   const token = session?.accounts?.[account ?? "0x0"]?.access_token;

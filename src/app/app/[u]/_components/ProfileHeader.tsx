@@ -16,7 +16,7 @@ import { useProfile } from "hooks/useProfile";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { formatNumber } from "lib/formatNumber";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import Modal from "components/Modal";
 import { Dialog } from "@headlessui/react";
 import IconButton from "components/IconButton";
@@ -28,7 +28,7 @@ export default function ProfileHeader() {
 
   const { profile } = useProfile(u);
 
-  const { account } = useAuthStatusStore();
+  const { account } = useAuthStore();
   const {
     profile: currentProfile,
     updateProfile,

@@ -20,7 +20,7 @@ import { formatNumber } from "lib/formatNumber";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 import { usePlotModal } from "state/plotModal";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import PlotDropdownMenu from "components/PlotDropdownMenu";
 import MediaRenderer from "components/MediaRenderer";
 import ProfileCardContainer from "components/ProfileCardContainer";
@@ -40,7 +40,7 @@ export default function PlottedCard({
   const router = useRouter();
   const { withAuthHandler } = useWithAuth();
 
-  const { account } = useAuthStatusStore();
+  const { account } = useAuthStore();
   const { openPlotModal } = usePlotModal();
 
   const isReplottedPlot = !_.isEmpty(nodeItem.node.parent_post);

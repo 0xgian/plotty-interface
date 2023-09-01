@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import { SessionUser } from "state/types";
 
 export default function SetSessionUser({
@@ -9,7 +9,7 @@ export default function SetSessionUser({
 }: {
   sessionUser?: SessionUser;
 }) {
-  const { setSession } = useAuthStatusStore();
+  const { setSession } = useAuthStore();
 
   useEffect(() => {
     setSession(sessionUser);

@@ -1,10 +1,10 @@
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import { getAPI } from "lib/getAPI";
 import { useQuery } from "wagmi";
 import { useMemo } from "react";
 
 export const usePlotDetails = (plotId?: string) => {
-  const { session, account } = useAuthStatusStore();
+  const { session, account } = useAuthStore();
 
   const token = session?.accounts?.[account ?? "0x0"]?.access_token;
 

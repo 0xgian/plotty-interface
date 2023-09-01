@@ -10,7 +10,10 @@ export default function Modal({
   viewOnly = false,
 }: {
   buttonRender: (renderProps: { openModal: () => void }) => ReactNode;
-  children: (renderProps: { closeModal: () => void }) => ReactNode;
+  children: (renderProps: {
+    openModal: () => void;
+    closeModal: () => void;
+  }) => ReactNode;
   preventClick?: boolean;
   viewOnly?: boolean;
 }) {
@@ -62,7 +65,7 @@ export default function Modal({
                     !viewOnly && "w-full h-max p-4 sm:p-6 max-w-[600px]"
                   )}
                 >
-                  {children({ closeModal })}
+                  {children({ openModal, closeModal })}
                 </Dialog.Panel>
               </Transition.Child>
             </div>

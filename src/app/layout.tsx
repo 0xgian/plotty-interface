@@ -1,6 +1,7 @@
+import BrandLoadingOverlay from "components/BrandLoadingOverlay";
+import Toaster from "components/Toaster";
 import { Metadata } from "next";
 import { ReactNode } from "react";
-import { Toaster } from "react-hot-toast";
 import "styles/globals.css";
 
 export const metadata: Metadata = {
@@ -15,8 +16,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
         {/* <link rel="preconnect" href="https://fonts.gstatic.com" /> */}
         <link rel="manifest" href="/manifest.json" />
 
@@ -33,16 +40,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
       <body>
         {children}
-        <Toaster
-          position="bottom-center"
-          toastOptions={{
-            style: {
-              borderRadius: "0.5rem",
-              color: "#fff",
-              background: "#5B6BDF",
-            },
-          }}
-        />
+        <BrandLoadingOverlay />
+        <Toaster />
       </body>
     </html>
   );

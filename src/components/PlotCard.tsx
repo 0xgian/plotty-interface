@@ -1,7 +1,7 @@
 import { usePlot } from "hooks/usePlot";
 import { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { Avatar } from "components/Avatar";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import clsx from "clsx";
 import RichTextEditor from "components/RichTextEditor";
 import { toast } from "react-hot-toast";
@@ -35,7 +35,7 @@ export default function PlotCard({
   const router = useRouter();
   const pathname = usePathname() as string;
 
-  const { account } = useAuthStatusStore();
+  const { account } = useAuthStore();
   const { plot: post, invalidatePlot } = usePlot();
   const [content, setContent] = useState("");
   const [images, setImages] = useState<string[]>([]);

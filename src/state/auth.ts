@@ -2,14 +2,14 @@ import { create } from "zustand";
 import { SessionUser } from "./types";
 import { Address } from "viem";
 
-interface AuthStatusStoreState {
+interface AuthStoreState {
   account?: Address;
   session?: SessionUser;
   setSession: (session?: SessionUser) => void;
   logout: () => void;
 }
 
-export const useAuthStatusStore = create<AuthStatusStoreState>((set, get) => ({
+export const useAuthStore = create<AuthStoreState>((set, get) => ({
   account: undefined,
   session: undefined,
   setSession: (session?: SessionUser) =>

@@ -8,7 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import BrandLoading from "components/BrandLoading";
 import IconButton from "components/IconButton";
 import AvatarCard from "components/AvatarCard";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import clsx from "clsx";
 import _ from "lodash";
 import { isValidHashOrCashtag } from "lib/textProcessor";
@@ -16,7 +16,7 @@ import { popOverDownAnimate } from "config/transitions";
 
 export default function Search() {
   const router = useRouter();
-  const { account } = useAuthStatusStore();
+  const { account } = useAuthStore();
 
   const pathname = usePathname() as string;
   const searchParams = useSearchParams();

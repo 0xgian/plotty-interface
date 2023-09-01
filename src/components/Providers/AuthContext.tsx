@@ -11,7 +11,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
+import { useModal } from "state/modal";
 import { useAccount } from "wagmi";
 
 export interface AuthContextProps {
@@ -22,8 +23,10 @@ export default function AuthContext({ children }: AuthContextProps) {
   const fetchingStatusRef = useRef(false);
   const verifyingRef = useRef(false);
   const [authStatus, setAuthStatus] = useState<AuthenticationStatus>("loading");
-  const { logout, account } = useAuthStatusStore();
+  const { logout, account } = useAuthStore();
   const { address } = useAccount();
+
+  const { openModal, closeModal } = useModal();
 
   const wrappedOnLogIn = useCallback(() => {
     setAuthStatus("authenticated");
@@ -108,14 +111,16 @@ export default function AuthContext({ children }: AuthContextProps) {
 
       signOut: async () => {
         try {
+          openModal("loading");
           await fetch(`/api/logout?address=${account}`);
         } finally {
+          closeModal();
           wrappedOnLogOut();
           window.location.reload();
         }
       },
     });
-  }, [address, wrappedOnLogOut, account]);
+  }, [address, wrappedOnLogOut, account, openModal, closeModal]);
 
   return (
     <RainbowKitAuthenticationProvider adapter={authAdapter} status={authStatus}>

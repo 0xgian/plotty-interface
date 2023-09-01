@@ -1,10 +1,10 @@
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import { getAPI } from "lib/getAPI";
 import { useMutation, useQueryClient } from "wagmi";
 import { dataURIToBlob } from "lib/selectFiles";
 
 export const usePlot = () => {
-  const { session, account } = useAuthStatusStore();
+  const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
 
   const token = session?.accounts?.[account ?? "0x0"]?.access_token;

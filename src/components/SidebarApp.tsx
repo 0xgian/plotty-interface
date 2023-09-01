@@ -17,7 +17,7 @@ import {
 } from "react-icons/hi";
 import { RiQuillPenLine } from "react-icons/ri";
 import { IoLogoDiscord, IoLogoTwitter } from "react-icons/io5";
-import { useAuthStatusStore } from "state/authStatus";
+import { useAuthStore } from "state/auth";
 import Button from "components/Button";
 import { usePlotModal } from "state/plotModal";
 import { IconPlotty } from "custom-icons";
@@ -27,7 +27,7 @@ export default function SidebarApp({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   const pathname = usePathname() as string;
-  const { account } = useAuthStatusStore();
+  const { account } = useAuthStore();
   const { openPlotModal } = usePlotModal();
 
   const safeAreaBottom =
