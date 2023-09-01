@@ -21,6 +21,7 @@ import { useAuthStatusStore } from "state/authStatus";
 import Button from "components/Button";
 import { usePlotModal } from "state/plotModal";
 import { IconPlotty } from "custom-icons";
+import { isIOS, isMobileOnly } from "react-device-detect";
 
 export default function SidebarApp({
   ...props
@@ -29,9 +30,10 @@ export default function SidebarApp({
   const { account } = useAuthStatusStore();
   const { openPlotModal } = usePlotModal();
 
-  const safeAreaBottom = getComputedStyle(
-    document.documentElement
-  ).getPropertyValue("--sab");
+  const safeAreaBottom =
+    isIOS && isMobileOnly && window.matchMedia("(display-mode: standalone)").matches
+      ? "12px"
+      : "0px";
 
   return (
     <div
@@ -61,7 +63,7 @@ export default function SidebarApp({
               <Link
                 key={i}
                 href={menu.path}
-                className="flex items-center gap-2 sm:w-full"
+                className="flex items-center gap-2 w-14 sm:w-full"
               >
                 <div
                   className={clsx(
@@ -72,8 +74,8 @@ export default function SidebarApp({
                 <div
                   className={clsx(
                     "flex items-center justify-center lg:justify-start gap-3 py-4 sm:py-3 lg:p-3",
-                    "sm:hover:bg-secondary-text sm:hover:bg-opacity-10 transition-all",
-                    "rounded-xl sm:rounded-full cursor-pointer w-full",
+                    "hover:bg-secondary-text hover:bg-opacity-10 transition-all",
+                    "rounded-full cursor-pointer w-full",
                     active && "font-semibold"
                   )}
                 >

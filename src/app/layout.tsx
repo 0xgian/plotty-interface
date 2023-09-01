@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         {/* <link rel="preconnect" href="https://fonts.gstatic.com" /> */}
         <link rel="manifest" href="/manifest.json" />
 
