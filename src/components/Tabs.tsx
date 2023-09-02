@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { rippleEffect } from "lib/rippleEffect";
 
 export default function Tabs({
   tabs,
@@ -20,14 +21,21 @@ export default function Tabs({
           <div
             key={i}
             style={{ width: `${100 / tabs.length}%` }}
-            className="flex flex-col items-center pt-3 transition-all cursor-pointer hover:bg-secondary-text hover:bg-opacity-10"
-            onClick={() => {
+            className={clsx(
+              "flex flex-col items-center pt-3 transition-all cursor-pointer",
+              "screen-hover:hover:bg-secondary-text screen-hover:hover:bg-opacity-10",
+              "relative overflow-hidden"
+            )}
+            onClick={(e) => {
+              rippleEffect(e);
               onSelect(tabs[i]);
               onSelectIndex(i);
             }}
           >
             <div className="flex flex-col">
-              <div className={clsx("pb-2", tab === selected && "font-semibold")}>
+              <div
+                className={clsx("pb-2", tab === selected && "font-semibold")}
+              >
                 {tab}
               </div>
               <div

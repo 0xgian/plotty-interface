@@ -8,20 +8,35 @@ import { Avatar } from "components/Avatar";
 import clsx from "clsx";
 import RichTextRenderer from "components/RichTextRenderer";
 import PlotCard from "components/PlotCard";
-import { overlayAnimate, slideUpAnimate } from "config/transitions";
 
 export default function PlotModal() {
   const { showPlotModal, closePlotModal, replyingTo } = usePlotModal();
   return (
     <Transition appear show={showPlotModal} as={Fragment}>
       <Dialog as="div" className="relative z-[1]" onClose={closePlotModal}>
-        <Transition.Child as={Fragment} {...overlayAnimate}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
           <div className="fixed inset-0 sm:bg-opacity-25 bg-primary-white sm:bg-primary-text" />
         </Transition.Child>
 
         <div className="fixed inset-0">
           <div className="flex justify-center min-h-full sm:px-4 sm:py-[60px] text-center">
-            <Transition.Child as={Fragment} {...slideUpAnimate}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-150"
+              enterFrom="opacity-0 translate-y-full"
+              enterTo="opacity-100 translate-y-0"
+              leave="ease-out duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-full"
+            >
               <Dialog.Panel
                 className={clsx(
                   "w-full max-w-[600px] h-max text-left transition-all",

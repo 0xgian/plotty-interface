@@ -12,7 +12,7 @@ import { useAuthStore } from "state/auth";
 import clsx from "clsx";
 import _ from "lodash";
 import { isValidHashOrCashtag } from "lib/textProcessor";
-import { popOverDownAnimate } from "config/transitions";
+import useWindowDimensions from "hooks/useWindowDimensions";
 
 export default function Search() {
   const router = useRouter();
@@ -24,8 +24,11 @@ export default function Search() {
 
   const [query, setQuery] = useState("");
   const [searchValue, setSearchValue] = useState("");
+  const [isInit, setIsInit] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(false);
+
+  const show = ["/search"].includes(pathname);
+  const { sm } = useWindowDimensions();
 
   const { searchResults, searchWords } = useSearch(query);
 
@@ -41,6 +44,7 @@ export default function Search() {
   );
 
   useEffect(() => {
+    setIsInit(true);
     !!initSearch ? setSearchValue(initSearch) : setSearchValue("");
   }, [initSearch]);
 
@@ -59,6 +63,7 @@ export default function Search() {
 
   const inputChangeHandler = useCallback((event: any) => {
     const text = event.target.value;
+    setIsInit(false);
     setSearchValue(text);
 
     if (text.length === 0) {
@@ -70,7 +75,10 @@ export default function Search() {
 
   const onSelectionChange = useCallback(
     (selected: string) => {
-      if (isValidHashOrCashtag(selected)) {
+      if (initSearch?.toLowerCase() === selected.toLowerCase()) {
+        setIsInit(true);
+        setSearchValue(selected);
+      } else if (isValidHashOrCashtag(selected)) {
         router.push(`/search?q=${encodeURIComponent(selected)}`);
       } else if (selected[0] === "@") {
         router.push(`/${selected.substring(1)}`);
@@ -79,30 +87,30 @@ export default function Search() {
         router.push(`/search?q=${selected}`);
       }
     },
+    [router, initSearch]
+  );
+
+  const setShow = useCallback(
+    (show: boolean) => {
+      show ? router.push("/search") : router.back();
+    },
     [router]
   );
 
   return !!account ? (
     <Combobox onChange={onSelectionChange}>
       <>
-        <div
-          className={clsx(
-            "w-full justify-end",
-            show ? "hidden" : "flex sm:hidden"
-          )}
-        >
-          <IconButton
-            icon={<HiOutlineSearch size={20} className="text-secondary-text" />}
-            activeColor="black"
-            onClick={() => setShow(!show)}
-          />
-        </div>
-
-        <div
+        <Transition
+          show={show || sm}
+          enter="transition ease-out duration-200"
+          enterFrom="opacity-0 translate-x-1"
+          enterTo="opacity-100 translate-x-0"
+          leave="transition ease-in duration-150"
+          leaveFrom="opacity-100 translate-x-0"
+          leaveTo="opacity-0 translate-x-1"
           className={clsx(
             "fixed top-0 left-0 z-[1] bg-white sm:relative sm:z-auto w-full sm:max-w-[348px]",
-            "px-4 sm:px-0 py-[9px] sm:py-0",
-            show ? "flex" : "hidden sm:flex"
+            "flex px-4 sm:px-0 py-[8.5px] sm:py-0"
           )}
         >
           <div className="relative w-full">
@@ -110,7 +118,7 @@ export default function Search() {
               <HiOutlineSearch size={20} className="text-secondary-text" />
               <Combobox.Input
                 className="w-full bg-transparent outline-none text-ellipsis"
-                placeholder="Search address / handle"
+                placeholder="Search Plotty"
                 autoComplete="off"
                 value={searchValue}
                 onChange={inputChangeHandler}
@@ -118,8 +126,14 @@ export default function Search() {
             </div>
 
             <Transition
+              show={!isInit}
               as={Fragment}
-              {...popOverDownAnimate}
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-1"
               afterLeave={() => setQuery("")}
             >
               <Combobox.Options
@@ -196,10 +210,10 @@ export default function Search() {
             <IconButton
               icon={<HiOutlineX size={20} className="text-secondary-text" />}
               activeColor="black"
-              onClick={() => setShow(!show)}
+              onClick={() => setShow(false)}
             />
           </div>
-        </div>
+        </Transition>
       </>
     </Combobox>
   ) : (

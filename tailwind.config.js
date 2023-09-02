@@ -9,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        "screen-hover": { raw: "(hover: hover) and (pointer: fine)" },
+      },
       colors: {
         "main-red": "#FF9A9A",
         "main-purple": "#C296FF",

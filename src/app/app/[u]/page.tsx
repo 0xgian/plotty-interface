@@ -14,6 +14,7 @@ export default function Page({ params: { u } }: { params: { u: string } }) {
   const uid = profile?.uid;
   const { plotsPages, fetchNextPage, hasNextPage, status, queryKey } =
     useProfilePlots(uid);
+    
   return status === "loading" ? (
     <BrandLoading listView />
   ) : plotsPages.some((page) => !_.isEmpty(page)) ? (

@@ -5,7 +5,6 @@ import { useModal } from "state/modal";
 import { IconIntelligence, IconPlotty } from "custom-icons";
 import Button from "components/Button";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
-import { slideUpAnimate } from "config/transitions";
 import { isMobile } from "react-device-detect";
 import InstallAppButton from "components/InstallAppButton";
 import { useAccount } from "wagmi";
@@ -25,7 +24,15 @@ export default function AuthModal() {
       <Dialog as="div" className="relative z-[1]" onClose={closeModal}>
         <div className="fixed inset-0">
           <div className="flex justify-center min-h-full text-center">
-            <Transition.Child as={Fragment} {...slideUpAnimate}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-150"
+              enterFrom="opacity-0 translate-y-full"
+              enterTo="opacity-100 translate-y-0"
+              leave="ease-out duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-full"
+            >
               <Dialog.Panel
                 className={clsx(
                   "text-left align-middle transition-all transform",

@@ -42,7 +42,7 @@ export default function SearchPage() {
       </InfiniteScroll>
     ) : (
       <Empty
-        title={`No results for "${q}"`}
+        title={q ? `No results for "${q}"` : "Search Plotty"}
         desc="Try searching for something else."
         mt="mt-4"
       />

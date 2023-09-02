@@ -1,6 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
 import clsx from "clsx";
-import { overlayAnimate, slideUpAnimate } from "config/transitions";
 import { Fragment, ReactNode, useState } from "react";
 
 export default function Modal({
@@ -33,7 +32,15 @@ export default function Modal({
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-[1]" onClose={closeModal}>
-          <Transition.Child as={Fragment} {...overlayAnimate}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
             <div
               className={clsx(
                 "fixed inset-0",
@@ -57,7 +64,15 @@ export default function Modal({
                 }
               }}
             >
-              <Transition.Child as={Fragment} {...slideUpAnimate}>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-150"
+                enterFrom="opacity-0 translate-y-full"
+                enterTo="opacity-100 translate-y-0"
+                leave="ease-out duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-full"
+              >
                 <Dialog.Panel
                   className={clsx(
                     "text-left align-middle transition-all transform",

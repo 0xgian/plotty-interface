@@ -36,7 +36,7 @@ export default function IconButton({
         )}
         onClick={onClick}
       >
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <div
             className={clsx(
               "absolute  rounded-full ",
@@ -44,7 +44,7 @@ export default function IconButton({
                 ? "w-8 h-8 -top-[5px] -left-[5px]"
                 : "w-[38px] h-[38px] -top-2 -left-2",
               COLORS_CLASS[activeColor].hoverBG,
-              "group-hover:bg-opacity-10"
+              "screen-hover:group-hover:bg-opacity-10"
             )}
           />
           {icon}
@@ -66,23 +66,23 @@ const COLORS_CLASS: {
   [color in COLORS]: { hoverText: string; hoverBG: string };
 } = {
   green: {
-    hoverText: "hover:text-green-500",
-    hoverBG: "group-hover:bg-green-500",
+    hoverText: "hover:group-hover:text-green-500",
+    hoverBG: "screen-hover:group-hover:bg-green-500",
   },
   red: {
-    hoverText: "hover:text-red-500",
-    hoverBG: "group-hover:bg-red-500",
+    hoverText: "hover:group-hover:text-red-500",
+    hoverBG: "screen-hover:group-hover:bg-red-500",
   },
   blue: {
-    hoverText: "hover:text-primary",
-    hoverBG: "group-hover:bg-primary",
+    hoverText: "hover:group-hover:text-primary",
+    hoverBG: "screen-hover:group-hover:bg-primary",
   },
   black: {
-    hoverText: "hover:text-primary-text",
-    hoverBG: "group-hover:bg-primary-text",
+    hoverText: "hover:group-hover:text-primary-text",
+    hoverBG: "screen-hover:group-hover:bg-primary-text",
   },
   white: {
-    hoverText: "hover:text-white",
-    hoverBG: "group-hover:bg-white",
+    hoverText: "hover:group-hover:text-white",
+    hoverBG: "screen-hover:group-hover:bg-white",
   },
 };

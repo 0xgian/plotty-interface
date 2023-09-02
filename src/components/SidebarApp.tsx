@@ -12,16 +12,19 @@ import {
   HiOutlineDotsCircleHorizontal,
   HiOutlineGlobe,
   HiOutlineHome,
+  HiOutlinePlus,
+  HiOutlineSearch,
   HiOutlineUser,
+  HiSearch,
   HiUser,
 } from "react-icons/hi";
-import { RiQuillPenLine } from "react-icons/ri";
-import { IoLogoDiscord, IoLogoTwitter } from "react-icons/io5";
+import { RiTwitterFill, RiDiscordFill } from "react-icons/ri";
 import { useAuthStore } from "state/auth";
 import Button from "components/Button";
 import { usePlotModal } from "state/plotModal";
 import { IconPlotty } from "custom-icons";
 import { isIOS, isMobileOnly } from "react-device-detect";
+import { rippleEffect } from "lib/rippleEffect";
 
 export default function SidebarApp({
   ...props
@@ -31,9 +34,15 @@ export default function SidebarApp({
   const { openPlotModal } = usePlotModal();
 
   const safeAreaBottom =
-    isIOS && isMobileOnly && window.matchMedia("(display-mode: standalone)").matches
+    isIOS &&
+    isMobileOnly &&
+    window.matchMedia("(display-mode: standalone)").matches
       ? "12px"
       : "0px";
+
+  const filteredMenus = SIDEMENUS.filter((m) =>
+    m.authRequired ? !!account : true
+  );
 
   return (
     <div
@@ -53,46 +62,42 @@ export default function SidebarApp({
             <IconPlotty size={30} />
           </div>
         </Link>
-        {SIDEMENUS.filter((m) => (m.authRequired ? !!account : true)).map(
-          (menu, i) => {
-            const active =
-              menu.path === "/app"
-                ? pathname.toLowerCase() === `/${account?.toLowerCase()}`
-                : pathname === menu.path;
-            return (
+        {filteredMenus.map((menu, i) => {
+          const active =
+            menu.path === "/app"
+              ? pathname.toLowerCase() === `/${account?.toLowerCase()}`
+              : pathname === menu.path;
+          return (
+            <div key={i} className="flex items-center w-full gap-2">
+              <div
+                className={clsx(
+                  "hidden sm:block min-w-[4px] h-7 rounded-r-full",
+                  active && "bg-primary"
+                )}
+              />
               <Link
-                key={i}
                 href={menu.path}
-                className="flex items-center gap-2 w-14 sm:w-full"
+                onClick={rippleEffect}
+                className={clsx(
+                  "flex items-center justify-center lg:justify-start gap-3 py-4 sm:py-3 lg:p-3",
+                  "screen-hover:hover:bg-secondary-text screen-hover:hover:bg-opacity-10 transition-all",
+                  "sm:rounded-full w-full relative overflow-hidden",
+                  active && "font-semibold"
+                )}
               >
+                {active ? menu.activeIcon : menu.icon}
                 <div
                   className={clsx(
-                    "hidden sm:block min-w-[4px] h-7 rounded-r-full",
-                    active && "bg-primary"
-                  )}
-                />
-                <div
-                  className={clsx(
-                    "flex items-center justify-center lg:justify-start gap-3 py-4 sm:py-3 lg:p-3",
-                    "hover:bg-secondary-text hover:bg-opacity-10 transition-all",
-                    "rounded-full cursor-pointer w-full",
-                    active && "font-semibold"
+                    "hidden text-lg lg:flex items-center",
+                    active ? "font-semibold" : "font-medium"
                   )}
                 >
-                  {active ? menu.activeIcon : menu.icon}
-                  <div
-                    className={clsx(
-                      "hidden text-lg lg:flex items-center",
-                      active ? "font-semibold" : "font-medium"
-                    )}
-                  >
-                    {menu.title}
-                  </div>
+                  {menu.title}
                 </div>
               </Link>
-            );
-          }
-        )}
+            </div>
+          );
+        })}
 
         {account && (
           <Button
@@ -106,7 +111,7 @@ export default function SidebarApp({
             onClick={() => openPlotModal()}
           >
             <span className="hidden lg:block">New Plot</span>
-            <RiQuillPenLine className="lg:hidden" size={24} />
+            <HiOutlinePlus className="lg:hidden" size={24} />
           </Button>
         )}
       </div>
@@ -115,10 +120,10 @@ export default function SidebarApp({
         <div className="hidden text-xs lg:block">Find us on</div>
         <div className="flex flex-col items-center gap-3 mx-auto lg:mx-0 lg:flex-row">
           <Link href="https://twitter.com/PlottyFi" target="_blank">
-            <IoLogoTwitter />
+            <RiTwitterFill />
           </Link>
           <Link href="https://discord.gg/dG2dPpCUKE" target="_blank">
-            <IoLogoDiscord />
+            <RiDiscordFill />
           </Link>
         </div>
       </div>
@@ -134,13 +139,13 @@ const SIDEMENUS = [
     path: "/home",
     authRequired: true,
   },
-  // {
-  //   title: "Explore",
-  //   icon: <HiOutlineGlobe size={24} />,
-  //   activeIcon: <HiGlobe size={24} />,
-  //   path: "/explore",
-  //   authRequired: true,
-  // },
+  {
+    title: "Search",
+    icon: <HiOutlineSearch size={24} />,
+    activeIcon: <HiSearch size={24} />,
+    path: "/search",
+    authRequired: true,
+  },
   // {
   //   title: "Notifications",
   //   icon: <HiOutlineBell size={24} />,

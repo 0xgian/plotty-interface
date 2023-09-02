@@ -4,6 +4,7 @@ export default function Button({
   kind = "primary",
   size = "lg",
   px = "px-4",
+  onClick,
   className,
   disabled,
   children,
@@ -23,6 +24,11 @@ export default function Button({
         className,
         disabled ? "opacity-50" : "cursor-pointer"
       )}
+      onClick={(e) => {
+        if (!disabled) {
+          onClick && onClick(e);
+        }
+      }}
       {...props}
     >
       {children}
@@ -39,19 +45,21 @@ type KINDS =
 
 const KIND_VARIANTS: { [kind in KINDS]: string } = {
   primary: "bg-primary text-primary-white",
-  transparent: "hover:bg-secondary-text hover:bg-opacity-10 transition-opacity",
+  transparent:
+    "screen-hover:hover:bg-secondary-text screen-hover:hover:bg-opacity-10 transition-opacity",
   "solid-black": "bg-primary-text text-primary-white",
   "outline-black":
-    "hover:bg-secondary-text hover:bg-opacity-10 transition-opacity border border-secondary-text border-opacity-20",
+    "screen-hover:hover:bg-secondary-text screen-hover:hover:bg-opacity-10 transition-opacity border border-secondary-text border-opacity-20",
   "outline-negative":
-    "hover:bg-red-500 hover:bg-opacity-10 transition-opacity border border-secondary-text border-opacity-20 hover:text-red-500",
+    "screen-hover:hover:bg-red-500 screen-hover:hover:bg-opacity-10 transition-opacity border border-secondary-text border-opacity-20 screen-hover:hover:text-red-500",
 };
 
-type SIZES = "lg" | "md" | "sm" | "xs";
+type SIZES = "lg" | "md" | "sm" | "xs" | "fit";
 
 const SIZE_VARIANTS: { [size in SIZES]: string } = {
   lg: "h-12",
   md: "h-[38px]",
   sm: "h-8",
   xs: "h-7",
+  fit: "h-fit",
 };
