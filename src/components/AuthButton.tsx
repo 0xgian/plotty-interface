@@ -59,7 +59,7 @@ export default function AuthButton() {
               return (
                 <Dropdown
                   button={
-                    <Button kind="transparent" size="fit" px="sm:px-4">
+                    <Button kind="transparent" size="md" px="sm:px-4">
                       <Avatar address={currentAccount as string} size={24} />
                       <div className="hidden sm:block">
                         {formatAddress(currentAccount as string, {

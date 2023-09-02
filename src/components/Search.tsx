@@ -6,7 +6,6 @@ import { HiOutlineSearch, HiOutlineX } from "react-icons/hi";
 import { useSearch } from "hooks/useSearch";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import BrandLoading from "components/BrandLoading";
-import IconButton from "components/IconButton";
 import AvatarCard from "components/AvatarCard";
 import { useAuthStore } from "state/auth";
 import clsx from "clsx";
@@ -88,13 +87,6 @@ export default function Search() {
       }
     },
     [router, initSearch]
-  );
-
-  const setShow = useCallback(
-    (show: boolean) => {
-      show ? router.push("/search") : router.back();
-    },
-    [router]
   );
 
   return !!account ? (
@@ -204,14 +196,6 @@ export default function Search() {
                 )}
               </Combobox.Options>
             </Transition>
-          </div>
-
-          <div className={clsx("ml-3", !show ? "hidden" : "flex sm:hidden")}>
-            <IconButton
-              icon={<HiOutlineX size={20} className="text-secondary-text" />}
-              activeColor="black"
-              onClick={() => setShow(false)}
-            />
           </div>
         </Transition>
       </>
