@@ -12,9 +12,7 @@ export const rippleEffect = (event: any) => {
   circle.style.width = circle.style.height = `${diameter}px`;
   const left = event.clientX - (btn.offsetLeft + radius);
   circle.style.left = `${
-    left > btn.clientWidth
-      ? left - (window.innerWidth - btn.clientWidth)
-      : left
+    left > btn.clientWidth ? left - (window.innerWidth - btn.clientWidth) : left
   }px`;
   const top = event.clientY - (btn.offsetTop + radius);
   circle.style.top = `${
@@ -29,4 +27,17 @@ export const rippleEffect = (event: any) => {
   }
 
   btn.appendChild(circle);
+};
+
+export const fadeEffect = (event: any) => {
+  if (!("ontouchstart" in window || navigator.maxTouchPoints > 0)) {
+    return;
+  }
+
+  const btn = event.currentTarget;
+
+  btn.classList.add("fade-anim");
+  setTimeout(() => {
+    btn.classList.remove("fade-anim");
+  }, 300)
 };

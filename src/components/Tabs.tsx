@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { rippleEffect } from "lib/rippleEffect";
+import { rippleEffect } from "lib/touchEffect";
 
 export default function Tabs({
   tabs,

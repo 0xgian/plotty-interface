@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { fadeEffect } from "lib/touchEffect";
 
 export default function Button({
   kind = "primary",
@@ -26,6 +27,7 @@ export default function Button({
       )}
       onClick={(e) => {
         if (!disabled) {
+          fadeEffect(e)
           onClick && onClick(e);
         }
       }}

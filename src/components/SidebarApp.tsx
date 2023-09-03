@@ -24,7 +24,7 @@ import Button from "components/Button";
 import { usePlotModal } from "state/plotModal";
 import { IconPlotty } from "custom-icons";
 import { isIOS, isMobileOnly } from "react-device-detect";
-import { rippleEffect } from "lib/rippleEffect";
+import { rippleEffect } from "lib/touchEffect";
 
 export default function SidebarApp({
   ...props

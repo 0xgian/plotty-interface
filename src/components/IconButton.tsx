@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { fadeEffect } from "lib/touchEffect";
 
 export default function IconButton({
   icon,
@@ -8,6 +9,7 @@ export default function IconButton({
   kind = "default",
   preventClick = true,
   onClick,
+  disabled,
   className,
   ...props
 }: {
@@ -34,7 +36,12 @@ export default function IconButton({
           "flex items-center group cursor-pointer",
           COLORS_CLASS[activeColor].hoverText
         )}
-        onClick={onClick}
+        onClick={(e) => {
+          if (!disabled) {
+            fadeEffect(e);
+            onClick && onClick(e);
+          }
+        }}
       >
         <div className="relative overflow-hidden">
           <div

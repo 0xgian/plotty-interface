@@ -23,7 +23,7 @@ import { usePlotModal } from "state/plotModal";
 import { useAuthStore } from "state/auth";
 import PlotDropdownMenu from "components/PlotDropdownMenu";
 import MediaRenderer from "components/MediaRenderer";
-import ProfileCardContainer from "components/ProfileCardContainer";
+import CardContainer from "components/CardContainer";
 import { useFeedback } from "hooks/useFeedback";
 import { useCallback } from "react";
 import { useWithAuth } from "hooks/useWithAuth";
@@ -126,7 +126,7 @@ export default function PlottedCard({
   );
 
   return (
-    <ProfileCardContainer onClick={() => router.push(`/plot/${plotId}`)}>
+    <CardContainer onClick={() => router.push(`/plot/${plotId}`)}>
       {isReplottedPlot && (
         <div className="flex items-center gap-3 text-secondary-text h-7">
           <div className="flex justify-end w-10">
@@ -243,6 +243,6 @@ export default function PlottedCard({
           </div>
         </div>
       </div>
-    </ProfileCardContainer>
+    </CardContainer>
   );
 }

@@ -3,7 +3,7 @@
 import AvatarCard from "components/AvatarCard";
 import { useFollowers } from "hooks/useFollow";
 import { useProfile } from "hooks/useProfile";
-import ProfileCardContainer from "components/ProfileCardContainer";
+import CardContainer from "components/CardContainer";
 import { useRouter } from "next/navigation";
 import InfiniteScroll from "react-infinite-scroll-component";
 import BrandLoading from "components/BrandLoading";
@@ -32,7 +32,7 @@ export default function Page({ params: { u } }: { params: { u: string } }) {
         <Fragment key={pageIndex}>
           {followers &&
             followers.map((item: any, i: number) => (
-              <ProfileCardContainer
+              <CardContainer
                 key={i}
                 onClick={() =>
                   item.node.profile &&
@@ -54,7 +54,7 @@ export default function Page({ params: { u } }: { params: { u: string } }) {
                   hoverAction
                   trailing={<FollowButton profile={item.node.profile} />}
                 />
-              </ProfileCardContainer>
+              </CardContainer>
             ))}
         </Fragment>
       ))}

@@ -4,7 +4,7 @@ import { useProfileSuggestions } from "hooks/useProfileSuggestions";
 import AvatarCard from "./AvatarCard";
 import FollowButton from "./FollowButton";
 import { useRouter } from "next/navigation";
-import ProfileCardContainer from "./ProfileCardContainer";
+import CardContainer from "./CardContainer";
 import _ from "lodash";
 
 export default function ProfileSuggestions() {
@@ -15,7 +15,7 @@ export default function ProfileSuggestions() {
     <div className="sticky flex flex-col w-full py-3 mt-3 rounded-lg bg-primary-white top-3">
       <div className="px-4 mb-3 text-xl font-semibold">Who to follow</div>
       {profileSuggestions.map((profile: any, i: number) => (
-        <ProfileCardContainer
+        <CardContainer
           key={i}
           onClick={() =>
             profile &&
@@ -29,7 +29,7 @@ export default function ProfileSuggestions() {
             hoverAction
             trailing={<FollowButton profile={profile} />}
           />
-        </ProfileCardContainer>
+        </CardContainer>
       ))}
     </div>
   ) : null;
