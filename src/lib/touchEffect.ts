@@ -39,5 +39,5 @@ export const fadeEffect = (event: any) => {
   btn.classList.add("fade-anim");
   setTimeout(() => {
     btn.classList.remove("fade-anim");
-  }, 300)
+  }, 600)
 };

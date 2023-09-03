@@ -140,7 +140,7 @@ span.ripple {
 }
 
 .fade-anim {
-  animation: fade-anim 300ms linear;
+  animation: fade-anim 600ms linear;
 }
 
 @keyframes fade-anim {
