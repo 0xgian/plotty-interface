@@ -43,7 +43,7 @@ export default function IconButton({
           }
         }}
       >
-        <div className="relative overflow-hidden">
+        <div className="relative">
           <div
             className={clsx(
               "absolute  rounded-full ",
@@ -73,23 +73,23 @@ const COLORS_CLASS: {
   [color in COLORS]: { hoverText: string; hoverBG: string };
 } = {
   green: {
-    hoverText: "hover:group-hover:text-green-500",
+    hoverText: "screen-hover:hover:text-green-500",
     hoverBG: "screen-hover:group-hover:bg-green-500",
   },
   red: {
-    hoverText: "hover:group-hover:text-red-500",
+    hoverText: "screen-hover:hover:text-red-500",
     hoverBG: "screen-hover:group-hover:bg-red-500",
   },
   blue: {
-    hoverText: "hover:group-hover:text-primary",
+    hoverText: "screen-hover:hover:text-primary",
     hoverBG: "screen-hover:group-hover:bg-primary",
   },
   black: {
-    hoverText: "hover:group-hover:text-primary-text",
+    hoverText: "screen-hover:hover:text-primary-text",
     hoverBG: "screen-hover:group-hover:bg-primary-text",
   },
   white: {
-    hoverText: "hover:group-hover:text-white",
+    hoverText: "screen-hover:hover:text-white",
     hoverBG: "screen-hover:group-hover:bg-white",
   },
 };
