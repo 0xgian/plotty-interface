@@ -21,7 +21,11 @@ export default function AuthModal() {
 
   return (
     <Transition appear show={isShowing("auth")} as={Fragment}>
-      <Dialog as="div" className="relative z-[1]" onClose={closeModal}>
+      <Dialog
+        as="div"
+        className="relative z-[1]"
+        onClose={() => closeModal("auth")}
+      >
         <div className="fixed inset-0">
           <div className="flex justify-center min-h-full text-center">
             <Transition.Child

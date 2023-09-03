@@ -114,7 +114,7 @@ export default function AuthContext({ children }: AuthContextProps) {
           openModal("loading");
           await fetch(`/api/logout?address=${account}`);
         } finally {
-          closeModal();
+          closeModal("auth");
           wrappedOnLogOut();
           window.location.reload();
         }
