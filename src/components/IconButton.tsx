@@ -37,7 +37,7 @@ export default function IconButton({
         if (preventClick) {
           e.preventDefault();
           e.stopPropagation();
-          labelAnimate && setShowLabel(false);
+          labelAnimate && showLabel && setShowLabel(false);
         }
       }}
       {...props}
@@ -45,12 +45,17 @@ export default function IconButton({
       <div
         className={clsx(
           "flex items-center group cursor-pointer",
-          activeAnimate && "transform active:scale-75 transition-transform",
           COLORS_CLASS[activeColor].hoverText
         )}
         onClick={(e) => !disabled && onClick && onClick(e)}
       >
-        <div className="relative">
+        <div
+          className={clsx(
+            "relative",
+            activeAnimate &&
+              "transform group-active:scale-75 transition-transform"
+          )}
+        >
           <div
             className={clsx(
               "absolute rounded-full",
@@ -63,21 +68,19 @@ export default function IconButton({
           />
           {icon}
         </div>
-        {label && kind !== "header" && (
-          <Transition
-            show={showLabel}
-            enter="ease-out duration-150"
-            enterFrom="opacity-0 translate-y-full"
-            enterTo="opacity-100 translate-y-0"
-            leave="ease-out duration-150"
-            leaveFrom="opacity-100 translate-y-0"
-            leaveTo="opacity-0 -translate-y-full"
-            afterLeave={() => setShowLabel(true)}
-            className="px-2 text-xs"
-          >
-            {label}
-          </Transition>
-        )}
+        <Transition
+          show={!!label && kind !== "header" && showLabel}
+          enter="ease-out duration-150"
+          enterFrom="opacity-0 translate-y-full"
+          enterTo="opacity-100 translate-y-0"
+          leave="ease-out duration-150"
+          leaveFrom="opacity-100 translate-y-0"
+          leaveTo="opacity-0 -translate-y-full"
+          afterLeave={() => setShowLabel(true)}
+          className="px-2 text-xs"
+        >
+          {label}
+        </Transition>
       </div>
       {label && kind === "header" && (
         <div className="text-xl font-semibold">{label}</div>
