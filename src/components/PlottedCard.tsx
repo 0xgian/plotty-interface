@@ -27,6 +27,7 @@ import CardContainer from "components/CardContainer";
 import { useFeedback } from "hooks/useFeedback";
 import { useCallback } from "react";
 import { useWithAuth } from "hooks/useWithAuth";
+import { usePlotFeedbackStore } from "state/plotFeedback";
 
 export default function PlottedCard({
   nodeItem,
@@ -43,14 +44,24 @@ export default function PlottedCard({
   const { account } = useAuthStore();
   const { openPlotModal } = usePlotModal();
 
+  const {
+    useful,
+    isUseful,
+    isNotUseful,
+    isReplotted,
+    totalReplots,
+    toggleUseful,
+    toggleNotUseful,
+    toggleReplot,
+  } = usePlotFeedbackStore();
+
   const isReplottedPlot = !_.isEmpty(nodeItem.node.parent_post);
   const node = isReplottedPlot ? nodeItem.node.parent_post : nodeItem.node;
   const plotId = isReplottedPlot ? nodeItem.node.parent_pid : nodeItem.node.id;
 
   const isOwnerPlot =
     account?.toLowerCase() === node.profile.public_address.toLowerCase();
-  const isReplotted = node.feedback.user_replot_status !== null;
-  const replotId = isReplotted ? node.feedback.user_replot_id : node.id;
+  const replotId = isReplotted(plotId) ? node.feedback.user_replot_id : node.id;
 
   const profileLink = node.profile?.handle
     ? `/${node.profile?.handle}`
@@ -71,6 +82,7 @@ export default function PlottedCard({
   const onUseful = withAuthHandler(
     useCallback(
       (plotId: string, isActive: boolean) => {
+        toggleUseful(plotId);
         feedback &&
           feedback({
             plotId: plotId,
@@ -78,30 +90,47 @@ export default function PlottedCard({
             pageIndex,
           });
       },
-      [feedback, pageIndex]
+      [toggleUseful, feedback, pageIndex]
     )
   );
 
   const onNotUseful = withAuthHandler(
     useCallback(
-      (plotId: string, isActive: boolean) =>
+      (plotId: string, isActive: boolean) => {
+        toggleNotUseful(plotId);
         feedback &&
-        feedback({
-          plotId: plotId,
-          feedback: isActive ? "DELETE" : "NOT_USEFUL",
-          pageIndex,
-        }),
-      [feedback, pageIndex]
+          feedback({
+            plotId: plotId,
+            feedback: isActive ? "DELETE" : "NOT_USEFUL",
+            pageIndex,
+          });
+      },
+      [toggleNotUseful, feedback, pageIndex]
     )
   );
 
   const onReplot = withAuthHandler(
     useCallback(
-      (plotId: string, isActive: boolean) =>
+      (replotId: string, isActive: boolean) => {
+        toggleReplot(plotId);
+        replot &&
+          replot({
+            plotId: replotId,
+            isReplot: !isActive,
+            pageIndex,
+          });
+      },
+      [toggleReplot, plotId, replot, pageIndex]
+    )
+  );
+
+  const onDelete = withAuthHandler(
+    useCallback(
+      (plotId: string) =>
         replot &&
         replot({
           plotId: plotId,
-          isReplot: !isActive,
+          isReplot: false,
           pageIndex,
         }),
       [replot, pageIndex]
@@ -168,7 +197,7 @@ export default function PlottedCard({
                 onClickMenu={(key: string) => {
                   switch (key) {
                     case "DELETE":
-                      onReplot(plotId, true);
+                      onDelete(plotId);
                       break;
 
                     default:
@@ -195,22 +224,20 @@ export default function PlottedCard({
             <div className="flex items-center">
               <IconButton
                 icon={
-                  node.feedback.user_feedback_status === 1 ? (
+                  isUseful(plotId) ? (
                     <IconUseful size={20} color="text-green-500" />
                   ) : (
                     <IconOutlineUseful size={20} />
                   )
                 }
                 activeColor="green"
-                label={formatNumber(node.feedback.useful)}
-                onClick={() =>
-                  onUseful(plotId, node.feedback.user_feedback_status === 1)
-                }
+                label={formatNumber(useful(plotId))}
+                onClick={() => onUseful(plotId, isUseful(plotId))}
               />
               <div className="pr-2 text-xs">·</div>
               <IconButton
                 icon={
-                  node.feedback.user_feedback_status === 0 ? (
+                  isNotUseful(plotId) ? (
                     <IconNotUseful size={20} color="text-red-500" />
                   ) : (
                     <IconOutlineNotUseful size={20} />
@@ -218,21 +245,19 @@ export default function PlottedCard({
                 }
                 activeColor="red"
                 label="Not useful"
-                onClick={() =>
-                  onNotUseful(plotId, node.feedback.user_feedback_status === 0)
-                }
+                onClick={() => onNotUseful(plotId, isNotUseful(plotId))}
               />
             </div>
             <IconButton
               icon={
                 <HiOutlineArrowPathRoundedSquare
                   size={20}
-                  className={clsx(isReplotted && "text-blue-500")}
+                  className={clsx(isReplotted(plotId) && "text-blue-500")}
                 />
               }
               activeColor="blue"
-              label={formatNumber(node.feedback.total_replot)}
-              onClick={() => onReplot(replotId, isReplotted)}
+              label={formatNumber(totalReplots(plotId))}
+              onClick={() => onReplot(replotId, isReplotted(plotId))}
             />
             <IconButton
               icon={<HiOutlineChatBubbleBottomCenter size={20} />}
