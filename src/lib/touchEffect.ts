@@ -28,16 +28,3 @@ export const rippleEffect = (event: any) => {
 
   btn.appendChild(circle);
 };
-
-export const fadeEffect = (event: any) => {
-  if (!("ontouchstart" in window || navigator.maxTouchPoints > 0)) {
-    return;
-  }
-
-  const btn = event.currentTarget;
-
-  btn.classList.add("fade-anim");
-  setTimeout(() => {
-    btn.classList.remove("fade-anim");
-  }, 600)
-};

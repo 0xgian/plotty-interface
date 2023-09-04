@@ -2,9 +2,11 @@ import { useAuthStore } from "state/auth";
 import { getAPI } from "lib/getAPI";
 import { useQuery } from "wagmi";
 import { useMemo } from "react";
+import { usePlotFeedbackStore } from "state/plotFeedback";
 
 export const usePlotDetails = (plotId?: string) => {
   const { session, account } = useAuthStore();
+  const { syncFeedback } = usePlotFeedbackStore();
 
   const token = session?.accounts?.[account ?? "0x0"]?.access_token;
 
@@ -23,6 +25,7 @@ export const usePlotDetails = (plotId?: string) => {
           : {}
       );
       const json = await res.json();
+      syncFeedback([{ node: json.data?.data?.post }]);
       return json?.data?.data?.post;
     }
     return null;

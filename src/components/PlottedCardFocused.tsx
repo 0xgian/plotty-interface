@@ -28,6 +28,7 @@ import MediaRenderer from "components/MediaRenderer";
 import { useCallback } from "react";
 import { useFeedback } from "hooks/useFeedback";
 import { useWithAuth } from "hooks/useWithAuth";
+import { usePlotFeedbackStore } from "state/plotFeedback";
 
 export default function PlottedCardFocused({
   queryKey,
@@ -41,13 +42,25 @@ export default function PlottedCardFocused({
   const { account } = useAuthStore();
   const { openPlotModal } = usePlotModal();
 
+  const {
+    useful,
+    isUseful,
+    isNotUseful,
+    isReplotted,
+    totalReplots,
+    toggleUseful,
+    toggleNotUseful,
+    toggleReplot,
+  } = usePlotFeedbackStore();
+
   const isOwnerPlot =
     account?.toLowerCase() ===
     plotDetails?.profile?.public_address.toLowerCase();
 
   const plotId = plotDetails.id;
-  const isReplotted = plotDetails?.feedback.user_replot_status !== null;
-  const replotId = isReplotted ? plotDetails?.feedback.user_replot_id : plotId;
+  const replotId = isReplotted(plotId)
+    ? plotDetails?.feedback.user_replot_id
+    : plotId;
 
   const profileLink = plotDetails?.profile?.handle
     ? `/${plotDetails?.profile?.handle}`
@@ -64,35 +77,52 @@ export default function PlottedCardFocused({
   const onUseful = withAuthHandler(
     useCallback(
       (plotId: string, isActive: boolean) => {
+        toggleUseful(plotId);
         feedback &&
           feedback({
             plotId: plotId,
             feedback: isActive ? "DELETE" : "USEFUL",
           });
       },
-      [feedback]
+      [toggleUseful, feedback]
     )
   );
 
   const onNotUseful = withAuthHandler(
     useCallback(
-      (plotId: string, isActive: boolean) =>
+      (plotId: string, isActive: boolean) => {
+        toggleNotUseful(plotId);
         feedback &&
-        feedback({
-          plotId: plotId,
-          feedback: isActive ? "DELETE" : "NOT_USEFUL",
-        }),
-      [feedback]
+          feedback({
+            plotId: plotId,
+            feedback: isActive ? "DELETE" : "NOT_USEFUL",
+          });
+      },
+      [toggleNotUseful, feedback]
     )
   );
 
   const onReplot = withAuthHandler(
     useCallback(
-      (plotId: string, isActive: boolean) =>
+      (replotId: string, isActive: boolean) => {
+        toggleReplot(plotId);
+        replot &&
+          replot({
+            plotId: replotId,
+            isReplot: !isActive,
+          });
+      },
+      [toggleReplot, plotId, replot]
+    )
+  );
+
+  const onDelete = withAuthHandler(
+    useCallback(
+      (plotId: string) =>
         replot &&
         replot({
           plotId: plotId,
-          isReplot: !isActive,
+          isReplot: false,
         }),
       [replot]
     )
@@ -122,7 +152,7 @@ export default function PlottedCardFocused({
         "border-b border-secondary-text border-opacity-10"
       )}
     >
-      {isReplotted && (
+      {isReplotted(plotId) && (
         <div className="flex items-center gap-3 text-secondary-text h-7">
           <div className="flex justify-end w-10">
             <HiOutlineArrowPathRoundedSquare size={16} />
@@ -156,7 +186,7 @@ export default function PlottedCardFocused({
                 onClickMenu={(key: string) => {
                   switch (key) {
                     case "DELETE":
-                      onReplot(plotId, true);
+                      onDelete(plotId);
                       break;
 
                     default:
@@ -188,23 +218,23 @@ export default function PlottedCardFocused({
 
       <div className="flex flex-col-reverse w-full gap-3 mt-3 sm:flex-row sm:justify-between">
         {Number(
-          plotDetails.feedback.useful |
-            plotDetails.feedback.total_replot |
+          useful(plotId) |
+            totalReplots(plotId) |
             plotDetails.feedback.total_reply
         ) > 0 && (
           <div className="flex gap-3">
-            {Number(plotDetails.feedback.useful) > 0 && (
+            {Number(useful(plotId)) > 0 && (
               <div className="flex gap-[6px]">
                 <span className="font-semibold">
-                  {formatNumber(plotDetails.feedback.useful)}
+                  {formatNumber(useful(plotId))}
                 </span>
                 <span className="text-secondary-text">Useful</span>
               </div>
             )}
-            {Number(plotDetails.feedback.total_replot) > 0 && (
+            {Number(totalReplots(plotId)) > 0 && (
               <div className="flex gap-[6px]">
                 <span className="font-semibold">
-                  {formatNumber(plotDetails.feedback.total_replot)}
+                  {formatNumber(totalReplots(plotId))}
                 </span>
                 <span className="text-secondary-text">Replots</span>
               </div>
@@ -235,7 +265,7 @@ export default function PlottedCardFocused({
       >
         <IconButton
           icon={
-            plotDetails.feedback.user_feedback_status === 1 ? (
+            isUseful(plotId) ? (
               <IconUseful size={22} color="text-green-500" />
             ) : (
               <IconOutlineUseful size={22} />
@@ -243,13 +273,12 @@ export default function PlottedCardFocused({
           }
           size="2xl"
           activeColor="green"
-          onClick={() =>
-            onUseful(plotId, plotDetails.feedback.user_feedback_status === 1)
-          }
+          activeAnimate
+          onClick={() => onUseful(plotId, isUseful(plotId))}
         />
         <IconButton
           icon={
-            plotDetails.feedback.user_feedback_status === 0 ? (
+            isNotUseful(plotId) ? (
               <IconNotUseful size={22} color="text-red-500" />
             ) : (
               <IconOutlineNotUseful size={22} />
@@ -257,20 +286,19 @@ export default function PlottedCardFocused({
           }
           size="2xl"
           activeColor="red"
-          onClick={() =>
-            onNotUseful(plotId, plotDetails.feedback.user_feedback_status === 0)
-          }
+          activeAnimate
+          onClick={() => onNotUseful(plotId, isNotUseful(plotId))}
         />
         <IconButton
           icon={
             <HiOutlineArrowPathRoundedSquare
               size={22}
-              className={clsx(isReplotted && "text-blue-500")}
+              className={clsx(isReplotted(plotId) && "text-blue-500")}
             />
           }
           size="2xl"
           activeColor="blue"
-          onClick={() => onReplot(replotId, isReplotted)}
+          onClick={() => onReplot(replotId, isReplotted(plotId))}
         />
         <IconButton
           icon={<HiOutlineChatBubbleBottomCenter size={22} />}

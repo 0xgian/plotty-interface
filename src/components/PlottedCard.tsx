@@ -231,7 +231,9 @@ export default function PlottedCard({
                   )
                 }
                 activeColor="green"
+                activeAnimate
                 label={formatNumber(useful(plotId))}
+                labelAnimate
                 onClick={() => onUseful(plotId, isUseful(plotId))}
               />
               <div className="pr-2 text-xs">·</div>
@@ -244,6 +246,7 @@ export default function PlottedCard({
                   )
                 }
                 activeColor="red"
+                activeAnimate
                 label="Not useful"
                 onClick={() => onNotUseful(plotId, isNotUseful(plotId))}
               />
@@ -257,6 +260,7 @@ export default function PlottedCard({
               }
               activeColor="blue"
               label={formatNumber(totalReplots(plotId))}
+              labelAnimate
               onClick={() => onReplot(replotId, isReplotted(plotId))}
             />
             <IconButton

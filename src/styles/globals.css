@@ -124,34 +124,6 @@ span.ripple {
   }
 }
 
-span.ripple {
-  position: absolute;
-  border-radius: 50%;
-  transform: scale(0);
-  animation: ripple 600ms linear;
-  background-color: #1312171a;
-}
-
-@keyframes ripple {
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
-}
-
-.fade-anim {
-  animation: fade-anim 600ms linear;
-}
-
-@keyframes fade-anim {
-  0% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 div.rtedt-mt div.imel:nth-of-type(1) {
   margin-top: 1rem;
 }
