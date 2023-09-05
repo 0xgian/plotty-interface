@@ -9,13 +9,13 @@ export default function Button({
   disabled,
   children,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+}: React.ButtonHTMLAttributes<HTMLDivElement> & {
   kind?: KINDS;
   size?: SIZES;
   px?: string;
 }) {
   return (
-    <button
+    <div
       className={clsx(
         "flex items-center justify-center select-none gap-[6px] font-semibold rounded-full",
         KIND_VARIANTS[kind],
@@ -24,12 +24,11 @@ export default function Button({
         className,
         disabled && "opacity-50"
       )}
-      disabled={disabled}
-      onClick={onClick}
+      onClick={(e) => !disabled && onClick && onClick(e)}
       {...props}
     >
       {children}
-    </button>
+    </div>
   );
 }
 

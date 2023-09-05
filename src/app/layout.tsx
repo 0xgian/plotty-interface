@@ -1,5 +1,4 @@
-import BrandLoadingOverlay from "components/BrandLoadingOverlay";
-import Toaster from "components/Toaster";
+import RootInitializer from "components/RootInitializer";
 import { Metadata } from "next";
 import { ReactNode } from "react";
 import "styles/globals.css";
@@ -40,8 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
       <body>
         {children}
-        <BrandLoadingOverlay />
-        <Toaster />
+        <RootInitializer />
       </body>
     </html>
   );

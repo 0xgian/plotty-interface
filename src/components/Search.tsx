@@ -100,10 +100,7 @@ export default function Search() {
           leave="transition ease-in duration-150"
           leaveFrom="opacity-100 translate-x-0"
           leaveTo="opacity-0 translate-x-1"
-          className={clsx(
-            "fixed top-0 left-0 z-[1] bg-white sm:relative sm:z-auto w-full sm:max-w-[348px]",
-            "flex px-4 sm:px-0 py-[8.5px] sm:py-0"
-          )}
+          className={clsx("flex w-full sm:w-screen sm:max-w-[348px]")}
         >
           <div className="relative w-full">
             <div className="flex items-center gap-3 bg-opacity-10 bg-secondary-text h-[42px] w-full px-4 rounded-full">

@@ -37,7 +37,9 @@ export default function IconButton({
         if (preventClick) {
           e.preventDefault();
           e.stopPropagation();
-          labelAnimate && showLabel && setShowLabel(false);
+          if (labelAnimate && showLabel) {
+            setShowLabel(false);
+          }
         }
       }}
       {...props}
@@ -68,19 +70,21 @@ export default function IconButton({
           />
           {icon}
         </div>
-        <Transition
-          show={!!label && kind !== "header" && showLabel}
-          enter="ease-out duration-150"
-          enterFrom="opacity-0 translate-y-full"
-          enterTo="opacity-100 translate-y-0"
-          leave="ease-out duration-150"
-          leaveFrom="opacity-100 translate-y-0"
-          leaveTo="opacity-0 -translate-y-full"
-          afterLeave={() => setShowLabel(true)}
-          className="px-2 text-xs"
-        >
-          {label}
-        </Transition>
+        {!!label && kind !== "header" && (
+          <Transition
+            show={showLabel}
+            enter="ease-out duration-150"
+            enterFrom="opacity-0 translate-y-full"
+            enterTo="opacity-100 translate-y-0"
+            leave="ease-out duration-150"
+            leaveFrom="opacity-100 translate-y-0"
+            leaveTo="opacity-0 -translate-y-full"
+            afterLeave={() => setShowLabel(true)}
+            className="px-2 text-xs"
+          >
+            {label}
+          </Transition>
+        )}
       </div>
       {label && kind === "header" && (
         <div className="text-xl font-semibold">{label}</div>

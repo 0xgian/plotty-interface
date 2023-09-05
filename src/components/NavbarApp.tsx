@@ -1,8 +1,7 @@
-import Link from "next/link";
 import AuthButton from "components/AuthButton";
 import Search from "components/Search";
-import { IconPlotty } from "custom-icons";
 import clsx from "clsx";
+import BackButton from "components/BackButton";
 
 export default function NavbarApp({
   ...props
@@ -21,16 +20,10 @@ export default function NavbarApp({
             "max-w-[930px] mx-auto gap-[6px] h-full"
           )}
         >
-          <Link
-            className="flex items-center cursor-pointer sm:hidden min-w-[30px]"
-            href="/app"
-          >
-            <div className="flex items-center gap-[6px] h-full">
-              <IconPlotty size={30} />
-            </div>
-          </Link>
-
-          <Search />
+          <div className="flex gap-3">
+            <BackButton />
+            <Search />
+          </div>
 
           <AuthButton />
         </div>
