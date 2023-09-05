@@ -32,7 +32,11 @@ export const usePathHistoryInitializer = () => {
         ? `${pathname}?${searchParams.toString()}`
         : pathname;
 
-    if (!!exactPathname && currentPathname !== exactPathname) {
+    if (
+      !!exactPathname &&
+      currentPathname !== exactPathname &&
+      !["/", "/app"].includes(exactPathname)
+    ) {
       const currentStore =
         prevPathname !== null && prevPathname === exactPathname
           ? [...store.slice(0, -1)]

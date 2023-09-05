@@ -55,7 +55,7 @@ export default function SidebarApp({
           "pr-0 sm:pr-3 flex-col gap-6 justify-between bg-white select-none",
           "w-full sm:w-auto lg:w-[255px] sm:h-[100dvh] fixed bottom-0 sm:sticky sm:top-0 z-[1]",
           "border-secondary-text border-opacity-10 border-t sm:border-t-0 sm:border-r",
-          show ? "sm:flex" : "hidden"
+          show ? "flex" : "hidden sm:flex"
         )}
         style={{ paddingBottom: safeAreaBottom }}
       >
