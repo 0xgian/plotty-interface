@@ -17,9 +17,11 @@ export default function BackButton() {
       icon={<HiOutlineArrowLeft size={20} />}
       activeColor="black"
       kind="header"
-      onClick={() => (!!prevPathname ? router.back() : router.replace("/home"))}
+      onClick={() =>
+        !!prevPathname ? router.back() : router.replace("/home")
+      }
     />
-  ) : ["/home"].includes(currentPathname ?? "") ? (
+  ) : currentPathname?.startsWith("/home") ? (
     <Link
       className="flex items-center cursor-pointer sm:hidden min-w-[30px]"
       href="/"
