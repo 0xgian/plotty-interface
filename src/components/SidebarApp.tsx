@@ -62,7 +62,7 @@ export default function SidebarApp({
         <div className="flex flex-row justify-around w-full gap-1 leading-snug sm:flex-col">
           <Link
             className="hidden h-[60px] cursor-pointer sm:flex items-center pl-6"
-            href="/app"
+            href="/"
           >
             <div className="flex items-center gap-[6px] h-full">
               <IconPlotty size={30} />
@@ -70,7 +70,7 @@ export default function SidebarApp({
           </Link>
           {filteredMenus.map((menu, i) => {
             const active =
-              menu.path === "/app"
+              menu.path === "/"
                 ? pathname.toLowerCase() === `/${account?.toLowerCase()}`
                 : pathname === menu.path;
             return (
@@ -176,7 +176,7 @@ const SIDEMENUS = [
     title: "Profile",
     icon: <HiOutlineUser size={24} />,
     activeIcon: <HiUser size={24} />,
-    path: "/app",
+    path: "/",
     authRequired: true,
   },
   {

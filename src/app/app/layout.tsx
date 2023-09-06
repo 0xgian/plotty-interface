@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import NavbarApp from "components/NavbarApp";
 import SidebarApp from "components/SidebarApp";
 import "@rainbow-me/rainbowkit/styles.css";
-import FetchSessionUser from "components/FetchSessionUser";
+import UserInitializer from "components/UserInitializer";
 import Providers from "components/Providers";
 import PageContainer from "components/PageContainer";
 import ProfileSuggestions from "components/ProfileSuggestions";
@@ -11,7 +11,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <>
       {/* @ts-expect-error Async Server Component */}
-      <FetchSessionUser />
+      <UserInitializer />
       <Providers>
         <section className="flex h-full">
           <SidebarApp />

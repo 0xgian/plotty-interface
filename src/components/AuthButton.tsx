@@ -49,7 +49,7 @@ export default function AuthButton() {
             {(() => {
               if (!authenticated || !currentAccount) {
                 return (
-                  <Link href="/app">
+                  <Link href="/login">
                     <Button size="md">
                       {!connected ? "Log in" : "Verify"}
                     </Button>

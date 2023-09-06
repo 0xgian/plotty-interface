@@ -17,7 +17,7 @@ export default function Button({
   return (
     <div
       className={clsx(
-        "flex items-center justify-center select-none gap-[6px] font-semibold rounded-full",
+        "flex cursor-pointer items-center justify-center select-none gap-[6px] font-semibold rounded-full",
         KIND_VARIANTS[kind],
         SIZE_VARIANTS[size],
         px,

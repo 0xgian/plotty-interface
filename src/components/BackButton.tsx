@@ -22,7 +22,7 @@ export default function BackButton() {
   ) : currentPathname === "/home" ? (
     <Link
       className="flex items-center cursor-pointer sm:hidden min-w-[30px]"
-      href="/app"
+      href="/"
     >
       <div className="flex items-center gap-[6px] h-full">
         <IconPlotty size={30} />

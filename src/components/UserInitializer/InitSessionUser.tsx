@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useAuthStore } from "state/auth";
 import { SessionUser } from "state/types";
 
-export default function SetSessionUser({
+export default function InitSessionUser({
   sessionUser,
 }: {
   sessionUser?: SessionUser;
