@@ -26,7 +26,6 @@ import { IconPlotty } from "custom-icons";
 import { isIOS, isMobileOnly } from "react-device-detect";
 import { rippleEffect } from "lib/touchEffect";
 import { usePathHistory } from "state/path";
-import { START_URL } from "config/startUrl";
 
 export default function SidebarApp({
   ...props
@@ -156,7 +155,7 @@ const SIDEMENUS = [
     title: "Home",
     icon: <HiOutlineHome size={24} />,
     activeIcon: <HiHome size={24} />,
-    path: START_URL,
+    path: "/home",
     authRequired: true,
   },
   {
@@ -189,4 +188,7 @@ const SIDEMENUS = [
   },
 ];
 
-export const MENUPATHS = SIDEMENUS.map((menu) => menu.path);
+export const MENUPATHS = [
+  ...SIDEMENUS.map((menu) => menu.path),
+  "/home?version=1",
+];
