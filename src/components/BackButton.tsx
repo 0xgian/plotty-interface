@@ -7,19 +7,22 @@ import Link from "next/link";
 import { IconPlotty } from "custom-icons";
 import { MENUPATHS } from "components/SidebarApp";
 import { useRouter } from "next/navigation";
+import { START_URL } from "config/startUrl";
 
 export default function BackButton() {
   const router = useRouter();
   const { prevPathname, currentPathname } = usePathHistory();
-  
+
   return !MENUPATHS.includes(currentPathname ?? "") ? (
     <IconButton
       icon={<HiOutlineArrowLeft size={20} />}
       activeColor="black"
       kind="header"
-      onClick={() => (!!prevPathname ? router.back() : router.replace("/home"))}
+      onClick={() =>
+        !!prevPathname ? router.back() : router.replace(START_URL)
+      }
     />
-  ) : currentPathname === "/home" ? (
+  ) : currentPathname === START_URL ? (
     <Link
       className="flex items-center cursor-pointer sm:hidden min-w-[30px]"
       href="/"
