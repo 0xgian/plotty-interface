@@ -19,7 +19,8 @@ export default async function FetchSessionUser() {
   if (!sessionUser?.currentAccount) {
     const pathKeys = activePath?.split("/");
     const pathKey = pathKeys?.[3] || pathKeys?.[2];
-    if (!!pathKey) {   
+    console.log(activePath, pathKeys, pathKey);
+    if (!!pathKey) {
       if (["home", "search", "following", "followers"].includes(pathKey))
         redirect("/");
     }
