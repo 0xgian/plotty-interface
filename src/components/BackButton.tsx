@@ -21,7 +21,7 @@ export default function BackButton() {
         !!prevPathname ? router.back() : router.replace("/home")
       }
     />
-  ) : currentPathname === "/home" ? (
+  ) : currentPathname?.startsWith("/home") ? (
     <Link
       className="flex items-center cursor-pointer sm:hidden min-w-[30px]"
       href="/"
