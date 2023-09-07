@@ -2,8 +2,9 @@
   "theme_color": "#131217",
   "background_color": "#131217",
   "display": "standalone",
-  "scope": "/home?version=1",
-  "start_url": "/home?version=1",
+  "scope": "/",
+  
+  "start_url": "/",
   "name": "Plotty",
   "short_name": "Plotty",
   "description": "Plot Approachable On-chain Data",
