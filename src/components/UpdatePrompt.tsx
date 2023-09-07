@@ -29,9 +29,9 @@ export default function UpdatePrompt() {
           A new update is now available. Please update by re-installing the app
           from the browser.
         </div>
-        <a href="/" target="_blank">
-          <Button className="min-w-[86px]">Update</Button>
-        </a>
+        <Button onClick={() => setShow(false)} className="min-w-[86px]">
+          Ok
+        </Button>
       </div>
     </div>
   ) : null;
