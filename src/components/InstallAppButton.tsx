@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "components/Button";
 import { isIOS } from "react-device-detect";
+import { isPWA } from "lib/isPWA";
 
 export default function InstallAppButton() {
   const [supportsPWA, setSupportsPWA] = useState(false);
@@ -20,11 +21,19 @@ export default function InstallAppButton() {
   const onClick = (evt: any) => {
     evt.preventDefault();
     if (!promptInstall) {
-      isIOS &&
+      if (isPWA()) {
+        alert(
+          `To install the app, you'll need to open it in your browser. Simply tap on the menu icon and select "Open in Browser"`
+        );
+        return;
+      }
+
+      if (isIOS) {
         alert(
           `Install this app on your Phone: Tap "Share" icon and then "Add to homescreen"`
         );
-      return;
+        return;
+      }
     }
     promptInstall.prompt();
   };
