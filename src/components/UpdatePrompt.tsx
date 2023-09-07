@@ -3,11 +3,15 @@ import { usePathHistory } from "state/path";
 import Button from "components/Button";
 import { isPWA } from "lib/isPWA";
 import manifest from "../../public/manifest.json";
+import { useState } from "react";
 
 export default function UpdatePrompt() {
   const { store } = usePathHistory();
+  const [show, setShow] = useState(
+    store[1] && !store[1].includes(manifest.start_url) && isPWA()
+  );
 
-  return store[1] && !store[1].includes(manifest.start_url) && isPWA() ? (
+  return show ? (
     <div
       className={clsx(
         "fixed inset-0 z-[1] bg-primary-text bg-opacity-25",
@@ -25,9 +29,9 @@ export default function UpdatePrompt() {
           A new update is now available. Please update by re-installing the app
           from the browser.
         </div>
-        <a href="/" target="_blank">
-          <Button>Update</Button>
-        </a>
+        <Button onClick={() => setShow(false)} className="min-w-[86px]">
+          Ok
+        </Button>
       </div>
     </div>
   ) : null;
