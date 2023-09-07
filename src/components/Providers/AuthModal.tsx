@@ -65,7 +65,7 @@ export default function AuthModal() {
                       <div>Data</div>
                     </div>
 
-                    {(isMobile || flag === "install") && !isPWA() ? (
+                    {(isMobile && !isPWA()) || flag === "install" ? (
                       <div className="flex flex-col gap-3">
                         <div>📲 See Plotty in...</div>
                         <InstallAppButton />
