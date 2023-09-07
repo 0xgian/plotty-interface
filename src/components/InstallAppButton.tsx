@@ -6,6 +6,7 @@ import { isPWA } from "lib/isPWA";
 export default function InstallAppButton() {
   const [supportsPWA, setSupportsPWA] = useState(false);
   const [promptInstall, setPromptInstall] = useState<any>(null);
+  const [pwaInstalled, setPWAInstalled] = useState(false);
 
   useEffect(() => {
     const handler = (e: any) => {
@@ -18,8 +19,21 @@ export default function InstallAppButton() {
     return () => window.removeEventListener("transitionend", handler);
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("appinstalled", () => {
+      setPWAInstalled(true);
+    });
+  }, []);
+
   const onClick = (evt: any) => {
     evt.preventDefault();
+    if (pwaInstalled) {
+      alert(
+        `To reinstall the app, you'll need to uninstall it first and then reinstall it.`
+      );
+      return;
+    }
+
     if (!promptInstall) {
       if (isPWA()) {
         alert(
@@ -34,6 +48,8 @@ export default function InstallAppButton() {
         );
         return;
       }
+
+      return;
     }
     promptInstall.prompt();
   };
