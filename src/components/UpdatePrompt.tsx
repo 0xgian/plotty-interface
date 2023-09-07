@@ -25,7 +25,7 @@ export default function UpdatePrompt() {
           A new update is now available. Please update by re-installing the app
           from the browser.
         </div>
-        <a href="/login?flag=install" target="_blank">
+        <a href="/" target="_blank">
           <Button>Update</Button>
         </a>
       </div>

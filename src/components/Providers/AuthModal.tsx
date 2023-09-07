@@ -10,10 +10,8 @@ import InstallAppButton from "components/InstallAppButton";
 import { useAccount } from "wagmi";
 import { useAuthStore } from "state/auth";
 import { isPWA } from "lib/isPWA";
-import { useSearchParams } from "next/navigation";
 
 export default function AuthModal() {
-  const flag = useSearchParams()?.get("flag") ?? null;
   const { address } = useAccount();
   const { account } = useAuthStore();
 
@@ -21,9 +19,10 @@ export default function AuthModal() {
   const { openConnectModal } = useConnectModal();
 
   const connected = useMemo(() => address && !account, [address, account]);
+  const needsInstall = isMobile && !isPWA();
 
   return (
-    <Transition appear show={isShowing("auth")} as={Fragment}>
+    <Transition appear show={isShowing("auth") || needsInstall} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-[1]"
@@ -65,7 +64,7 @@ export default function AuthModal() {
                       <div>Data</div>
                     </div>
 
-                    {(isMobile && !isPWA()) || flag === "install" ? (
+                    {needsInstall ? (
                       <div className="flex flex-col gap-3">
                         <div>📲 See Plotty in...</div>
                         <InstallAppButton />

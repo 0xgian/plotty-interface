@@ -98,10 +98,14 @@ export default function Providers({ children }: { children: ReactNode }) {
           modalSize="compact"
           avatar={Avatar}
         >
-          {mounted && children}
-          {mounted && <UpdatePrompt />}
-          <PlotModal />
-          <AuthModal />
+          {mounted && (
+            <>
+              {children}
+              <UpdatePrompt />
+              <PlotModal />
+              <AuthModal />
+            </>
+          )}
         </RainbowKitProvider>
       </AuthContext>
     </WagmiConfig>
