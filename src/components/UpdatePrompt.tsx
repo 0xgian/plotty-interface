@@ -29,8 +29,15 @@ export default function UpdatePrompt() {
           A new update is now available. Please update by re-installing the app
           from the browser.
         </div>
-        <Button onClick={() => setShow(false)} className="min-w-[86px]">
-          Ok
+        <Button
+          onClick={() =>
+            alert(
+              `To install the app, you'll need to open it in your browser. Simply tap on the menu icon and select "Open in Browser"`
+            )
+          }
+          className="min-w-[86px]"
+        >
+          Update
         </Button>
       </div>
     </div>

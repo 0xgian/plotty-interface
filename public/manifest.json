@@ -3,8 +3,8 @@
   "background_color": "#131217",
   "display": "standalone",
   "scope": "/",
-  
-  "start_url": "/",
+  "id": "/home?version=1",
+  "start_url": "/home?version=1",
   "name": "Plotty",
   "short_name": "Plotty",
   "description": "Plot Approachable On-chain Data",
