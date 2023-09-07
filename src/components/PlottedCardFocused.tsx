@@ -135,7 +135,7 @@ export default function PlottedCardFocused({
           to: username,
           plotDetails: {
             plotId,
-            avatarUrl: plotDetails.profile?.profile_picture_uri,
+            avatarUrl: plotDetails.profile?.profile_picture_uri ?? plotDetails.profile?.public_address,
             desc: shortedAddress,
             timestamp: formatTime(Number(plotDetails.created_at)),
             content: plotDetails.content,
@@ -166,7 +166,10 @@ export default function PlottedCardFocused({
       <div className="flex items-start gap-3">
         <Link href={profileLink} className="hover:brightness-90">
           <Avatar
-            address={plotDetails.profile?.profile_picture_uri}
+            address={
+              plotDetails.profile?.profile_picture_uri ??
+              plotDetails.profile?.address
+            }
             size={40}
           />
         </Link>

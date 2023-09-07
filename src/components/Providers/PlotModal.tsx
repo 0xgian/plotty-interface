@@ -73,9 +73,7 @@ export default function PlotModal() {
                             <div className="relative flex gap-3 pt-3">
                               <div className="flex flex-col items-center gap-3">
                                 <Avatar
-                                  address={
-                                    replyingTo.plotDetails?.avatarUrl ?? "0x0"
-                                  }
+                                  address={replyingTo.plotDetails?.avatarUrl}
                                   size={40}
                                 />
                                 <div className="w-[2px] h-full bg-secondary-text bg-opacity-10" />

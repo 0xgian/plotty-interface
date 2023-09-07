@@ -38,7 +38,10 @@ export default function AvatarCard({
               hoverAction && "hover:brightness-90"
             )}
           >
-            <Avatar address={profile?.profile_picture_uri as any} size={40} />
+            <Avatar
+              address={profile?.profile_picture_uri ?? profile?.public_address}
+              size={40}
+            />
           </div>
 
           <div className="flex flex-col">

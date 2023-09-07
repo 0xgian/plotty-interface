@@ -144,7 +144,7 @@ export default function PlottedCard({
           to: username,
           plotDetails: {
             plotId,
-            avatarUrl: node.profile?.profile_picture_uri,
+            avatarUrl: node.profile?.profile_picture_uri ?? node.profile?.public_address,
             desc: shortedAddress,
             timestamp: formatTime(Number(node.created_at)),
             content: node.content,
@@ -173,7 +173,12 @@ export default function PlottedCard({
           className="hover:brightness-90"
           onClick={(e) => e.stopPropagation()}
         >
-          <Avatar address={node.profile?.profile_picture_uri} size={40} />
+          <Avatar
+            address={
+              node.profile?.profile_picture_uri ?? node.profile?.public_address
+            }
+            size={40}
+          />
         </Link>
         <div className="flex flex-col w-[calc(100%-40px-12px)]">
           <div className="flex items-center justify-between">
