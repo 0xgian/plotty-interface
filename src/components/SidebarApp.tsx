@@ -26,6 +26,7 @@ import { IconPlotty } from "custom-icons";
 import { isIOS, isMobileOnly } from "react-device-detect";
 import { rippleEffect } from "lib/touchEffect";
 import { usePathHistory } from "state/path";
+import { isPWA } from "lib/isPWA";
 
 export default function SidebarApp({
   ...props
@@ -35,12 +36,7 @@ export default function SidebarApp({
   const { account } = useAuthStore();
   const { openPlotModal } = usePlotModal();
 
-  const safeAreaBottom =
-    isIOS &&
-    isMobileOnly &&
-    window.matchMedia("(display-mode: standalone)").matches
-      ? "12px"
-      : "0px";
+  const safeAreaBottom = isIOS && isMobileOnly && isPWA() ? "12px" : "0px";
 
   const filteredMenus = SIDEMENUS.filter((m) =>
     m.authRequired ? !!account : true

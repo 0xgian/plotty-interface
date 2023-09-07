@@ -7,7 +7,7 @@ import { SessionUserServer } from "state/types";
 export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next();
   const reqSession = await getIronSession(req, res, ironOptions);
-  const { pathname } = req.nextUrl;
+  const { pathname, searchParams } = req.nextUrl;
   // @ts-ignore
   const session = reqSession[ironOptions.cookieName] as SessionUserServer;
 
@@ -24,7 +24,7 @@ export const middleware = async (req: NextRequest) => {
     );
   }
 
-  if (["/login"].includes(pathname)) {
+  if (["/login"].includes(pathname) && !searchParams?.get("flag")) {
     return NextResponse.redirect(new URL("/home", req.url));
   }
 

@@ -174,10 +174,7 @@ export default function RichTextEditor({
   );
 
   useEffect(() => {
-    if (
-      target &&
-      (filteredProfiles.length > 0 || filteredWords.length > 0)
-    ) {
+    if (target && (filteredProfiles.length > 0 || filteredWords.length > 0)) {
       const el = ref.current;
       const domRange = ReactEditor.toDOMRange(editor, target);
       const rect = domRange.getBoundingClientRect();
@@ -272,10 +269,7 @@ export default function RichTextEditor({
                       key={i}
                       onClick={() => {
                         Transforms.select(editor, target);
-                        Transforms.insertText(
-                          editor,
-                          word + " "
-                        );
+                        Transforms.insertText(editor, word + " ");
                         setTarget(null);
                       }}
                       className={clsx(
@@ -387,7 +381,9 @@ const withImages = (editor: any) => {
           }
         }
       } else {
-        toast("Please choose either 1 GIF or up to 4 photos.");
+        toast("Please choose either 1 GIF or up to 4 photos.", {
+          id: "error-add-photos",
+        });
       }
     } else {
       insertData(data);

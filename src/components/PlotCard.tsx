@@ -63,7 +63,9 @@ export default function PlotCard({
           }
           router.push(`/plot/${callbackPlotId}`);
         } catch (error) {
-          toast("Failed to plot. Please try again later.");
+          toast("Failed to plot. Please try again later.", {
+            id: "fail-to-plot",
+          });
         }
     },
     [

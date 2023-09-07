@@ -78,7 +78,7 @@ export default function ProfileHeader() {
                       activeColor="black"
                       onClick={() => {
                         navigator.clipboard.writeText(profile.public_address);
-                        toast.success("Copied");
+                        toast.success("Copied", { id: profile.public_address });
                       }}
                     />
                     <div
@@ -175,7 +175,8 @@ export default function ProfileHeader() {
                             closeModal();
                           } catch (error) {
                             toast(
-                              "Failed to update profile. Please try again later."
+                              "Failed to update profile. Please try again later.",
+                              { id: "fail-to-update-profile" }
                             );
                           }
                         }}

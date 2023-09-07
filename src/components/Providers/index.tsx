@@ -26,6 +26,7 @@ import { Avatar } from "components/Avatar";
 import AuthContext from "./AuthContext";
 import PlotModal from "./PlotModal";
 import AuthModal from "./AuthModal";
+import UpdatePrompt from "components/UpdatePrompt";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -98,8 +99,9 @@ export default function Providers({ children }: { children: ReactNode }) {
           avatar={Avatar}
         >
           {mounted && children}
-          <AuthModal />
+          {mounted && <UpdatePrompt />}
           <PlotModal />
+          <AuthModal />
         </RainbowKitProvider>
       </AuthContext>
     </WagmiConfig>

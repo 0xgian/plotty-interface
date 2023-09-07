@@ -9,8 +9,11 @@ import { isMobile } from "react-device-detect";
 import InstallAppButton from "components/InstallAppButton";
 import { useAccount } from "wagmi";
 import { useAuthStore } from "state/auth";
+import { isPWA } from "lib/isPWA";
+import { useSearchParams } from "next/navigation";
 
 export default function AuthModal() {
+  const flag = useSearchParams()?.get("flag") ?? null;
   const { address } = useAccount();
   const { account } = useAuthStore();
 
@@ -62,8 +65,7 @@ export default function AuthModal() {
                       <div>Data</div>
                     </div>
 
-                    {isMobile &&
-                    !window.matchMedia("(display-mode: standalone)").matches ? (
+                    {(isMobile || flag === "install") && !isPWA() ? (
                       <div className="flex flex-col gap-3">
                         <div>📲 See Plotty in...</div>
                         <InstallAppButton />
