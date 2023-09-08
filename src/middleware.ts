@@ -11,21 +11,20 @@ export const middleware = async (req: NextRequest) => {
   // @ts-ignore
   const session = reqSession[ironOptions.cookieName] as SessionUserServer;
 
+  let params = "";
+  searchParams.forEach((_, key) => {
+    params = `${params ? `${params}&` : "?"}${key}=${searchParams.get(key)}`;
+  });
+
   if (!session?.currentAccount) {
     if (pathname.startsWith("/login")) {
       return res;
     }
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/login" + params, req.url));
   }
 
-  if (["/", "/app"].includes(pathname)) {
-    return NextResponse.redirect(
-      new URL(`/${session.currentAccount}`, req.url)
-    );
-  }
-
-  if (["/login"].includes(pathname) && !searchParams?.get("flag")) {
-    return NextResponse.redirect(new URL("/home", req.url));
+  if (["/", "/app", "/login"].includes(pathname)) {
+    return NextResponse.redirect(new URL("/home" + params, req.url));
   }
 
   return res;

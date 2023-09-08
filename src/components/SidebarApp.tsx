@@ -27,6 +27,7 @@ import { isIOS, isMobileOnly } from "react-device-detect";
 import { rippleEffect } from "lib/touchEffect";
 import { usePathHistory } from "state/path";
 import { isPWA } from "lib/isPWA";
+import manifest from "../../public/manifest.json";
 
 export default function SidebarApp({
   ...props
@@ -64,42 +65,42 @@ export default function SidebarApp({
               <IconPlotty size={30} />
             </div>
           </Link>
-          {filteredMenus.map((menu, i) => {
-            const active =
-              menu.path === "/"
-                ? pathname.toLowerCase() === `/${account?.toLowerCase()}`
-                : pathname === menu.path;
-            return (
-              <div key={i} className="flex items-center w-full gap-2">
-                <div
-                  className={clsx(
-                    "hidden sm:block min-w-[4px] h-7 rounded-r-full",
-                    active && "bg-primary"
-                  )}
-                />
-                <Link
-                  href={menu.path}
-                  onClick={rippleEffect}
-                  className={clsx(
-                    "flex items-center justify-center lg:justify-start gap-3 py-4 sm:py-3 lg:p-3",
-                    "screen-hover:hover:bg-secondary-text screen-hover:hover:bg-opacity-10 transition-all",
-                    "sm:rounded-full w-full relative overflow-hidden",
-                    active && "font-semibold"
-                  )}
-                >
-                  {active ? menu.activeIcon : menu.icon}
+          {account &&
+            filteredMenus.map((menu, i) => {
+              const path = menu.path === "/user" ? `/${account}` : menu.path;
+              const active = pathname.toLowerCase() === path.toLowerCase();
+              console.log(path, pathname);
+              return (
+                <div key={i} className="flex items-center w-full gap-2">
                   <div
                     className={clsx(
-                      "hidden text-lg lg:flex items-center",
-                      active ? "font-semibold" : "font-medium"
+                      "hidden sm:block min-w-[4px] h-7 rounded-r-full",
+                      active && "bg-primary"
+                    )}
+                  />
+                  <Link
+                    href={path}
+                    onClick={rippleEffect}
+                    className={clsx(
+                      "flex items-center justify-center lg:justify-start gap-3 py-4 sm:py-3 lg:p-3",
+                      "screen-hover:hover:bg-secondary-text screen-hover:hover:bg-opacity-10 transition-all",
+                      "sm:rounded-full w-full relative overflow-hidden",
+                      active && "font-semibold"
                     )}
                   >
-                    {menu.title}
-                  </div>
-                </Link>
-              </div>
-            );
-          })}
+                    {active ? menu.activeIcon : menu.icon}
+                    <div
+                      className={clsx(
+                        "hidden text-lg lg:flex items-center",
+                        active ? "font-semibold" : "font-medium"
+                      )}
+                    >
+                      {menu.title}
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
 
           {account && (
             <Button
@@ -172,7 +173,7 @@ const SIDEMENUS = [
     title: "Profile",
     icon: <HiOutlineUser size={24} />,
     activeIcon: <HiUser size={24} />,
-    path: "/",
+    path: "/user",
     authRequired: true,
   },
   {
@@ -186,5 +187,5 @@ const SIDEMENUS = [
 
 export const MENUPATHS = [
   ...SIDEMENUS.map((menu) => menu.path),
-  "/home?version=1",
+  manifest.start_url,
 ];
