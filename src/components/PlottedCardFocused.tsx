@@ -137,7 +137,7 @@ export default function PlottedCardFocused({
             plotId,
             avatarUrl:
               plotDetails.profile?.profile_picture_uri ??
-              plotDetails.profile?.public_address,
+              `avatar:${plotDetails.profile?.public_address}`,
             desc: shortedAddress,
             timestamp: formatTime(Number(plotDetails.created_at)),
             content: plotDetails.content,
@@ -170,7 +170,7 @@ export default function PlottedCardFocused({
           <Avatar
             address={
               plotDetails.profile?.profile_picture_uri ??
-              `avatar:${plotDetails.profile?.address}`
+              `avatar:${plotDetails.profile?.public_address}`
             }
             size={40}
           />
