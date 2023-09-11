@@ -69,7 +69,6 @@ export default function SidebarApp({
             filteredMenus.map((menu, i) => {
               const path = menu.path === "/user" ? `/${account}` : menu.path;
               const active = pathname.toLowerCase() === path.toLowerCase();
-              console.log(path, pathname);
               return (
                 <div key={i} className="flex items-center w-full gap-2">
                   <div

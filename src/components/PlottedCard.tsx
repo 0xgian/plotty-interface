@@ -144,7 +144,8 @@ export default function PlottedCard({
           to: username,
           plotDetails: {
             plotId,
-            avatarUrl: node.profile?.profile_picture_uri ?? node.profile?.public_address,
+            avatarUrl:
+              node.profile?.profile_picture_uri ?? node.profile?.public_address,
             desc: shortedAddress,
             timestamp: formatTime(Number(node.created_at)),
             content: node.content,
@@ -175,7 +176,8 @@ export default function PlottedCard({
         >
           <Avatar
             address={
-              node.profile?.profile_picture_uri ?? node.profile?.public_address
+              node.profile?.profile_picture_uri ??
+              `avatar:${node.profile?.public_address}`
             }
             size={40}
           />

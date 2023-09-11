@@ -30,7 +30,7 @@ export default function UpdatePrompt() {
           from the browser.
         </div>
         <Button onClick={() => setShow(false)} className="min-w-[86px]">
-          Ok
+          Got it
         </Button>
       </div>
     </div>

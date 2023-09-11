@@ -1,25 +1,21 @@
 "use client";
 
-import { usePathHistory } from "state/path";
 import IconButton from "components/IconButton";
 import { HiOutlineArrowLeft } from "react-icons/hi";
 import Link from "next/link";
 import { IconPlotty } from "custom-icons";
 import { MENUPATHS } from "components/SidebarApp";
-import { useRouter } from "next/navigation";
+import { useGoBack } from "hooks/useGoBack";
 
 export default function BackButton() {
-  const router = useRouter();
-  const { prevPathname, currentPathname } = usePathHistory();
+  const { goBack, currentPathname } = useGoBack();
 
   return !MENUPATHS.includes(currentPathname ?? "") ? (
     <IconButton
       icon={<HiOutlineArrowLeft size={20} />}
       activeColor="black"
       kind="header"
-      onClick={() =>
-        !!prevPathname ? router.back() : router.replace("/home")
-      }
+      onClick={goBack}
     />
   ) : currentPathname?.startsWith("/home") ? (
     <Link

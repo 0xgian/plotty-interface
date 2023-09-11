@@ -25,8 +25,9 @@ export const usePlotDetails = (plotId?: string) => {
           : {}
       );
       const json = await res.json();
-      syncFeedback([{ node: json.data?.data?.post }]);
-      return json?.data?.data?.post;
+      const node = json?.data?.data?.post;
+      node && syncFeedback([{ node }]);
+      return node;
     }
     return null;
   });

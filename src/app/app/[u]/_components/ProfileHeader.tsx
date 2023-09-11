@@ -42,7 +42,9 @@ export default function ProfileHeader() {
       <div className="flex justify-between gap-[30px] flex-row">
         <div className="flex flex-col items-start gap-6 lg:flex-row">
           <Avatar
-            address={profile?.profile_picture_uri ?? profile?.public_address}
+            address={
+              profile?.profile_picture_uri ?? `avatar:${profile?.public_address}`
+            }
             size={132}
           />
 

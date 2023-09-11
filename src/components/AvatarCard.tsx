@@ -39,7 +39,10 @@ export default function AvatarCard({
             )}
           >
             <Avatar
-              address={profile?.profile_picture_uri ?? profile?.public_address}
+              address={
+                profile?.profile_picture_uri ??
+                `avatar:${profile?.public_address}`
+              }
               size={40}
             />
           </div>

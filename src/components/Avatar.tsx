@@ -4,14 +4,10 @@ import Image from "next/image";
 import BoringAvatar from "boring-avatars";
 import clsx from "clsx";
 
-export const Avatar: AvatarComponent = ({
-  address = "0x0",
-  ensImage,
-  size,
-}) => {
-  const { profile } = useProfile(
-    address.startsWith("http") ? undefined : address
-  );
+export const Avatar: AvatarComponent = ({ address, ensImage, size }) => {
+  const skipFetchingProfile =
+    address.startsWith("http") || address.startsWith("avatar");
+  const { profile } = useProfile(skipFetchingProfile ? undefined : address);
 
   return address.startsWith("http") || !!profile?.profile_picture_uri ? (
     <Image
@@ -24,7 +20,7 @@ export const Avatar: AvatarComponent = ({
   ) : (
     <BoringAvatar
       size={size}
-      name={address}
+      name={address.replaceAll("avatar:", "")}
       variant="beam"
       colors={["#352F44", "#5C5470", "#B9B4C7", "#FAF0E6"]}
     />
