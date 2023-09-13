@@ -254,7 +254,6 @@ export default function PlottedCard({
                 }
                 activeColor="red"
                 activeAnimate
-                label="Not useful"
                 onClick={() => onNotUseful(plotId, isNotUseful(plotId))}
               />
             </div>
