@@ -41,12 +41,15 @@ export default function ProfileHeader() {
     <div className="flex flex-col gap-6">
       <div className="flex justify-between gap-[30px] flex-row">
         <div className="flex flex-col items-start gap-6 lg:flex-row">
-          <Avatar
-            address={
-              profile?.profile_picture_uri ?? `avatar:${profile?.public_address}`
-            }
-            size={132}
-          />
+          <div className="min-w-[132px]">
+            <Avatar
+              address={
+                profile?.profile_picture_uri ??
+                `avatar:${profile?.public_address}`
+              }
+              size={132}
+            />
+          </div>
 
           <div className="w-full sm:max-w-[600px] flex flex-col gap-3">
             <div className="flex flex-col">
