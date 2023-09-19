@@ -15,8 +15,12 @@ export async function generateMetadata(
   const username =
     plotDetails?.profile?.handle ??
     formatAddress(plotDetails?.profile?.public_address, { trailing: 0 });
+  const parentMeta = await parent;
 
-  return { title: plotDetails ? `${username}: ${content}` : `Plot - ${id}` };
+  return {
+    title: plotDetails ? `${username}: ${content}` : `Plot - ${id}`,
+    description: plotDetails ? content : parentMeta.description,
+  };
 }
 
 export default function Layout({ children }: { children: ReactNode }) {
