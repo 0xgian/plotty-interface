@@ -1,8 +1,9 @@
 import clsx from "clsx";
 import { Avatar } from "components/Avatar";
 import { formatAddress } from "lib/formatAddress";
-import { Fragment, ReactNode } from "react";
+import { Fragment, ReactNode, useMemo } from "react";
 import RichTextRenderer from "./RichTextRenderer";
+import { IconHandleBadge } from "custom-icons";
 
 export default function AvatarCard({
   profile,
@@ -26,8 +27,20 @@ export default function AvatarCard({
 } & React.HTMLAttributes<HTMLDivElement>) {
   const nametag =
     profile?.public_nametag_user_preferance || profile?.public_nametag;
+
   const shortedAddress = formatAddress(profile.public_address);
-  const subtitleEntity = [nametag, shortedAddress];
+  const subtitleEntity = [shortedAddress];
+
+  const username = profile?.handle
+    ? profile.handle + (nametag ? ` (${nametag})` : "")
+    : nametag || formatAddress(profile?.public_address, { trailing: 0 });
+  const usernameBadge = useMemo(
+    () =>
+      profile?.handle ? (
+        <IconHandleBadge size={15} className="text-primary" />
+      ) : null,
+    [profile]
+  );
 
   return (
     <div
@@ -55,28 +68,32 @@ export default function AvatarCard({
           </div>
 
           <div className="flex flex-col">
-            <div
-              className={clsx(
-                "font-semibold truncate text-ellipsis",
-                hoverAction && "hover:underline"
-              )}
-            >
-              {profile?.handle ??
-                formatAddress(profile?.public_address, { trailing: 0 })}
+            <div className="flex items-center gap-[6px]">
+              <div
+                className={clsx(
+                  "font-semibold truncate text-ellipsis",
+                  hoverAction && "hover:underline"
+                )}
+              >
+                {username}
+              </div>
+              {usernameBadge}
             </div>
 
-            {subtitleEntity
-              .filter((text) => !!text)
-              .map((text, i) => (
-                <Fragment key={text}>
-                  {i > 0 && (
-                    <div className="truncate text-ellipsis text-secondary-text">
-                      ·
-                    </div>
-                  )}
-                  <div className="text-secondary-text">{text}</div>
-                </Fragment>
-              ))}
+            <div className="flex items-center gap-[6px]">
+              {subtitleEntity
+                .filter((text) => !!text)
+                .map((text, i) => (
+                  <Fragment key={text}>
+                    {i > 0 && (
+                      <div className="truncate text-ellipsis text-secondary-text">
+                        ·
+                      </div>
+                    )}
+                    <div className="text-secondary-text">{text}</div>
+                  </Fragment>
+                ))}
+            </div>
 
             {showBio && profile?.bio && (
               <div>

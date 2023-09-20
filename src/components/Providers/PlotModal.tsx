@@ -72,19 +72,23 @@ export default function PlotModal() {
                           {replyingTo && replyingTo?.plotDetails && (
                             <div className="relative flex gap-3 pt-3">
                               <div className="flex flex-col items-center gap-3">
-                                <Avatar
-                                  address={replyingTo.plotDetails?.avatarUrl}
-                                  size={40}
-                                />
+                                <div>
+                                  <Avatar
+                                    address={replyingTo.plotDetails?.avatarUrl}
+                                    size={40}
+                                  />
+                                </div>
                                 <div className="w-[2px] h-full bg-secondary-text bg-opacity-10" />
                               </div>
                               <div className="flex flex-col w-[calc(100%-40px-12px)]">
-                                <div className="flex gap-[6px] w-full items-end">
+                                <div className="flex gap-[6px] w-full items-center">
                                   <div className="font-semibold">
                                     {replyingTo.to}
                                   </div>
-                                  {replyingTo.plotDetails.subtitleEntity.filter(text => !!text).map(
-                                    (text, i) => (
+                                  {replyingTo.plotDetails.badge}
+                                  {replyingTo.plotDetails.subtitleEntity
+                                    .filter((text) => !!text)
+                                    .map((text, i) => (
                                       <Fragment key={text}>
                                         {i > 0 && (
                                           <div className="text-secondary-text">
@@ -95,8 +99,7 @@ export default function PlotModal() {
                                           {text}
                                         </div>
                                       </Fragment>
-                                    )
-                                  )}
+                                    ))}
                                 </div>
                                 <div className="w-full mb-3 break-words">
                                   <RichTextRenderer

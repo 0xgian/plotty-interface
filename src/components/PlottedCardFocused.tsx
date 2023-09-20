@@ -11,6 +11,7 @@ import {
   IconOutlineNotUseful,
   IconOutlineUseful,
   IconUseful,
+  IconHandleBadge,
 } from "custom-icons";
 import Link from "next/link";
 import { Avatar } from "components/Avatar";
@@ -69,17 +70,25 @@ export default function PlottedCardFocused({
   const nametag =
     plotDetails?.profile?.public_nametag_user_preferance ||
     plotDetails?.profile?.public_nametag;
+
   const shortedAddress =
     plotDetails && formatAddress(plotDetails?.profile?.public_address);
   const subtitleEntity = useMemo(
-    () => [nametag, shortedAddress],
-    [nametag, shortedAddress]
+    () => [shortedAddress],
+    [shortedAddress]
   );
 
-  const username =
-    plotDetails &&
-    (plotDetails?.profile?.handle ??
-      formatAddress(plotDetails?.profile?.public_address, { trailing: 0 }));
+  const username = plotDetails?.profile?.handle
+    ? plotDetails.profile.handle + (nametag ? ` (${nametag})` : "")
+    : nametag ||
+      formatAddress(plotDetails.profile?.public_address, { trailing: 0 });
+  const usernameBadge = useMemo(
+    () =>
+      plotDetails?.profile?.handle ? (
+        <IconHandleBadge size={15} className="text-primary" />
+      ) : null,
+    [plotDetails]
+  );
 
   const { feedback, replot } = useFeedback(queryKey);
 
@@ -147,6 +156,7 @@ export default function PlottedCardFocused({
             avatarUrl:
               plotDetails.profile?.profile_picture_uri ??
               `avatar:${plotDetails.profile?.public_address}`,
+            badge: usernameBadge,
             subtitleEntity: [
               ...subtitleEntity,
               formatTime(Number(plotDetails.created_at)),
@@ -154,7 +164,14 @@ export default function PlottedCardFocused({
             content: plotDetails.content,
           },
         }),
-      [username, plotId, plotDetails, subtitleEntity, openPlotModal]
+      [
+        username,
+        plotId,
+        plotDetails,
+        usernameBadge,
+        subtitleEntity,
+        openPlotModal,
+      ]
     )
   );
 
@@ -168,7 +185,7 @@ export default function PlottedCardFocused({
       {isReplotted(plotId) && (
         <div className="flex items-center gap-3 text-secondary-text h-7">
           <div className="flex justify-end w-10">
-            <HiOutlineArrowPathRoundedSquare size={16} />
+            <HiOutlineArrowPathRoundedSquare size={15} />
           </div>
           <div className="flex items-center text-xs font-semibold">
             You Replotted
@@ -188,13 +205,14 @@ export default function PlottedCardFocused({
         </Link>
         <div className="flex flex-col w-[calc(100%-40px-12px)]">
           <div className="flex items-center justify-between">
-            <div className="flex gap-[6px] w-full items-end">
+            <div className="flex gap-[6px] w-full items-center">
               <Link
                 href={profileLink}
                 className="font-semibold hover:underline"
               >
                 {username}
               </Link>
+              {usernameBadge}
             </div>
 
             {isOwnerPlot && (
@@ -214,16 +232,18 @@ export default function PlottedCardFocused({
           </div>
 
           <div className="flex gap-[6px] w-full items-end">
-            {subtitleEntity.filter(text => !!text).map((text, i) => (
-              <Fragment key={text}>
-                {i > 0 && <div className="text-secondary-text">·</div>}
-                <div className="text-secondary-text">{text}</div>
-              </Fragment>
-            ))}
+            {subtitleEntity
+              .filter((text) => !!text)
+              .map((text, i) => (
+                <Fragment key={text}>
+                  {i > 0 && <div className="text-secondary-text">·</div>}
+                  <div className="text-secondary-text">{text}</div>
+                </Fragment>
+              ))}
           </div>
           {plotDetails.source === "on-chain" && (
             <div className="text-secondary-text flex gap-[6px] items-center m-[2px]">
-              <IconIntelligence size={16} />
+              <IconIntelligence size={15} />
               <span>On-chain as a Plot</span>
             </div>
           )}

@@ -11,6 +11,7 @@ import {
   IconOutlineNotUseful,
   IconOutlineUseful,
   IconUseful,
+  IconHandleBadge,
 } from "custom-icons";
 import {
   HiOutlineArrowPathRoundedSquare,
@@ -70,15 +71,23 @@ export default function PlottedCard({
   const nametag =
     node.profile?.public_nametag_user_preferance ||
     node.profile?.public_nametag;
+
   const shortedAddress = formatAddress(node.profile.public_address);
   const subtitleEntity = useMemo(
-    () => [nametag, shortedAddress, formatTime(Number(node.created_at))],
-    [nametag, shortedAddress, node.created_at]
+    () => [shortedAddress, formatTime(Number(node.created_at))],
+    [shortedAddress, node.created_at]
   );
 
-  const username =
-    node.profile?.handle ??
-    formatAddress(node.profile?.public_address, { trailing: 0 });
+  const username = node.profile?.handle
+    ? node.profile.handle + (nametag ? ` (${nametag})` : "")
+    : nametag || formatAddress(node.profile?.public_address, { trailing: 0 });
+  const usernameBadge = useMemo(
+    () =>
+      node.profile?.handle ? (
+        <IconHandleBadge size={15} className="text-primary" />
+      ) : null,
+    [node]
+  );
 
   const ownerReplottedName =
     nodeItem.node.profile?.handle ??
@@ -155,11 +164,12 @@ export default function PlottedCard({
             plotId,
             avatarUrl:
               node.profile?.profile_picture_uri ?? node.profile?.public_address,
+            badge: usernameBadge,
             subtitleEntity,
             content: node.content,
           },
         }),
-      [username, plotId, node, openPlotModal, subtitleEntity]
+      [username, plotId, node, openPlotModal, usernameBadge, subtitleEntity]
     )
   );
 
@@ -168,7 +178,7 @@ export default function PlottedCard({
       {isReplottedPlot && (
         <div className="flex items-center gap-3 text-secondary-text h-7">
           <div className="flex justify-end w-10">
-            <HiOutlineArrowPathRoundedSquare size={16} />
+            <HiOutlineArrowPathRoundedSquare size={15} />
           </div>
           <div className="flex items-center text-xs font-semibold">
             {`${isOwnerPlot ? "You" : ownerReplottedName} Replotted`}
@@ -192,7 +202,7 @@ export default function PlottedCard({
         </Link>
         <div className="flex flex-col w-[calc(100%-40px-12px)]">
           <div className="flex items-center justify-between">
-            <div className="flex gap-[6px] w-full items-baseline">
+            <div className="flex gap-[6px] w-full items-center">
               <Link
                 href={profileLink}
                 className="font-semibold hover:underline"
@@ -200,12 +210,15 @@ export default function PlottedCard({
               >
                 {username}
               </Link>
-              {subtitleEntity.filter(text => !!text).map((text, i) => (
-                <Fragment key={text}>
-                  {i > 0 && <div className="text-secondary-text">·</div>}
-                  <div className="text-secondary-text">{text}</div>
-                </Fragment>
-              ))}
+              {usernameBadge}
+              {subtitleEntity
+                .filter((text) => !!text)
+                .map((text, i) => (
+                  <Fragment key={text}>
+                    {i > 0 && <div className="text-secondary-text">·</div>}
+                    <div className="text-secondary-text">{text}</div>
+                  </Fragment>
+                ))}
             </div>
 
             {isOwnerPlot && (
@@ -226,7 +239,7 @@ export default function PlottedCard({
 
           {node.source === "on-chain" && (
             <div className="text-secondary-text flex gap-[6px] items-center h-[1.375rem] m-[2px]">
-              <IconIntelligence size={16} />
+              <IconIntelligence size={15} />
               <span>On-chain as a Plot</span>
             </div>
           )}

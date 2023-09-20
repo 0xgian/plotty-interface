@@ -4,8 +4,12 @@ import clsx from "clsx";
 import { Avatar } from "components/Avatar";
 import {
   HiOutlineDocumentDuplicate,
+  HiOutlineDotsHorizontal,
+  HiOutlinePlus,
   HiOutlineQrcode,
+  HiOutlineSpeakerphone,
   HiOutlineX,
+  HiTag,
 } from "react-icons/hi";
 import { formatAddress } from "lib/formatAddress";
 import QRCode from "react-qr-code";
@@ -14,13 +18,15 @@ import { toast } from "react-hot-toast";
 import RichTextRenderer from "components/RichTextRenderer";
 import { useProfile } from "hooks/useProfile";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { formatNumber } from "lib/formatNumber";
 import { useAuthStore } from "state/auth";
 import Modal from "components/Modal";
 import { Dialog } from "@headlessui/react";
 import IconButton from "components/IconButton";
 import FollowButton from "components/FollowButton";
+import { IconHandleBadge } from "custom-icons";
+import Dropdown from "components/Dropdown";
 
 export default function ProfileHeader() {
   const params = useParams();
@@ -36,6 +42,16 @@ export default function ProfileHeader() {
   } = useProfile(account);
 
   const [bioValue, setBioValue] = useState<string>(profile?.bio ?? "");
+
+  const nametag =
+    profile?.public_nametag_user_preferance || profile?.public_nametag;
+  const usernameBadge = useMemo(
+    () =>
+      profile?.handle ? (
+        <IconHandleBadge size={20} className="text-primary ml-[6px]" />
+      ) : null,
+    [profile]
+  );
 
   return (
     <div className="flex flex-col gap-6">
@@ -53,7 +69,7 @@ export default function ProfileHeader() {
 
           <div className="w-full sm:max-w-[600px] flex flex-col gap-3">
             <div className="flex flex-col">
-              <div className="flex items-center gap-3 mb-[6px]">
+              <div className="flex items-center mb-[6px]">
                 <div
                   className={clsx(
                     "font-semibold text-xl",
@@ -63,8 +79,10 @@ export default function ProfileHeader() {
                   {!profile?.handle ? "No Handle" : profile.handle}
                 </div>
 
-                {/* <Button size="xs">
-                  <HiOutlinePlus size={16} />
+                {usernameBadge}
+
+                {/* <Button size="xs" px="px-3" className="ml-3">
+                  <HiOutlinePlus size={15} />
                   <span className="hidden sm:block">Mint</span>
                 </Button> */}
               </div>
@@ -113,6 +131,62 @@ export default function ProfileHeader() {
                   </div>
                 </div>
               )}
+
+              <div className="flex mt-[6px]">
+                <Dropdown
+                  button={
+                    nametag ? (
+                      <Button size="xs" px="px-3" kind="outline-black">
+                        <HiTag size={15} />
+                        <span>{nametag}</span>
+                      </Button>
+                    ) : (
+                      <Button
+                        size="xs"
+                        px="px-3"
+                        kind="outline-black"
+                        className="border-dashed"
+                      >
+                        <HiOutlinePlus size={15} />
+                        <span>Add</span>
+                      </Button>
+                    )
+                  }
+                  maxWidth="max-w-[160px]"
+                  position="bottom-right"
+                >
+                  {({ close }) => (
+                    <div>
+                      <div
+                        className={clsx(
+                          "border-b border-secondary-text border-opacity-10",
+                          "px-4 py-3 font-bold"
+                        )}
+                      >
+                        Address label
+                      </div>
+                      <div
+                        className={clsx(
+                          "flex items-center gap-3 px-4 py-3 mt-3",
+                          "hover:bg-secondary-text hover:bg-opacity-10 cursor-pointer"
+                        )}
+                      >
+                        <HiOutlineSpeakerphone size={20} />
+                        <span>Report</span>
+                      </div>
+                      <div
+                        className={clsx(
+                          "flex items-center gap-3 px-4 py-3 mb-3",
+                          "hover:bg-secondary-text hover:bg-opacity-10 cursor-pointer"
+                        )}
+                      >
+                        <HiOutlinePlus size={20} />
+                        <span>Add private</span>
+                      </div>
+                    </div>
+                  )}
+                </Dropdown>
+              </div>
             </div>
 
             {profile?.bio && (
@@ -122,7 +196,7 @@ export default function ProfileHeader() {
             )}
 
             {/* <div className="flex gap-[6px] items-center text-secondary-text">
-              <HiOutlineCalendar size={16} />
+              <HiOutlineCalendar size={15} />
               <div>1800 days</div>
             </div> */}
 

@@ -7,3 +7,4 @@ export { default as IconIntelligence } from "./IconIntelligence";
 export { default as IconOutlineIntelligence } from "./IconOutlineIntelligence";
 export { default as IconPhinder } from "./IconPhinder";
 export { default as IconOutlinePhinder } from "./IconOutlinePhinder";
+export { default as IconHandleBadge } from "./IconHandleBadge";

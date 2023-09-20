@@ -5,6 +5,7 @@ interface ReplyingTo {
   plotDetails?: {
     plotId: string;
     avatarUrl: string;
+    badge: React.ReactNode;
     subtitleEntity: string[];
     content: string;
   };
