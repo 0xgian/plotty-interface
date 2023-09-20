@@ -17,9 +17,11 @@ import { useDisconnect } from "wagmi";
 import Dropdown from "components/Dropdown";
 import Link from "next/link";
 import AvatarCard from "components/AvatarCard";
+import { useProfile } from "hooks/useProfile";
 
 export default function AuthButton() {
   const { account: currentAccount } = useAuthStore();
+  const { profile: currentProfile } = useProfile(currentAccount);
   const { disconnect } = useDisconnect();
   const { signOut } = useAuthenticationAdapter();
   return (
@@ -75,7 +77,11 @@ export default function AuthButton() {
                       <div className="py-3 border-b border-secondary-text border-opacity-10">
                         <div className="relative px-4 py-3 select-none hover:bg-secondary-text hover:bg-opacity-5">
                           <AvatarCard
-                            profile={{ public_address: currentAccount }}
+                            profile={
+                              currentProfile ?? {
+                                public_address: currentAccount,
+                              }
+                            }
                             trailing={
                               <HiCheckCircle className="text-green-500" />
                             }

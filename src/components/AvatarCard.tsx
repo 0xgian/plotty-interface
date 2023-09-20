@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Avatar } from "components/Avatar";
 import { formatAddress } from "lib/formatAddress";
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 import RichTextRenderer from "./RichTextRenderer";
 
 export default function AvatarCard({
@@ -17,11 +17,18 @@ export default function AvatarCard({
     public_address: string;
     handle?: string;
     bio?: string;
+    public_nametag?: string;
+    public_nametag_user_preferance?: string;
   };
   showBio?: boolean;
   hoverAction?: boolean;
   trailing?: ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>) {
+  const nametag =
+    profile?.public_nametag_user_preferance || profile?.public_nametag;
+  const shortedAddress = formatAddress(profile.public_address);
+  const subtitleEntity = [nametag, shortedAddress];
+
   return (
     <div
       className={clsx(
@@ -57,9 +64,20 @@ export default function AvatarCard({
               {profile?.handle ??
                 formatAddress(profile?.public_address, { trailing: 0 })}
             </div>
-            <div className="truncate text-ellipsis text-secondary-text">
-              {formatAddress(profile?.public_address)}
-            </div>
+
+            {subtitleEntity
+              .filter((text) => !!text)
+              .map((text, i) => (
+                <Fragment key={text}>
+                  {i > 0 && (
+                    <div className="truncate text-ellipsis text-secondary-text">
+                      ·
+                    </div>
+                  )}
+                  <div className="text-secondary-text">{text}</div>
+                </Fragment>
+              ))}
+
             {showBio && profile?.bio && (
               <div>
                 <RichTextRenderer content={profile.bio} />

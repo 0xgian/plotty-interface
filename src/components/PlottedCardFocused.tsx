@@ -25,7 +25,7 @@ import Button from "components/Button";
 import PlotDropdownMenu from "components/PlotDropdownMenu";
 import { useAuthStore } from "state/auth";
 import MediaRenderer from "components/MediaRenderer";
-import { useCallback } from "react";
+import { Fragment, useCallback, useMemo } from "react";
 import { useFeedback } from "hooks/useFeedback";
 import { useWithAuth } from "hooks/useWithAuth";
 import { usePlotFeedbackStore } from "state/plotFeedback";
@@ -65,8 +65,17 @@ export default function PlottedCardFocused({
   const profileLink = plotDetails?.profile?.handle
     ? `/${plotDetails?.profile?.handle}`
     : `/${plotDetails?.profile.public_address}`;
+
+  const nametag =
+    plotDetails?.profile?.public_nametag_user_preferance ||
+    plotDetails?.profile?.public_nametag;
   const shortedAddress =
     plotDetails && formatAddress(plotDetails?.profile?.public_address);
+  const subtitleEntity = useMemo(
+    () => [nametag, shortedAddress],
+    [nametag, shortedAddress]
+  );
+
   const username =
     plotDetails &&
     (plotDetails?.profile?.handle ??
@@ -138,12 +147,14 @@ export default function PlottedCardFocused({
             avatarUrl:
               plotDetails.profile?.profile_picture_uri ??
               `avatar:${plotDetails.profile?.public_address}`,
-            desc: shortedAddress,
-            timestamp: formatTime(Number(plotDetails.created_at)),
+            subtitleEntity: [
+              ...subtitleEntity,
+              formatTime(Number(plotDetails.created_at)),
+            ],
             content: plotDetails.content,
           },
         }),
-      [username, plotId, plotDetails, shortedAddress, openPlotModal]
+      [username, plotId, plotDetails, subtitleEntity, openPlotModal]
     )
   );
 
@@ -203,7 +214,12 @@ export default function PlottedCardFocused({
           </div>
 
           <div className="flex gap-[6px] w-full items-end">
-            <div className="text-secondary-text">{shortedAddress}</div>
+            {subtitleEntity.filter(text => !!text).map((text, i) => (
+              <Fragment key={text}>
+                {i > 0 && <div className="text-secondary-text">·</div>}
+                <div className="text-secondary-text">{text}</div>
+              </Fragment>
+            ))}
           </div>
           {plotDetails.source === "on-chain" && (
             <div className="text-secondary-text flex gap-[6px] items-center m-[2px]">

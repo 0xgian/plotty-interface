@@ -5,8 +5,7 @@ interface ReplyingTo {
   plotDetails?: {
     plotId: string;
     avatarUrl: string;
-    desc: string;
-    timestamp: string;
+    subtitleEntity: string[];
     content: string;
   };
 }

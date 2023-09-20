@@ -25,7 +25,7 @@ import PlotDropdownMenu from "components/PlotDropdownMenu";
 import MediaRenderer from "components/MediaRenderer";
 import CardContainer from "components/CardContainer";
 import { useFeedback } from "hooks/useFeedback";
-import { useCallback } from "react";
+import { Fragment, useCallback, useMemo } from "react";
 import { useWithAuth } from "hooks/useWithAuth";
 import { usePlotFeedbackStore } from "state/plotFeedback";
 
@@ -66,7 +66,16 @@ export default function PlottedCard({
   const profileLink = node.profile?.handle
     ? `/${node.profile?.handle}`
     : `/${node.profile.public_address}`;
+
+  const nametag =
+    node.profile?.public_nametag_user_preferance ||
+    node.profile?.public_nametag;
   const shortedAddress = formatAddress(node.profile.public_address);
+  const subtitleEntity = useMemo(
+    () => [nametag, shortedAddress, formatTime(Number(node.created_at))],
+    [nametag, shortedAddress, node.created_at]
+  );
+
   const username =
     node.profile?.handle ??
     formatAddress(node.profile?.public_address, { trailing: 0 });
@@ -146,12 +155,11 @@ export default function PlottedCard({
             plotId,
             avatarUrl:
               node.profile?.profile_picture_uri ?? node.profile?.public_address,
-            desc: shortedAddress,
-            timestamp: formatTime(Number(node.created_at)),
+            subtitleEntity,
             content: node.content,
           },
         }),
-      [username, plotId, node, openPlotModal, shortedAddress]
+      [username, plotId, node, openPlotModal, subtitleEntity]
     )
   );
 
@@ -184,7 +192,7 @@ export default function PlottedCard({
         </Link>
         <div className="flex flex-col w-[calc(100%-40px-12px)]">
           <div className="flex items-center justify-between">
-            <div className="flex gap-[6px] w-full items-end">
+            <div className="flex gap-[6px] w-full items-baseline">
               <Link
                 href={profileLink}
                 className="font-semibold hover:underline"
@@ -192,11 +200,12 @@ export default function PlottedCard({
               >
                 {username}
               </Link>
-              <div className="text-secondary-text">{shortedAddress}</div>
-              <div className="text-secondary-text">·</div>
-              <div className="text-secondary-text">
-                {formatTime(Number(node.created_at))}
-              </div>
+              {subtitleEntity.filter(text => !!text).map((text, i) => (
+                <Fragment key={text}>
+                  {i > 0 && <div className="text-secondary-text">·</div>}
+                  <div className="text-secondary-text">{text}</div>
+                </Fragment>
+              ))}
             </div>
 
             {isOwnerPlot && (

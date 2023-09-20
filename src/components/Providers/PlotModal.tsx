@@ -83,13 +83,20 @@ export default function PlotModal() {
                                   <div className="font-semibold">
                                     {replyingTo.to}
                                   </div>
-                                  <div className="text-secondary-text">
-                                    {replyingTo.plotDetails.desc}
-                                  </div>
-                                  <div className="text-secondary-text">·</div>
-                                  <div className="text-secondary-text">
-                                    {replyingTo.plotDetails.timestamp}
-                                  </div>
+                                  {replyingTo.plotDetails.subtitleEntity.filter(text => !!text).map(
+                                    (text, i) => (
+                                      <Fragment key={text}>
+                                        {i > 0 && (
+                                          <div className="text-secondary-text">
+                                            ·
+                                          </div>
+                                        )}
+                                        <div className="text-secondary-text">
+                                          {text}
+                                        </div>
+                                      </Fragment>
+                                    )
+                                  )}
                                 </div>
                                 <div className="w-full mb-3 break-words">
                                   <RichTextRenderer

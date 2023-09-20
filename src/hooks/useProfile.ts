@@ -87,6 +87,10 @@ export const useProfile = (param: string | undefined) => {
       profile_picture: profileData?.profile_picture,
       profile_picture_uri: profileData?.profile_picture_uri,
       handle: profileData?.handle,
+      public_nametag: profileData?.public_nametag,
+      public_nametag_user_preferance:
+        profileData?.public_nametag_user_preferance,
+      is_contract: profileData?.is_contract,
       join_date: profileData?.join_date,
       following: profileData?.following,
       follower: profileData?.follower,
