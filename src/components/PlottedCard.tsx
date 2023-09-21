@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { Avatar } from "components/Avatar";
-import { formatAddress } from "lib/formatAddress";
+import { formatAddress, formatWithBrackets } from "lib/formatAddress";
 import { formatTime } from "lib/formatTime";
 import RichTextRenderer from "components/RichTextRenderer";
 import IconButton from "components/IconButton";
@@ -79,7 +79,7 @@ export default function PlottedCard({
   );
 
   const username = node.profile?.handle
-    ? node.profile.handle + (nametag ? ` (${nametag})` : "")
+    ? node.profile.handle + formatWithBrackets(nametag)
     : nametag || formatAddress(node.profile?.public_address, { trailing: 0 });
   const usernameBadge = useMemo(
     () =>
@@ -205,7 +205,7 @@ export default function PlottedCard({
             <div className="flex gap-[6px] w-full items-center">
               <Link
                 href={profileLink}
-                className="font-semibold hover:underline"
+                className="font-semibold truncate hover:underline"
                 onClick={(e) => e.stopPropagation()}
               >
                 {username}
@@ -216,7 +216,14 @@ export default function PlottedCard({
                 .map((text, i) => (
                   <Fragment key={text}>
                     {i > 0 && <div className="text-secondary-text">·</div>}
-                    <div className="text-secondary-text">{text}</div>
+                    <div
+                      className={clsx(
+                        "text-secondary-text whitespace-nowrap",
+                        text.length > 6 && "truncate"
+                      )}
+                    >
+                      {text}
+                    </div>
                   </Fragment>
                 ))}
             </div>

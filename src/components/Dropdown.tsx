@@ -52,6 +52,25 @@ export default function Dropdown({
   );
 }
 
+export function DropdownMenu({
+  onClick,
+  className,
+  children,
+}: {} & React.ButtonHTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={clsx(
+        "flex items-center gap-3 px-4 py-3",
+        "hover:bg-secondary-text hover:bg-opacity-10 cursor-pointer",
+        className
+      )}
+      onClick={onClick}
+    >
+      {children}
+    </div>
+  );
+}
+
 type POSITIONS = "bottom-left" | "bottom-right" | "bottom-center";
 
 const POSITIONS_CLASS: { [key in POSITIONS]: string } = {

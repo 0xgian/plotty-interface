@@ -26,7 +26,7 @@ import { Dialog } from "@headlessui/react";
 import IconButton from "components/IconButton";
 import FollowButton from "components/FollowButton";
 import { IconHandleBadge } from "custom-icons";
-import Dropdown from "components/Dropdown";
+import Dropdown, { DropdownMenu } from "components/Dropdown";
 
 export default function ProfileHeader() {
   const params = useParams();
@@ -52,6 +52,9 @@ export default function ProfileHeader() {
       ) : null,
     [profile]
   );
+
+  const isOwnProfile =
+    profile && currentProfile && profile?.uid === currentProfile?.uid;
 
   return (
     <div className="flex flex-col gap-6">
@@ -132,61 +135,54 @@ export default function ProfileHeader() {
                 </div>
               )}
 
-              <div className="flex mt-[6px]">
-                <Dropdown
-                  button={
-                    nametag ? (
-                      <Button size="xs" px="px-3" kind="outline-black">
-                        <HiTag size={15} />
-                        <span>{nametag}</span>
-                      </Button>
-                    ) : (
-                      <Button
-                        size="xs"
-                        px="px-3"
-                        kind="outline-black"
-                        className="border-dashed"
-                      >
-                        <HiOutlinePlus size={15} />
-                        <span>Add</span>
-                      </Button>
-                    )
-                  }
-                  maxWidth="max-w-[160px]"
-                  position="bottom-right"
-                >
-                  {({ close }) => (
-                    <div>
-                      <div
-                        className={clsx(
-                          "border-b border-secondary-text border-opacity-10",
-                          "px-4 py-3 font-bold"
+              {(!isOwnProfile || nametag) && (
+                <div className="flex mt-[6px]">
+                  <Dropdown
+                    button={
+                      nametag ? (
+                        <Button size="xs" px="px-3" kind="outline-black">
+                          <HiTag size={15} />
+                          <span>{nametag}</span>
+                        </Button>
+                      ) : (
+                        <Button
+                          size="xs"
+                          px="px-3"
+                          kind="outline-black"
+                          className="border-dashed"
+                        >
+                          <HiOutlinePlus size={15} />
+                          <span>Add</span>
+                        </Button>
+                      )
+                    }
+                    position="bottom-right"
+                  >
+                    {({ close }) => (
+                      <div>
+                        <div
+                          className={clsx(
+                            "border-b border-secondary-text border-opacity-10",
+                            "px-4 py-3 font-bold"
+                          )}
+                        >
+                          Address label
+                        </div>
+                        <DropdownMenu className="mt-3">
+                          <HiOutlineSpeakerphone size={20} />
+                          <span>Report</span>
+                        </DropdownMenu>
+                        {!isOwnProfile && (
+                          <DropdownMenu className="mb-3">
+                            <HiOutlinePlus size={20} />
+                            <span>Add private</span>
+                          </DropdownMenu>
                         )}
-                      >
-                        Address label
                       </div>
-                      <div
-                        className={clsx(
-                          "flex items-center gap-3 px-4 py-3 mt-3",
-                          "hover:bg-secondary-text hover:bg-opacity-10 cursor-pointer"
-                        )}
-                      >
-                        <HiOutlineSpeakerphone size={20} />
-                        <span>Report</span>
-                      </div>
-                      <div
-                        className={clsx(
-                          "flex items-center gap-3 px-4 py-3 mb-3",
-                          "hover:bg-secondary-text hover:bg-opacity-10 cursor-pointer"
-                        )}
-                      >
-                        <HiOutlinePlus size={20} />
-                        <span>Add private</span>
-                      </div>
-                    </div>
-                  )}
-                </Dropdown>
-              </div>
+                    )}
+                  </Dropdown>
+                </div>
+              )}
             </div>
 
             {profile?.bio && (
@@ -219,7 +215,7 @@ export default function ProfileHeader() {
         </div>
 
         <div className="absolute flex flex-col items-end gap-3 lg:justify-between md:static right-6">
-          {profile && profile?.uid === currentProfile?.uid ? (
+          {isOwnProfile ? (
             <>
               <Modal
                 buttonRender={({ openModal }) => (

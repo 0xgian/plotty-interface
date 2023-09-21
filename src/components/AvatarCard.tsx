@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { Avatar } from "components/Avatar";
-import { formatAddress } from "lib/formatAddress";
+import { formatAddress, formatWithBrackets } from "lib/formatAddress";
 import { Fragment, ReactNode, useMemo } from "react";
 import RichTextRenderer from "./RichTextRenderer";
 import { IconHandleBadge } from "custom-icons";
@@ -32,7 +32,7 @@ export default function AvatarCard({
   const subtitleEntity = [shortedAddress];
 
   const username = profile?.handle
-    ? profile.handle + (nametag ? ` (${nametag})` : "")
+    ? profile.handle + formatWithBrackets(nametag)
     : nametag || formatAddress(profile?.public_address, { trailing: 0 });
   const usernameBadge = useMemo(
     () =>

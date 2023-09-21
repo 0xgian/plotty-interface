@@ -16,6 +16,12 @@ export function formatAddress(
       }${address.substring(address.length - trailingChars)}`;
 }
 
+export function formatWithBrackets(label?: string): string {
+  return label
+    ? ` (${label.substring(0, 16)}${label.length > 16 ? "..." : ""})`
+    : "";
+}
+
 export function formatUrl(url: string): { leading: string; trailing: string } {
   const removedProtocol = url.replace(/^https?:\/\//g, "");
   return {

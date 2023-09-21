@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Metadata, ResolvingMetadata } from "next";
 import { getAPI } from "lib/getAPI";
-import { formatAddress } from "lib/formatAddress";
+import { formatAddress, formatWithBrackets } from "lib/formatAddress";
 
 export async function generateMetadata(
   { params: { id } }: { params: { id: string } },
@@ -12,9 +12,14 @@ export async function generateMetadata(
   const plotDetails = json?.data?.data?.post;
 
   const content = plotDetails?.content;
-  const username =
-    plotDetails?.profile?.handle ??
-    formatAddress(plotDetails?.profile?.public_address, { trailing: 0 });
+
+  const nametag =
+    plotDetails?.profile?.public_nametag_user_preferance ||
+    plotDetails?.profile?.public_nametag;
+  const username = plotDetails?.profile?.handle
+    ? plotDetails?.profile.handle + formatWithBrackets(nametag)
+    : nametag ||
+      formatAddress(plotDetails?.profile?.public_address, { trailing: 0 });
   const parentMeta = await parent;
 
   return {

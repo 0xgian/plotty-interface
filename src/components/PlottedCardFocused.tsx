@@ -15,7 +15,7 @@ import {
 } from "custom-icons";
 import Link from "next/link";
 import { Avatar } from "components/Avatar";
-import { formatAddress } from "lib/formatAddress";
+import { formatAddress, formatWithBrackets } from "lib/formatAddress";
 import moment from "moment";
 import { formatNumber } from "lib/formatNumber";
 import IconButton from "components/IconButton";
@@ -73,13 +73,10 @@ export default function PlottedCardFocused({
 
   const shortedAddress =
     plotDetails && formatAddress(plotDetails?.profile?.public_address);
-  const subtitleEntity = useMemo(
-    () => [shortedAddress],
-    [shortedAddress]
-  );
+  const subtitleEntity = useMemo(() => [shortedAddress], [shortedAddress]);
 
   const username = plotDetails?.profile?.handle
-    ? plotDetails.profile.handle + (nametag ? ` (${nametag})` : "")
+    ? plotDetails.profile.handle + formatWithBrackets(nametag)
     : nametag ||
       formatAddress(plotDetails.profile?.public_address, { trailing: 0 });
   const usernameBadge = useMemo(
@@ -208,7 +205,7 @@ export default function PlottedCardFocused({
             <div className="flex gap-[6px] w-full items-center">
               <Link
                 href={profileLink}
-                className="font-semibold hover:underline"
+                className="font-semibold truncate hover:underline"
               >
                 {username}
               </Link>
@@ -244,7 +241,7 @@ export default function PlottedCardFocused({
           {plotDetails.source === "on-chain" && (
             <div className="text-secondary-text flex gap-[6px] items-center m-[2px]">
               <IconIntelligence size={15} />
-              <span>On-chain as a Plot</span>
+              <span className="truncate">On-chain as a Plot</span>
             </div>
           )}
         </div>

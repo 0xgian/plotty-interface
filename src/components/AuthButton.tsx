@@ -88,7 +88,7 @@ export default function AuthButton() {
                           />
                         </div>
                       </div>
-                      <div className="pb-3 font-semibold cursor-pointer">
+                      <div className="py-3 font-semibold cursor-pointer">
                         {/* <div className="flex items-center gap-3 px-4 py-3 select-none hover:bg-secondary-text hover:bg-opacity-5">
                           <HiOutlinePlus className="text-secondary-text" />
                           <span className="truncate">Add another account</span>

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import Dropdown from "components/Dropdown";
+import Dropdown, { DropdownMenu } from "components/Dropdown";
 import IconButton from "components/IconButton";
 import { useState } from "react";
 import {
@@ -22,7 +22,6 @@ export default function PlotDropdownMenu({
           preventClick={false}
         />
       }
-      maxWidth="max-w-[160px]"
     >
       {({ close }) => <DeleteButton onClickMenu={onClickMenu} close={close} />}
     </Dropdown>
@@ -38,12 +37,8 @@ const DeleteButton = ({
 }) => {
   const [confirm, setConfirm] = useState(false);
   return (
-    <div
-      className={clsx(
-        "flex items-center gap-3 px-4 py-3",
-        "hover:bg-secondary-text hover:bg-opacity-10 cursor-pointer",
-        confirm ? "text-primary" : "text-red-500"
-      )}
+    <DropdownMenu
+      className={clsx(confirm ? "text-primary" : "text-red-500")}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -57,6 +52,6 @@ const DeleteButton = ({
     >
       {confirm ? <HiOutlineCheck size={20} /> : <HiOutlineTrash size={20} />}
       <div>{confirm ? "Confirm" : "Delete"}</div>
-    </div>
+    </DropdownMenu>
   );
 };
