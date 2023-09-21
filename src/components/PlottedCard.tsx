@@ -95,7 +95,7 @@ export default function PlottedCard({
       trailing: 0,
     });
 
-  const { feedback, replot } = useFeedback(queryKey);
+  const { feedback, replot } = useFeedback();
 
   const onUseful = withAuthHandler(
     useCallback(
@@ -106,9 +106,10 @@ export default function PlottedCard({
             plotId: plotId,
             feedback: isActive ? "DELETE" : "USEFUL",
             pageIndex,
+            queryKey,
           });
       },
-      [toggleUseful, feedback, pageIndex]
+      [toggleUseful, feedback, pageIndex, queryKey]
     )
   );
 
@@ -121,9 +122,10 @@ export default function PlottedCard({
             plotId: plotId,
             feedback: isActive ? "DELETE" : "NOT_USEFUL",
             pageIndex,
+            queryKey,
           });
       },
-      [toggleNotUseful, feedback, pageIndex]
+      [toggleNotUseful, feedback, pageIndex, queryKey]
     )
   );
 
@@ -136,9 +138,10 @@ export default function PlottedCard({
             plotId: replotId,
             isReplot: !isActive,
             pageIndex,
+            queryKey
           });
       },
-      [toggleReplot, plotId, replot, pageIndex]
+      [toggleReplot, plotId, replot, pageIndex, queryKey]
     )
   );
 
@@ -150,8 +153,9 @@ export default function PlottedCard({
           plotId: plotId,
           isReplot: false,
           pageIndex,
+          queryKey
         }),
-      [replot, pageIndex]
+      [replot, pageIndex, queryKey]
     )
   );
 

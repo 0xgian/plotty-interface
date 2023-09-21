@@ -3,7 +3,7 @@ import { getAPI } from "lib/getAPI";
 import { useMutation, useQueryClient } from "wagmi";
 import _ from "lodash";
 
-export const useFeedback = (queryKey: any[]) => {
+export const useFeedback = () => {
   const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
 
@@ -14,10 +14,12 @@ export const useFeedback = (queryKey: any[]) => {
       plotId,
       feedback,
       pageIndex,
+      queryKey,
     }: {
       plotId: string;
       feedback: "USEFUL" | "NOT_USEFUL" | "DELETE";
       pageIndex?: number;
+      queryKey: any[];
     }) => {
       if (token) {
         const res =
@@ -40,8 +42,8 @@ export const useFeedback = (queryKey: any[]) => {
                 }),
               });
         return typeof pageIndex === "number"
-          ? { pageIndex, ...res.json() }
-          : res.json();
+          ? { queryKey, pageIndex, ...res.json() }
+          : { queryKey, ...res.json() };
       }
 
       throw new Error("Invalid token.");
@@ -49,11 +51,11 @@ export const useFeedback = (queryKey: any[]) => {
     {
       onSuccess: (data) => {
         if (typeof data?.pageIndex !== undefined) {
-          queryClient.refetchQueries(queryKey, {
+          queryClient.refetchQueries(data.queryKey, {
             refetchPage: (_, index) => index === data.pageIndex,
           });
         } else {
-          queryClient.invalidateQueries(queryKey);
+          queryClient.invalidateQueries(data.queryKey);
         }
       },
     }
@@ -64,10 +66,12 @@ export const useFeedback = (queryKey: any[]) => {
       plotId,
       isReplot,
       pageIndex,
+      queryKey,
     }: {
       plotId: string;
       isReplot: boolean;
       pageIndex?: number;
+      queryKey: any[];
     }) => {
       if (token) {
         const res = isReplot
@@ -84,8 +88,8 @@ export const useFeedback = (queryKey: any[]) => {
               },
             });
         return typeof pageIndex === "number"
-          ? { pageIndex, ...res.json() }
-          : res.json();
+          ? { queryKey, pageIndex, ...res.json() }
+          : { queryKey, ...res.json() };
       }
 
       throw new Error("Invalid token.");
@@ -93,11 +97,11 @@ export const useFeedback = (queryKey: any[]) => {
     {
       onSuccess: (data) => {
         if (typeof data?.pageIndex !== undefined) {
-          queryClient.refetchQueries(queryKey, {
+          queryClient.refetchQueries(data.queryKey, {
             refetchPage: (_, index) => index === data.pageIndex,
           });
         } else {
-          queryClient.invalidateQueries(queryKey);
+          queryClient.invalidateQueries(data.queryKey);
         }
       },
     }

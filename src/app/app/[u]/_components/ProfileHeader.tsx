@@ -2,46 +2,30 @@
 
 import clsx from "clsx";
 import { Avatar } from "components/Avatar";
-import {
-  HiOutlineDocumentDuplicate,
-  HiOutlineDotsHorizontal,
-  HiOutlinePlus,
-  HiOutlineQrcode,
-  HiOutlineSpeakerphone,
-  HiOutlineX,
-  HiTag,
-} from "react-icons/hi";
+import { HiOutlineDocumentDuplicate, HiOutlineQrcode } from "react-icons/hi";
 import { formatAddress } from "lib/formatAddress";
 import QRCode from "react-qr-code";
-import Button from "components/Button";
 import { toast } from "react-hot-toast";
 import RichTextRenderer from "components/RichTextRenderer";
 import { useProfile } from "hooks/useProfile";
 import { useParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { formatNumber } from "lib/formatNumber";
 import { useAuthStore } from "state/auth";
-import Modal from "components/Modal";
-import { Dialog } from "@headlessui/react";
 import IconButton from "components/IconButton";
 import FollowButton from "components/FollowButton";
 import { IconHandleBadge } from "custom-icons";
-import Dropdown, { DropdownMenu } from "components/Dropdown";
+import EditProfileModal from "./EditProfileModal";
+import ProfileLabel from "./ProfileLabel";
 
 export default function ProfileHeader() {
   const params = useParams();
   const u = params?.["u"] as string;
 
-  const { profile } = useProfile(u);
+  const { profile, queryKey } = useProfile(u);
 
   const { account } = useAuthStore();
-  const {
-    profile: currentProfile,
-    updateProfile,
-    queryKey,
-  } = useProfile(account);
-
-  const [bioValue, setBioValue] = useState<string>(profile?.bio ?? "");
+  const { profile: currentProfile, updateProfile } = useProfile(account);
 
   const nametag =
     profile?.public_nametag_user_preferance || profile?.public_nametag;
@@ -135,54 +119,13 @@ export default function ProfileHeader() {
                 </div>
               )}
 
-              {(!isOwnProfile || nametag) && (
-                <div className="flex mt-[6px]">
-                  <Dropdown
-                    button={
-                      nametag ? (
-                        <Button size="xs" px="px-3" kind="outline-black">
-                          <HiTag size={15} />
-                          <span>{nametag}</span>
-                        </Button>
-                      ) : (
-                        <Button
-                          size="xs"
-                          px="px-3"
-                          kind="outline-black"
-                          className="border-dashed"
-                        >
-                          <HiOutlinePlus size={15} />
-                          <span>Add</span>
-                        </Button>
-                      )
-                    }
-                    position="bottom-right"
-                  >
-                    {({ close }) => (
-                      <div>
-                        <div
-                          className={clsx(
-                            "border-b border-secondary-text border-opacity-10",
-                            "px-4 py-3 font-bold"
-                          )}
-                        >
-                          Address label
-                        </div>
-                        <DropdownMenu className="mt-3">
-                          <HiOutlineSpeakerphone size={20} />
-                          <span>Report</span>
-                        </DropdownMenu>
-                        {!isOwnProfile && (
-                          <DropdownMenu className="mb-3">
-                            <HiOutlinePlus size={20} />
-                            <span>Add private</span>
-                          </DropdownMenu>
-                        )}
-                      </div>
-                    )}
-                  </Dropdown>
-                </div>
-              )}
+              <ProfileLabel
+                nametag={nametag}
+                ownNametag={profile?.public_nametag_user_preferance}
+                isOwnProfile={isOwnProfile}
+                uid={profile?.uid}
+                queryKey={queryKey}
+              />
             </div>
 
             {profile?.bio && (
@@ -216,75 +159,10 @@ export default function ProfileHeader() {
 
         <div className="absolute flex flex-col items-end gap-3 lg:justify-between md:static right-6">
           {isOwnProfile ? (
-            <>
-              <Modal
-                buttonRender={({ openModal }) => (
-                  <Button
-                    className="min-w-[114px]"
-                    kind="outline-black"
-                    onClick={openModal}
-                  >
-                    Edit Bio
-                  </Button>
-                )}
-              >
-                {({ closeModal }) => (
-                  <>
-                    <Dialog.Title className="flex items-center justify-between">
-                      <IconButton
-                        icon={<HiOutlineX size={20} />}
-                        activeColor="black"
-                        kind="header"
-                        label="Edit Bio"
-                        onClick={() => {
-                          closeModal();
-                          setBioValue(profile?.bio ?? "");
-                        }}
-                      />
-                      <Button
-                        size="sm"
-                        kind="solid-black"
-                        onClick={async () => {
-                          try {
-                            updateProfile && (await updateProfile(bioValue));
-                            closeModal();
-                          } catch (error) {
-                            toast(
-                              "Failed to update profile. Please try again later.",
-                              { id: "fail-to-update-profile" }
-                            );
-                          }
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </Dialog.Title>
-
-                    <div className="px-2 pt-2 pb-3 mt-3 border border-secondary-text border-opacity-20 rounded-[4px] flex flex-col gap-[6px]">
-                      <div className="flex justify-between text-xs text-secondary-text">
-                        <div>Bio</div>
-                        <div>{`${bioValue.length}/160`}</div>
-                      </div>
-                      <textarea
-                        maxLength={160}
-                        className="w-full h-16 outline-none resize-none bg-inherit"
-                        autoCapitalize="sentences"
-                        autoComplete="on"
-                        autoCorrect="on"
-                        name="description"
-                        dir="auto"
-                        spellCheck
-                        placeholder="Bio"
-                        onChange={(e) => {
-                          setBioValue(e.target.value);
-                        }}
-                        value={bioValue}
-                      />
-                    </div>
-                  </>
-                )}
-              </Modal>
-            </>
+            <EditProfileModal
+              bio={profile?.bio}
+              updateProfile={updateProfile}
+            />
           ) : (
             <FollowButton queryKey={queryKey} profile={profile} size="lg" />
           )}

@@ -87,7 +87,7 @@ export default function PlottedCardFocused({
     [plotDetails]
   );
 
-  const { feedback, replot } = useFeedback(queryKey);
+  const { feedback, replot } = useFeedback();
 
   const onUseful = withAuthHandler(
     useCallback(
@@ -97,9 +97,10 @@ export default function PlottedCardFocused({
           feedback({
             plotId: plotId,
             feedback: isActive ? "DELETE" : "USEFUL",
+            queryKey
           });
       },
-      [toggleUseful, feedback]
+      [toggleUseful, feedback, queryKey]
     )
   );
 
@@ -111,9 +112,10 @@ export default function PlottedCardFocused({
           feedback({
             plotId: plotId,
             feedback: isActive ? "DELETE" : "NOT_USEFUL",
+            queryKey
           });
       },
-      [toggleNotUseful, feedback]
+      [toggleNotUseful, feedback, queryKey]
     )
   );
 
@@ -125,9 +127,10 @@ export default function PlottedCardFocused({
           replot({
             plotId: replotId,
             isReplot: !isActive,
+            queryKey
           });
       },
-      [toggleReplot, plotId, replot]
+      [toggleReplot, plotId, replot, queryKey]
     )
   );
 
@@ -138,8 +141,9 @@ export default function PlottedCardFocused({
         replot({
           plotId: plotId,
           isReplot: false,
+          queryKey
         }),
-      [replot]
+      [replot, queryKey]
     )
   );
 
