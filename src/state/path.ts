@@ -2,14 +2,14 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { create } from "zustand";
 
-interface PathnameStoreType {
+interface PathnameStore {
   store: (string | null)[];
   prevPathname: string | null;
   currentPathname: string | null;
 }
 
 /** use as a hook to get prevPathname and currentPathname*/
-export const usePathHistory = create<PathnameStoreType>((set, get) => ({
+export const usePathHistory = create<PathnameStore>((set, get) => ({
   store: [null],
   prevPathname: null,
   currentPathname: null,

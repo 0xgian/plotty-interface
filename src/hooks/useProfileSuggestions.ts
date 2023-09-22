@@ -5,7 +5,7 @@ import { useAuthStore } from "state/auth";
 export const useProfileSuggestions = () => {
   const { session, account } = useAuthStore();
 
-  const token = session?.accounts?.[account ?? "0x0"]?.access_token;
+  const token = account && session?.accounts?.[account]?.access_token;
 
   const { data: profileSuggestions } = useQuery(
     ["profileSuggestions", !!token],

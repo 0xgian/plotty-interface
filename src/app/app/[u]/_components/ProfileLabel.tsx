@@ -11,27 +11,34 @@ import {
   HiOutlineX,
   HiTag,
 } from "react-icons/hi";
+import { usePrivateLabels } from "state/privateLabels";
+import { IconUserTag } from "custom-icons";
+import _ from "lodash";
 
 export default function ProfileLabel({
-  nametag,
-  ownNametag,
-  uid,
+  profile,
   queryKey,
   isOwnProfile,
 }: {
-  nametag?: string;
-  ownNametag?: string;
-  uid: number;
+  profile: any;
   queryKey?: any[];
   isOwnProfile?: boolean;
 }) {
+  const { labelByUid } = usePrivateLabels();
+
+  const privLabel = labelByUid(profile?.uid);
+  const nametag =
+    privLabel ||
+    profile?.public_nametag_user_preferance ||
+    profile?.public_nametag;
+
   return !isOwnProfile || nametag ? (
     <div className="flex mt-[6px]">
       <Dropdown
         button={
           nametag ? (
             <Button size="xs" px="px-3" kind="outline-black">
-              <HiTag size={15} />
+              {privLabel ? <IconUserTag size={15} /> : <HiTag size={15} />}
               <span>{nametag}</span>
             </Button>
           ) : (
@@ -52,9 +59,10 @@ export default function ProfileLabel({
           <DropdownLabelWrapper
             isOwnProfile={isOwnProfile}
             close={close}
-            uid={uid}
+            uid={profile?.uid}
             queryKey={queryKey}
-            ownNametag={ownNametag}
+            ownNametag={profile?.public_nametag_user_preferance}
+            privLabel={privLabel}
           />
         )}
       </Dropdown>
@@ -67,20 +75,25 @@ const DropdownLabelWrapper = ({
   queryKey,
   isOwnProfile,
   ownNametag,
+  privLabel,
   close,
 }: {
   uid: number;
   queryKey?: any[];
   isOwnProfile?: boolean;
   ownNametag?: string;
+  privLabel?: string;
   close: () => void;
 }) => {
-  const [mode, setMode] = useState<"" | "report" | "add">("");
+  const [mode, setMode] = useState<"" | "report" | "private">("");
 
   const initValue = ownNametag ?? "";
   const [value, setValue] = useState(ownNametag ?? "");
 
-  const { report } = useUpdateLabel();
+  const initPrivValue = ownNametag ?? "";
+  const [privValue, setPrivValue] = useState(privLabel ?? "");
+
+  const { report, addPrivate } = useUpdateLabel();
 
   return mode === "report" ? (
     <div className="px-4">
@@ -110,8 +123,27 @@ const DropdownLabelWrapper = ({
         />
       </div>
       <div className="flex justify-end gap-3 pb-3">
+        {!_.isEmpty(value) && (
+          <Button
+            size="sm"
+            kind="outline-negative"
+            onClick={async () => {
+              try {
+                report && (await report({ uid: uid, nametag: "", queryKey }));
+                close();
+              } catch (error) {
+                toast("Failed to update label. Please try again later.", {
+                  id: "fail-to-update-label",
+                });
+              }
+            }}
+          >
+            Delete
+          </Button>
+        )}
         <Button
           size="sm"
+          disabled={_.isEmpty(value)}
           onClick={async () => {
             try {
               report && (await report({ uid: uid, nametag: value, queryKey }));
@@ -127,7 +159,7 @@ const DropdownLabelWrapper = ({
         </Button>
       </div>
     </div>
-  ) : mode === "add" ? (
+  ) : mode === "private" ? (
     <div className="px-4">
       <div className="pt-3">
         <IconButton
@@ -135,7 +167,7 @@ const DropdownLabelWrapper = ({
           activeColor="black"
           onClick={() => {
             setMode("");
-            setValue(initValue);
+            setPrivValue(initPrivValue);
           }}
         />
       </div>
@@ -151,21 +183,41 @@ const DropdownLabelWrapper = ({
           name="label"
           placeholder="Input a label"
           onChange={(e) => {
-            setValue(e.target.value);
+            setPrivValue(e.target.value);
           }}
-          value={value}
+          value={privValue}
         />
       </div>
       <div className="flex justify-end gap-3 pb-3">
+        {!_.isEmpty(initPrivValue) && (
+          <Button
+            size="sm"
+            kind="outline-negative"
+            onClick={async () => {
+              try {
+                addPrivate && (await addPrivate({ uid: uid, nametag: "" }));
+                close();
+              } catch (error) {
+                toast("Failed to update label. Please try again later.", {
+                  id: "fail-to-update-private-label",
+                });
+              }
+            }}
+          >
+            Delete
+          </Button>
+        )}
         <Button
           size="sm"
+          disabled={_.isEmpty(privValue)}
           onClick={async () => {
             try {
-              report && (await report({ uid: uid, nametag: value, queryKey }));
+              addPrivate &&
+                (await addPrivate({ uid: uid, nametag: privValue }));
               close();
             } catch (error) {
               toast("Failed to update label. Please try again later.", {
-                id: "fail-to-update-label",
+                id: "fail-to-update-private-label",
               });
             }
           }}
@@ -189,7 +241,7 @@ const DropdownLabelWrapper = ({
         <span>Report</span>
       </DropdownMenu>
       {!isOwnProfile && (
-        <DropdownMenu onClick={() => setMode("add")}>
+        <DropdownMenu onClick={() => setMode("private")}>
           <HiOutlinePlus size={20} />
           <span>Add private</span>
         </DropdownMenu>

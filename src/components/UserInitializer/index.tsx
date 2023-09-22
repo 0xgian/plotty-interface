@@ -1,6 +1,6 @@
 import { getRequestCookie } from "lib/getRequestCookie";
 import { cookies } from "next/headers";
-import InitSessionUser from "./InitSessionUser";
+import SessionInitializer from "./SessionInitializer";
 
 async function getSessionUser() {
   const sessionUser = await getRequestCookie(cookies());
@@ -9,5 +9,5 @@ async function getSessionUser() {
 
 export default async function UserInitializer() {
   const sessionUser = await getSessionUser();
-  return <InitSessionUser sessionUser={sessionUser} />;
+  return <SessionInitializer sessionUser={sessionUser} />;
 }

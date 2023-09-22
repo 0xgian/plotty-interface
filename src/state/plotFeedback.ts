@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { FeedbackStore, fbDataTofbStore } from "./types";
+import { FeedbackStore, fbDataTofbStore } from "state/types";
 
-interface PlotFeedbackStoreState {
+interface PlotFeedbackStore {
   feedbackStore: FeedbackStore;
   useful: (plotId: string) => number;
   isUseful: (plotId: string) => boolean;
@@ -14,12 +14,12 @@ interface PlotFeedbackStoreState {
   syncFeedback: (nodes: any[]) => void;
 }
 
-export const usePlotFeedbackStore = create<PlotFeedbackStoreState>(
+export const usePlotFeedbackStore = create<PlotFeedbackStore>(
   (set, get) => ({
     feedbackStore: {},
-    useful: (plotId: string) => get().feedbackStore?.[plotId]?.useful ?? 0,
-    isUseful: (plotId: string) => get().feedbackStore?.[plotId]?.status === 1,
-    toggleUseful: (plotId: string) =>
+    useful: (plotId) => get().feedbackStore?.[plotId]?.useful ?? 0,
+    isUseful: (plotId) => get().feedbackStore?.[plotId]?.status === 1,
+    toggleUseful: (plotId) =>
       set((state) => {
         const prev = state.feedbackStore[plotId];
         return {
@@ -33,9 +33,9 @@ export const usePlotFeedbackStore = create<PlotFeedbackStoreState>(
           }),
         };
       }),
-    isNotUseful: (plotId: string) =>
+    isNotUseful: (plotId) =>
       get().feedbackStore?.[plotId]?.status === 0,
-    toggleNotUseful: (plotId: string) =>
+    toggleNotUseful: (plotId) =>
       set((state) => {
         const prev = state.feedbackStore[plotId];
         return {
@@ -49,11 +49,11 @@ export const usePlotFeedbackStore = create<PlotFeedbackStoreState>(
           }),
         };
       }),
-    isReplotted: (plotId: string) =>
+    isReplotted: (plotId) =>
       get().feedbackStore?.[plotId]?.replotStatus === 1,
-    totalReplots: (plotId: string) =>
+    totalReplots: (plotId) =>
       get().feedbackStore?.[plotId]?.totalReplots ?? 0,
-    toggleReplot: (plotId: string) =>
+    toggleReplot: (plotId) =>
       set((state) => {
         const prev = state.feedbackStore[plotId];      
         return {
@@ -68,7 +68,7 @@ export const usePlotFeedbackStore = create<PlotFeedbackStoreState>(
           }),
         };
       }),
-    syncFeedback: (nodes: any[]) =>
+    syncFeedback: (nodes) =>
       set((state) => ({
         feedbackStore: Object.assign(
           state.feedbackStore,

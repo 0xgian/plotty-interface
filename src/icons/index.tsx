@@ -8,3 +8,4 @@ export { default as IconOutlineIntelligence } from "./IconOutlineIntelligence";
 export { default as IconPhinder } from "./IconPhinder";
 export { default as IconOutlinePhinder } from "./IconOutlinePhinder";
 export { default as IconHandleBadge } from "./IconHandleBadge";
+export { default as IconUserTag } from "./IconUserTag";

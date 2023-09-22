@@ -8,7 +8,7 @@ export const useProfile = (param: string | undefined) => {
   const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
 
-  const token = session?.accounts?.[account ?? "0x0"]?.access_token;
+  const token = account && session?.accounts?.[account]?.access_token;
 
   const queryKey = useMemo(() => ["profile", param, !!token], [param, token]);
 

@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { Avatar } from "components/Avatar";
 import { formatAddress, formatWithBrackets } from "lib/formatAddress";
 import { Fragment, ReactNode, useMemo } from "react";
-import RichTextRenderer from "./RichTextRenderer";
+import RichTextRenderer from "components/RichTextRenderer";
 import { IconHandleBadge } from "custom-icons";
 
 export default function AvatarCard({

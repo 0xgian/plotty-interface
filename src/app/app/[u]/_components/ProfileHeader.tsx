@@ -27,8 +27,6 @@ export default function ProfileHeader() {
   const { account } = useAuthStore();
   const { profile: currentProfile, updateProfile } = useProfile(account);
 
-  const nametag =
-    profile?.public_nametag_user_preferance || profile?.public_nametag;
   const usernameBadge = useMemo(
     () =>
       profile?.handle ? (
@@ -120,10 +118,8 @@ export default function ProfileHeader() {
               )}
 
               <ProfileLabel
-                nametag={nametag}
-                ownNametag={profile?.public_nametag_user_preferance}
+                profile={profile}
                 isOwnProfile={isOwnProfile}
-                uid={profile?.uid}
                 queryKey={queryKey}
               />
             </div>

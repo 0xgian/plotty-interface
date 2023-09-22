@@ -10,7 +10,7 @@ export const useSearchPlots = (q?: string) => {
   const queryClient = useQueryClient();
   const { syncFeedback } = usePlotFeedbackStore();
 
-  const token = session?.accounts?.[account ?? "0x0"]?.access_token;
+  const token = account && session?.accounts?.[account]?.access_token;
 
   const queryKey = useMemo(() => ["searchPlots", q, !!token], [q, token]);
 

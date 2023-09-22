@@ -11,14 +11,14 @@ interface ReplyingTo {
   };
 }
 
-interface PlotModalStoreState {
+interface PlotModalStore {
   showPlotModal: boolean;
   replyingTo?: ReplyingTo;
   openPlotModal: (replyTo?: ReplyingTo) => void;
   closePlotModal: () => void;
 }
 
-export const usePlotModal = create<PlotModalStoreState>((set, get) => ({
+export const usePlotModal = create<PlotModalStore>((set, get) => ({
   showPlotModal: false,
   replyingTo: undefined,
   openPlotModal: (replyingTo) => set({ showPlotModal: true, replyingTo }),

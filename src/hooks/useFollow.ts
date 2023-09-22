@@ -13,7 +13,7 @@ export const useFollow = (queryKey?: any[]) => {
   const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
 
-  const token = session?.accounts?.[account ?? "0x0"]?.access_token;
+  const token = account && session?.accounts?.[account]?.access_token;
 
   const { mutateAsync: follow } = useMutation(
     async ({ uid, task }: FollowParams) => {
@@ -44,7 +44,7 @@ export const useFollowing = (uid?: number) => {
   const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
 
-  const token = session?.accounts?.[account ?? "0x0"]?.access_token;
+  const token = account && session?.accounts?.[account]?.access_token;
 
   const queryKey = useMemo(() => ["following", uid, !!token], [uid, token]);
 
@@ -88,7 +88,7 @@ export const useFollowers = (uid?: number) => {
   const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
 
-  const token = session?.accounts?.[account ?? "0x0"]?.access_token;
+  const token = account && session?.accounts?.[account]?.access_token;
 
   const queryKey = useMemo(() => ["followers", uid, !!token], [uid, token]);
 

@@ -1,10 +1,10 @@
 "use client";
 
 import { useProfileSuggestions } from "hooks/useProfileSuggestions";
-import AvatarCard from "./AvatarCard";
-import FollowButton from "./FollowButton";
+import AvatarCard from "components/AvatarCard";
+import FollowButton from "components/FollowButton";
 import { useRouter } from "next/navigation";
-import CardContainer from "./CardContainer";
+import CardContainer from "components/CardContainer";
 import _ from "lodash";
 
 export default function ProfileSuggestions() {

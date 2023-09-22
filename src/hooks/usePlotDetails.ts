@@ -8,7 +8,7 @@ export const usePlotDetails = (plotId?: string) => {
   const { session, account } = useAuthStore();
   const { syncFeedback } = usePlotFeedbackStore();
 
-  const token = session?.accounts?.[account ?? "0x0"]?.access_token;
+  const token = account && session?.accounts?.[account]?.access_token;
 
   const queryKey = useMemo(() => ["plot", plotId, !!token], [plotId, token]);
 

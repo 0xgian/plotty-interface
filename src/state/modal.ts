@@ -1,23 +1,23 @@
 import { create } from "zustand";
 
-interface ModalStoreState {
+interface ModalStoreType {
   modalIds: string[];
   isShowing: (modalId: string) => boolean;
   openModal: (modalId: string) => void;
   closeModal: (modalId: string) => void;
 }
 
-export const useModal = create<ModalStoreState>((set, get) => ({
+export const useModal = create<ModalStoreType>((set, get) => ({
   modalIds: [],
-  isShowing: (modalId: string) => get().modalIds.includes(modalId),
-  openModal: (modalId: string) =>
+  isShowing: (modalId) => get().modalIds.includes(modalId),
+  openModal: (modalId) =>
     set((state) => ({
       modalIds:
         state.modalIds.indexOf(modalId) === -1
           ? [...state.modalIds, modalId]
           : state.modalIds,
     })),
-  closeModal: (modalId: string) =>
+  closeModal: (modalId) =>
     set((state) => ({
       modalIds: state.modalIds.filter((id) => id !== modalId),
     })),

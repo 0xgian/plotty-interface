@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import BrandLoading from "./BrandLoading";
+import BrandLoading from "components/BrandLoading";
 import { useModal } from "state/modal";
 
 export default function BrandLoadingOverlay() {
