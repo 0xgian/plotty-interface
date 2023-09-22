@@ -18,7 +18,7 @@ export default function Empty({
       )}
     >
       <div className="flex flex-col items-center w-full h-full gap-4 max-w-[348px]">
-        <div className="">
+        <div>
           <Image
             alt="empty"
             src="/images/app/empty.png"

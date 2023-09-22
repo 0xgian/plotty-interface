@@ -42,7 +42,7 @@ export default function ProfileLabel({
               className="border-dashed"
             >
               <HiOutlinePlus size={15} />
-              <span>Add</span>
+              <span>Label</span>
             </Button>
           )
         }
@@ -76,6 +76,7 @@ const DropdownLabelWrapper = ({
   close: () => void;
 }) => {
   const [mode, setMode] = useState<"" | "report" | "add">("");
+
   const initValue = ownNametag ?? "";
   const [value, setValue] = useState(ownNametag ?? "");
 
@@ -187,12 +188,12 @@ const DropdownLabelWrapper = ({
         <HiOutlineSpeakerphone size={20} />
         <span>Report</span>
       </DropdownMenu>
-      {/* {!isOwnProfile && (
+      {!isOwnProfile && (
         <DropdownMenu onClick={() => setMode("add")}>
           <HiOutlinePlus size={20} />
           <span>Add private</span>
         </DropdownMenu>
-      )} */}
+      )}
     </div>
   );
 };

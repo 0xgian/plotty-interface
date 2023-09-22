@@ -92,15 +92,11 @@ export default function Search() {
   return !!account ? (
     <Combobox onChange={onSelectionChange}>
       <>
-        <Transition
-          show={show || sm}
-          enter="transition ease-out duration-200"
-          enterFrom="opacity-0 translate-x-1"
-          enterTo="opacity-100 translate-x-0"
-          leave="transition ease-in duration-150"
-          leaveFrom="opacity-100 translate-x-0"
-          leaveTo="opacity-0 translate-x-1"
-          className={clsx("flex w-full sm:w-screen sm:max-w-[348px]")}
+        <div
+          className={clsx(
+            "w-full sm:w-screen sm:max-w-[348px]",
+            show || sm ? "flex" : "hidden"
+          )}
         >
           <div className="relative w-full">
             <div className="flex items-center gap-3 bg-opacity-10 bg-secondary-text h-[42px] w-full px-4 rounded-full">
@@ -127,7 +123,7 @@ export default function Search() {
             >
               <Combobox.Options
                 className={clsx(
-                  "absolute z-[1]  overflow-x-hidden text-base rounded-lg shadow-lg bg-primary-white",
+                  "absolute z-[1] overflow-x-hidden text-base rounded-lg shadow-lg bg-primary-white",
                   "max-h-60 w-full mt-1 sm:text-sm",
                   query !== "" && "ring-1 ring-secondary-text ring-opacity-5"
                 )}
@@ -194,7 +190,7 @@ export default function Search() {
               </Combobox.Options>
             </Transition>
           </div>
-        </Transition>
+        </div>
       </>
     </Combobox>
   ) : (
