@@ -4,6 +4,7 @@ import { formatAddress, formatWithBrackets } from "lib/formatAddress";
 import { Fragment, ReactNode, useMemo } from "react";
 import RichTextRenderer from "components/RichTextRenderer";
 import { IconHandleBadge } from "custom-icons";
+import { usePrivateLabels } from "state/privateLabels";
 
 export default function AvatarCard({
   profile,
@@ -14,6 +15,7 @@ export default function AvatarCard({
   ...props
 }: {
   profile: {
+    uid?: number;
     profile_picture_uri?: string;
     public_address: string;
     handle?: string;
@@ -25,8 +27,12 @@ export default function AvatarCard({
   hoverAction?: boolean;
   trailing?: ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>) {
+  const { labelByUid } = usePrivateLabels();
+  const privLabel = labelByUid(profile?.uid);
   const nametag =
-    profile?.public_nametag_user_preferance || profile?.public_nametag;
+    privLabel ||
+    profile?.public_nametag_user_preferance ||
+    profile?.public_nametag;
 
   const shortedAddress = formatAddress(profile.public_address);
   const subtitleEntity = [shortedAddress];

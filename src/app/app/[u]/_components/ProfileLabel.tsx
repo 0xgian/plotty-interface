@@ -25,7 +25,6 @@ export default function ProfileLabel({
   isOwnProfile?: boolean;
 }) {
   const { labelByUid } = usePrivateLabels();
-
   const privLabel = labelByUid(profile?.uid);
   const nametag =
     privLabel ||

@@ -30,6 +30,7 @@ import { Fragment, useCallback, useMemo } from "react";
 import { useFeedback } from "hooks/useFeedback";
 import { useWithAuth } from "hooks/useWithAuth";
 import { usePlotFeedbackStore } from "state/plotFeedback";
+import { usePrivateLabels } from "state/privateLabels";
 
 export default function PlottedCardFocused({
   queryKey,
@@ -67,6 +68,8 @@ export default function PlottedCardFocused({
     ? `/${plotDetails?.profile?.handle}`
     : `/${plotDetails?.profile.public_address}`;
 
+  const { labelByUid } = usePrivateLabels();
+  const privLabel = labelByUid(plotDetails?.profile?.uid);
   const nametag =
     plotDetails?.profile?.public_nametag_user_preferance ||
     plotDetails?.profile?.public_nametag;
@@ -97,7 +100,7 @@ export default function PlottedCardFocused({
           feedback({
             plotId: plotId,
             feedback: isActive ? "DELETE" : "USEFUL",
-            queryKey
+            queryKey,
           });
       },
       [toggleUseful, feedback, queryKey]
@@ -112,7 +115,7 @@ export default function PlottedCardFocused({
           feedback({
             plotId: plotId,
             feedback: isActive ? "DELETE" : "NOT_USEFUL",
-            queryKey
+            queryKey,
           });
       },
       [toggleNotUseful, feedback, queryKey]
@@ -127,7 +130,7 @@ export default function PlottedCardFocused({
           replot({
             plotId: replotId,
             isReplot: !isActive,
-            queryKey
+            queryKey,
           });
       },
       [toggleReplot, plotId, replot, queryKey]
@@ -141,7 +144,7 @@ export default function PlottedCardFocused({
         replot({
           plotId: plotId,
           isReplot: false,
-          queryKey
+          queryKey,
         }),
       [replot, queryKey]
     )

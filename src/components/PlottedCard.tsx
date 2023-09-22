@@ -29,6 +29,7 @@ import { useFeedback } from "hooks/useFeedback";
 import { Fragment, useCallback, useMemo } from "react";
 import { useWithAuth } from "hooks/useWithAuth";
 import { usePlotFeedbackStore } from "state/plotFeedback";
+import { usePrivateLabels } from "state/privateLabels";
 
 export default function PlottedCard({
   nodeItem,
@@ -68,7 +69,10 @@ export default function PlottedCard({
     ? `/${node.profile?.handle}`
     : `/${node.profile.public_address}`;
 
+  const { labelByUid } = usePrivateLabels();
+  const privLabel = labelByUid(node.profile?.uid);
   const nametag =
+    privLabel ||
     node.profile?.public_nametag_user_preferance ||
     node.profile?.public_nametag;
 
@@ -138,7 +142,7 @@ export default function PlottedCard({
             plotId: replotId,
             isReplot: !isActive,
             pageIndex,
-            queryKey
+            queryKey,
           });
       },
       [toggleReplot, plotId, replot, pageIndex, queryKey]
@@ -153,7 +157,7 @@ export default function PlottedCard({
           plotId: plotId,
           isReplot: false,
           pageIndex,
-          queryKey
+          queryKey,
         }),
       [replot, pageIndex, queryKey]
     )
