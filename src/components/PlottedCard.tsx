@@ -19,7 +19,7 @@ import {
 } from "react-icons/hi2";
 import { formatNumber } from "lib/formatNumber";
 import _ from "lodash";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { usePlotModal } from "state/plotModal";
 import { useAuthStore } from "state/auth";
 import PlotDropdownMenu from "components/PlotDropdownMenu";
@@ -41,6 +41,8 @@ export default function PlottedCard({
   queryKey: any[];
 }) {
   const router = useRouter();
+  const params = useParams();
+  const u = params?.["u"] as string;
   const { withAuthHandler } = useWithAuth();
 
   const { account } = useAuthStore();
@@ -236,20 +238,21 @@ export default function PlottedCard({
                 ))}
             </div>
 
-            {isOwnerPlot && (
-              <PlotDropdownMenu
-                onClickMenu={(key: string) => {
-                  switch (key) {
-                    case "DELETE":
-                      onDelete(plotId);
-                      break;
+            <PlotDropdownMenu
+              isOwnerPlot={isOwnerPlot}
+              profile={node.profile}
+              queryKey={["profile", u, true]}
+              onClickMenu={(key: string) => {
+                switch (key) {
+                  case "DELETE":
+                    onDelete(plotId);
+                    break;
 
-                    default:
-                      break;
-                  }
-                }}
-              />
-            )}
+                  default:
+                    break;
+                }
+              }}
+            />
           </div>
 
           {node.source === "on-chain" && (

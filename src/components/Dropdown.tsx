@@ -55,8 +55,9 @@ export default function Dropdown({
 export function DropdownMenu({
   onClick,
   className,
+  preventClick = true,
   children,
-}: {} & React.ButtonHTMLAttributes<HTMLDivElement>) {
+}: { preventClick?: boolean } & React.ButtonHTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={clsx(
@@ -64,7 +65,13 @@ export function DropdownMenu({
         "hover:bg-secondary-text hover:bg-opacity-10 cursor-pointer",
         className
       )}
-      onClick={onClick}
+      onClick={(e) => {
+        if (preventClick) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        onClick && onClick(e);
+      }}
     >
       {children}
     </div>

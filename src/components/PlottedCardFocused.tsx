@@ -220,20 +220,20 @@ export default function PlottedCardFocused({
               {usernameBadge}
             </div>
 
-            {isOwnerPlot && (
-              <PlotDropdownMenu
-                onClickMenu={(key: string) => {
-                  switch (key) {
-                    case "DELETE":
-                      onDelete(plotId);
-                      break;
+            <PlotDropdownMenu
+              isOwnerPlot={isOwnerPlot}
+              profile={plotDetails.profile}
+              onClickMenu={(key: string) => {
+                switch (key) {
+                  case "DELETE":
+                    onDelete(plotId);
+                    break;
 
-                    default:
-                      break;
-                  }
-                }}
-              />
-            )}
+                  default:
+                    break;
+                }
+              }}
+            />
           </div>
 
           <div className="flex gap-[6px] w-full items-end">

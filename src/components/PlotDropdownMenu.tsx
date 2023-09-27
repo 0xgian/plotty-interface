@@ -7,10 +7,17 @@ import {
   HiOutlineDotsHorizontal,
   HiOutlineTrash,
 } from "react-icons/hi";
+import FollowButton from "components/FollowButton";
 
 export default function PlotDropdownMenu({
+  queryKey,
+  isOwnerPlot,
+  profile,
   onClickMenu,
 }: {
+  queryKey?: any[];
+  isOwnerPlot: boolean;
+  profile: any;
   onClickMenu: (key: string) => void;
 }) {
   return (
@@ -23,7 +30,18 @@ export default function PlotDropdownMenu({
         />
       }
     >
-      {({ close }) => <DeleteButton onClickMenu={onClickMenu} close={close} />}
+      {({ close }) => (
+        <>
+          {isOwnerPlot && (
+            <DeleteButton onClickMenu={onClickMenu} close={close} />
+          )}
+          <FollowButton
+            queryKey={queryKey}
+            profile={profile}
+            kind="dropdown-menu"
+          />
+        </>
+      )}
     </Dropdown>
   );
 }
@@ -39,9 +57,7 @@ const DeleteButton = ({
   return (
     <DropdownMenu
       className={clsx(confirm ? "text-primary" : "text-red-500")}
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      onClick={() => {
         if (confirm) {
           onClickMenu("DELETE");
           close();

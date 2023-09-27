@@ -235,12 +235,12 @@ const DropdownLabelWrapper = ({
       >
         Address label
       </div>
-      <DropdownMenu onClick={() => setMode("report")}>
+      <DropdownMenu preventClick={false} onClick={() => setMode("report")}>
         <HiOutlineSpeakerphone size={20} />
         <span>Report</span>
       </DropdownMenu>
       {!isOwnProfile && (
-        <DropdownMenu onClick={() => setMode("private")}>
+        <DropdownMenu preventClick={false} onClick={() => setMode("private")}>
           <HiOutlinePlus size={20} />
           <span>Add private</span>
         </DropdownMenu>
