@@ -71,6 +71,7 @@ export default function PlottedCardFocused({
   const { labelByUid } = usePrivateLabels();
   const privLabel = labelByUid(plotDetails?.profile?.uid);
   const nametag =
+    privLabel ||
     plotDetails?.profile?.public_nametag_user_preferance ||
     plotDetails?.profile?.public_nametag;
 
