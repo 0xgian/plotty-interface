@@ -35,11 +35,13 @@ export default function PlotDropdownMenu({
           {isOwnerPlot && (
             <DeleteButton onClickMenu={onClickMenu} close={close} />
           )}
-          <FollowButton
-            queryKey={queryKey}
-            profile={profile}
-            kind="dropdown-menu"
-          />
+          {!isOwnerPlot && (
+            <FollowButton
+              queryKey={queryKey}
+              profile={profile}
+              kind="dropdown-menu"
+            />
+          )}
         </>
       )}
     </Dropdown>
