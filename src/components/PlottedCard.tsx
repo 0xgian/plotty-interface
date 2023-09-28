@@ -16,6 +16,7 @@ import {
 import {
   HiOutlineArrowPathRoundedSquare,
   HiOutlineChatBubbleBottomCenter,
+  HiOutlineShare,
 } from "react-icons/hi2";
 import { formatNumber } from "lib/formatNumber";
 import _ from "lodash";
@@ -30,6 +31,7 @@ import { Fragment, useCallback, useMemo } from "react";
 import { useWithAuth } from "hooks/useWithAuth";
 import { usePlotFeedbackStore } from "state/plotFeedback";
 import { usePrivateLabels } from "state/privateLabels";
+import toast from "react-hot-toast";
 
 export default function PlottedCard({
   nodeItem,
@@ -267,7 +269,7 @@ export default function PlottedCard({
             {node?.media && <MediaRenderer media={node.media} />}
           </div>
 
-          <div className="flex items-center justify-between w-full cursor-pointer sm:w-3/4 text-secondary-text">
+          <div className="flex items-center justify-between w-full cursor-pointer text-secondary-text">
             <div className="flex items-center">
               <IconButton
                 icon={
@@ -314,6 +316,16 @@ export default function PlottedCard({
               activeColor="green"
               label={formatNumber(node.feedback.total_reply)}
               onClick={onOpenPlotModal}
+            />
+            <IconButton
+              icon={<HiOutlineShare size={20} />}
+              activeColor="black"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `${window.location.protocol}//${window.location.host}/plot/${plotId}`
+                );
+                toast.success("Link copied", { id: plotId });
+              }}
             />
           </div>
         </div>

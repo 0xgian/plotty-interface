@@ -4,6 +4,7 @@ import _ from "lodash";
 import {
   HiOutlineArrowPathRoundedSquare,
   HiOutlineChatBubbleBottomCenter,
+  HiOutlineShare,
 } from "react-icons/hi2";
 import {
   IconNotUseful,
@@ -31,6 +32,7 @@ import { useFeedback } from "hooks/useFeedback";
 import { useWithAuth } from "hooks/useWithAuth";
 import { usePlotFeedbackStore } from "state/plotFeedback";
 import { usePrivateLabels } from "state/privateLabels";
+import toast from "react-hot-toast";
 
 export default function PlottedCardFocused({
   queryKey,
@@ -305,7 +307,7 @@ export default function PlottedCardFocused({
 
       <div
         className={clsx(
-          "flex justify-around w-full gap-3 py-3 mt-3 text-secondary-text",
+          "flex justify-between w-full gap-3 py-3 px-2 mt-3 text-secondary-text",
           "border-y border-secondary-text border-opacity-10"
         )}
       >
@@ -351,6 +353,17 @@ export default function PlottedCardFocused({
           size="2xl"
           activeColor="green"
           onClick={onOpenPlotModal}
+        />
+        <IconButton
+          icon={<HiOutlineShare size={20} />}
+          size="2xl"
+          activeColor="black"
+          onClick={() => {
+            navigator.clipboard.writeText(
+              `${window.location.protocol}//${window.location.host}/plot/${plotId}`
+            );
+            toast.success("Link copied", { id: plotId });
+          }}
         />
       </div>
 

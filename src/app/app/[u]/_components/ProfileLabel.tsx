@@ -89,7 +89,7 @@ const DropdownLabelWrapper = ({
   const initValue = ownNametag ?? "";
   const [value, setValue] = useState(ownNametag ?? "");
 
-  const initPrivValue = ownNametag ?? "";
+  const initPrivValue = privLabel ?? "";
   const [privValue, setPrivValue] = useState(privLabel ?? "");
 
   const { report, addPrivate } = useUpdateLabel();
@@ -122,7 +122,7 @@ const DropdownLabelWrapper = ({
         />
       </div>
       <div className="flex justify-end gap-3 pb-3">
-        {!_.isEmpty(value) && (
+        {!_.isEmpty(initValue) && (
           <Button
             size="sm"
             kind="outline-negative"
