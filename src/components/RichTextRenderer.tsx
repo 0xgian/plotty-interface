@@ -1,7 +1,8 @@
 import textProcessor from "lib/textProcessor";
-import { formatUrl } from "lib/formatAddress";
+import { formatAddress, formatUrl } from "lib/formatAddress";
 import Link from "next/link";
 import clsx from "clsx";
+import { isAddress } from "viem";
 
 export default function RichTextRenderer({
   content,
@@ -32,9 +33,8 @@ export default function RichTextRenderer({
                   beginIndex,
                   entity.indices[0]
                 );
-                let entityEl = <></>;
+                let entityEl = null;
                 const baseProps = {
-                  key: i,
                   onClick: (e: any) => {
                     e.stopPropagation();
                     viewOnly && e.preventDefault();
@@ -48,27 +48,42 @@ export default function RichTextRenderer({
                 if (entity.url) {
                   const url = formatUrl(entity.url);
                   entityEl = (
-                    <a href={entity.url} target="_blank" {...baseProps}>
+                    <a key={i} href={entity.url} target="_blank" {...baseProps}>
                       {url.leading}
                       <span className="text-[0px]">{url.trailing}</span>
                       <span className="select-none">...</span>
                     </a>
                   );
                 } else if (entity.hashtag) {
-                  entityEl = (
-                    <Link
-                      href={`/search?q=${encodeURIComponent(
-                        "#".concat(entity.hashtag)
-                      )}`}
-                      prefetch={false}
-                      {...baseProps}
-                    >
-                      #{entity.hashtag}
-                    </Link>
-                  );
+                  if (isAddress(entity.hashtag)) {
+                    entityEl = (
+                      <Link
+                        key={i}
+                        href={`/${entity.hashtag}`}
+                        prefetch={false}
+                        {...baseProps}
+                      >
+                        {formatAddress(entity.hashtag, { trailing: 0 })}
+                      </Link>
+                    );
+                  } else {
+                    entityEl = (
+                      <Link
+                        key={i}
+                        href={`/search?q=${encodeURIComponent(
+                          "#".concat(entity.hashtag)
+                        )}`}
+                        prefetch={false}
+                        {...baseProps}
+                      >
+                        #{entity.hashtag}
+                      </Link>
+                    );
+                  }
                 } else if (entity.screenName) {
                   entityEl = (
                     <Link
+                      key={i}
                       href={`/${entity.screenName}`}
                       prefetch={false}
                       {...baseProps}
@@ -79,6 +94,7 @@ export default function RichTextRenderer({
                 } else if (entity.cashtag) {
                   entityEl = (
                     <Link
+                      key={i}
                       href={`/search?q=${encodeURIComponent(
                         "$".concat(entity.cashtag)
                       )}`}
