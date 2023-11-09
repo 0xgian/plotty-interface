@@ -3,6 +3,7 @@ import { getAPI } from "lib/getAPI";
 import { getAddress, isAddress } from "viem";
 import { useMutation, useQuery, useQueryClient } from "wagmi";
 import { useMemo } from "react";
+import { Profile } from "./types";
 
 export const useProfile = (param: string | undefined) => {
   const { session, account } = useAuthStore();
@@ -79,23 +80,7 @@ export const useProfile = (param: string | undefined) => {
 
   return {
     updateProfile,
-    profile: {
-      uid: profileData?.uid,
-      name: profileData?.name,
-      public_address: profileData?.public_address,
-      bio: profileData?.bio,
-      profile_picture: profileData?.profile_picture,
-      profile_picture_uri: profileData?.profile_picture_uri,
-      handle: profileData?.handle,
-      public_nametag: profileData?.public_nametag,
-      public_nametag_user_preferance:
-        profileData?.public_nametag_user_preferance,
-      is_contract: profileData?.is_contract,
-      join_date: profileData?.join_date,
-      following: profileData?.following,
-      follower: profileData?.follower,
-      follow_status: profileData?.follow_status,
-    },
+    profile: profileData as Profile,
     queryKey,
   };
 };

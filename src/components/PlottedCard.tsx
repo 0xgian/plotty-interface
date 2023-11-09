@@ -30,8 +30,8 @@ import { useFeedback } from "hooks/useFeedback";
 import { Fragment, useCallback, useMemo } from "react";
 import { useWithAuth } from "hooks/useWithAuth";
 import { usePlotFeedbackStore } from "state/plotFeedback";
-import { usePrivateLabels } from "state/privateLabels";
 import toast from "react-hot-toast";
+import { useLabel } from "hooks/useLabel";
 
 export default function PlottedCard({
   nodeItem,
@@ -73,12 +73,7 @@ export default function PlottedCard({
     ? `/${node.profile?.handle}`
     : `/${node.profile.public_address}`;
 
-  const { labelByUid } = usePrivateLabels();
-  const privLabel = labelByUid(node.profile?.uid);
-  const nametag =
-    privLabel ||
-    node.profile?.public_nametag_user_preferance ||
-    node.profile?.public_nametag;
+  const { label } = useLabel(node.profile);
 
   const shortedAddress = formatAddress(node.profile.public_address);
   const subtitleEntity = useMemo(
@@ -87,8 +82,8 @@ export default function PlottedCard({
   );
 
   const username = node.profile?.handle
-    ? node.profile.handle + formatWithBrackets(nametag)
-    : nametag || formatAddress(node.profile?.public_address, { trailing: 0 });
+    ? node.profile.handle + formatWithBrackets(label)
+    : label || formatAddress(node.profile?.public_address, { trailing: 0 });
   const usernameBadge = useMemo(
     () =>
       node.profile?.handle ? (

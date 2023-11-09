@@ -3,6 +3,7 @@ import Button from "components/Button";
 import Dropdown, { DropdownMenu } from "components/Dropdown";
 import IconButton from "components/IconButton";
 import { useUpdateLabel } from "hooks/useUpdateLabel";
+import { Profile } from "hooks/types";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import {
@@ -11,34 +12,29 @@ import {
   HiOutlineX,
   HiTag,
 } from "react-icons/hi";
-import { usePrivateLabels } from "state/privateLabels";
 import { IconUserTag } from "custom-icons";
 import _ from "lodash";
+import { useLabel } from "hooks/useLabel";
 
 export default function ProfileLabel({
   profile,
   queryKey,
   isOwnProfile,
 }: {
-  profile: any;
+  profile: Profile;
   queryKey?: any[];
   isOwnProfile?: boolean;
 }) {
-  const { labelByUid } = usePrivateLabels();
-  const privLabel = labelByUid(profile?.uid);
-  const nametag =
-    privLabel ||
-    profile?.public_nametag_user_preferance ||
-    profile?.public_nametag;
+  const { label, privLabel } = useLabel(profile);
 
-  return !isOwnProfile || nametag ? (
+  return !isOwnProfile || label ? (
     <div className="flex mt-[6px]">
       <Dropdown
         button={
-          nametag ? (
+          label ? (
             <Button size="xs" px="px-3" kind="outline-black">
               {privLabel ? <IconUserTag size={15} /> : <HiTag size={15} />}
-              <span>{nametag}</span>
+              <span>{label}</span>
             </Button>
           ) : (
             <Button
@@ -77,7 +73,7 @@ const DropdownLabelWrapper = ({
   privLabel,
   close,
 }: {
-  uid: number;
+  uid?: number;
   queryKey?: any[];
   isOwnProfile?: boolean;
   ownNametag?: string;
@@ -128,7 +124,9 @@ const DropdownLabelWrapper = ({
             kind="outline-negative"
             onClick={async () => {
               try {
-                report && (await report({ uid: uid, nametag: "", queryKey }));
+                uid &&
+                  report &&
+                  (await report({ uid: uid, nametag: "", queryKey }));
                 close();
               } catch (error) {
                 toast("Failed to update label. Please try again later.", {
@@ -145,7 +143,9 @@ const DropdownLabelWrapper = ({
           disabled={_.isEmpty(value)}
           onClick={async () => {
             try {
-              report && (await report({ uid: uid, nametag: value, queryKey }));
+              uid &&
+                report &&
+                (await report({ uid: uid, nametag: value, queryKey }));
               close();
             } catch (error) {
               toast("Failed to update label. Please try again later.", {
@@ -194,7 +194,9 @@ const DropdownLabelWrapper = ({
             kind="outline-negative"
             onClick={async () => {
               try {
-                addPrivate && (await addPrivate({ uid: uid, nametag: "" }));
+                uid &&
+                  addPrivate &&
+                  (await addPrivate({ uid: uid, nametag: "" }));
                 close();
               } catch (error) {
                 toast("Failed to update label. Please try again later.", {
@@ -211,7 +213,8 @@ const DropdownLabelWrapper = ({
           disabled={_.isEmpty(privValue)}
           onClick={async () => {
             try {
-              addPrivate &&
+              uid &&
+                addPrivate &&
                 (await addPrivate({ uid: uid, nametag: privValue }));
               close();
             } catch (error) {

@@ -4,7 +4,8 @@ import { formatAddress, formatWithBrackets } from "lib/formatAddress";
 import { Fragment, ReactNode, useMemo } from "react";
 import RichTextRenderer from "components/RichTextRenderer";
 import { IconHandleBadge } from "custom-icons";
-import { usePrivateLabels } from "state/privateLabels";
+import { Profile } from "hooks/types";
+import { useLabel } from "hooks/useLabel";
 
 export default function AvatarCard({
   profile,
@@ -14,32 +15,19 @@ export default function AvatarCard({
   className,
   ...props
 }: {
-  profile: {
-    uid?: number;
-    profile_picture_uri?: string;
-    public_address: string;
-    handle?: string;
-    bio?: string;
-    public_nametag?: string;
-    public_nametag_user_preferance?: string;
-  };
+  profile: Profile;
   showBio?: boolean;
   hoverAction?: boolean;
   trailing?: ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>) {
-  const { labelByUid } = usePrivateLabels();
-  const privLabel = labelByUid(profile?.uid);
-  const nametag =
-    privLabel ||
-    profile?.public_nametag_user_preferance ||
-    profile?.public_nametag;
+  const { label } = useLabel(profile);
 
   const shortedAddress = formatAddress(profile.public_address);
   const subtitleEntity = [shortedAddress];
 
   const username = profile?.handle
-    ? profile.handle + formatWithBrackets(nametag)
-    : nametag || formatAddress(profile?.public_address, { trailing: 0 });
+    ? profile.handle + formatWithBrackets(label)
+    : label || formatAddress(profile?.public_address, { trailing: 0 });
   const usernameBadge = useMemo(
     () =>
       profile?.handle ? (
@@ -51,62 +39,57 @@ export default function AvatarCard({
   return (
     <div
       className={clsx(
-        "flex items-center justify-between gap-3 cursor-pointer select-none",
+        "grid grid-cols-[1fr_auto] items-center gap-3 cursor-pointer select-none",
         className
       )}
       {...props}
     >
-      <div className="flex items-center gap-3">
-        <div className="flex items-start gap-3">
-          <div
-            className={clsx(
-              "min-w-[40px]",
-              hoverAction && "hover:brightness-90"
-            )}
-          >
-            <Avatar
-              address={
-                profile?.profile_picture_uri ??
-                `avatar:${profile?.public_address}`
-              }
-              size={40}
-            />
+      <div className="grid grid-cols-[40px_1fr] items-start gap-3">
+        <div
+          className={clsx("min-w-[40px]", hoverAction && "hover:brightness-90")}
+        >
+          <Avatar
+            address={
+              profile?.profile_picture_uri ??
+              `avatar:${profile?.public_address}`
+            }
+            size={40}
+          />
+        </div>
+
+        <div className="flex flex-col truncate">
+          <div className="flex items-center gap-[6px]">
+            <div
+              className={clsx(
+                "font-semibold truncate text-ellipsis",
+                hoverAction && "hover:underline"
+              )}
+            >
+              {username}
+            </div>
+            {usernameBadge}
           </div>
 
-          <div className="flex flex-col">
-            <div className="flex items-center gap-[6px]">
-              <div
-                className={clsx(
-                  "font-semibold truncate text-ellipsis",
-                  hoverAction && "hover:underline"
-                )}
-              >
-                {username}
-              </div>
-              {usernameBadge}
-            </div>
-
-            <div className="flex items-center gap-[6px]">
-              {subtitleEntity
-                .filter((text) => !!text)
-                .map((text, i) => (
-                  <Fragment key={text}>
-                    {i > 0 && (
-                      <div className="truncate text-ellipsis text-secondary-text">
-                        ·
-                      </div>
-                    )}
-                    <div className="text-secondary-text">{text}</div>
-                  </Fragment>
-                ))}
-            </div>
-
-            {showBio && profile?.bio && (
-              <div>
-                <RichTextRenderer content={profile.bio} />
-              </div>
-            )}
+          <div className="flex items-center gap-[6px]">
+            {subtitleEntity
+              .filter((text) => !!text)
+              .map((text, i) => (
+                <Fragment key={text}>
+                  {i > 0 && (
+                    <div className="truncate text-ellipsis text-secondary-text">
+                      ·
+                    </div>
+                  )}
+                  <div className="truncate text-secondary-text">{text}</div>
+                </Fragment>
+              ))}
           </div>
+
+          {showBio && profile?.bio && (
+            <div>
+              <RichTextRenderer content={profile.bio} />
+            </div>
+          )}
         </div>
       </div>
 

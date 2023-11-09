@@ -31,8 +31,8 @@ import { Fragment, useCallback, useMemo } from "react";
 import { useFeedback } from "hooks/useFeedback";
 import { useWithAuth } from "hooks/useWithAuth";
 import { usePlotFeedbackStore } from "state/plotFeedback";
-import { usePrivateLabels } from "state/privateLabels";
 import toast from "react-hot-toast";
+import { useLabel } from "hooks/useLabel";
 
 export default function PlottedCardFocused({
   queryKey,
@@ -70,20 +70,15 @@ export default function PlottedCardFocused({
     ? `/${plotDetails?.profile?.handle}`
     : `/${plotDetails?.profile.public_address}`;
 
-  const { labelByUid } = usePrivateLabels();
-  const privLabel = labelByUid(plotDetails?.profile?.uid);
-  const nametag =
-    privLabel ||
-    plotDetails?.profile?.public_nametag_user_preferance ||
-    plotDetails?.profile?.public_nametag;
+  const { label } = useLabel(plotDetails?.profile);
 
   const shortedAddress =
     plotDetails && formatAddress(plotDetails?.profile?.public_address);
   const subtitleEntity = useMemo(() => [shortedAddress], [shortedAddress]);
 
   const username = plotDetails?.profile?.handle
-    ? plotDetails.profile.handle + formatWithBrackets(nametag)
-    : nametag ||
+    ? plotDetails.profile.handle + formatWithBrackets(label)
+    : label ||
       formatAddress(plotDetails.profile?.public_address, { trailing: 0 });
   const usernameBadge = useMemo(
     () =>

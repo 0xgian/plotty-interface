@@ -2,6 +2,8 @@ import { ReactNode } from "react";
 import { Metadata, ResolvingMetadata } from "next";
 import { getAPI } from "lib/getAPI";
 import { formatAddress, formatWithBrackets } from "lib/formatAddress";
+import { Profile } from "hooks/types";
+import { toLabel } from "hooks/useLabel";
 
 export async function generateMetadata(
   { params: { id } }: { params: { id: string } },
@@ -12,14 +14,12 @@ export async function generateMetadata(
   const plotDetails = json?.data?.data?.post;
 
   const content = plotDetails?.content;
+  const profile = plotDetails?.profile as Profile;
 
-  const nametag =
-    plotDetails?.profile?.public_nametag_user_preferance ||
-    plotDetails?.profile?.public_nametag;
-  const username = plotDetails?.profile?.handle
-    ? plotDetails?.profile.handle + formatWithBrackets(nametag)
-    : nametag ||
-      formatAddress(plotDetails?.profile?.public_address, { trailing: 0 });
+  const label = toLabel(profile);
+  const username = profile?.handle
+    ? profile.handle + formatWithBrackets(label)
+    : label || formatAddress(profile?.public_address, { trailing: 0 });
   const parentMeta = await parent;
 
   return {

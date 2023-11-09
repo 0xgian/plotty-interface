@@ -117,11 +117,13 @@ export default function ProfileHeader() {
                 </div>
               )}
 
-              <ProfileLabel
-                profile={profile}
-                isOwnProfile={isOwnProfile}
-                queryKey={queryKey}
-              />
+              {profile && (
+                <ProfileLabel
+                  profile={profile}
+                  isOwnProfile={isOwnProfile}
+                  queryKey={queryKey}
+                />
+              )}
             </div>
 
             {profile?.bio && (
