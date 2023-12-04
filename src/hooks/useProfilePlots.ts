@@ -5,7 +5,7 @@ import { useEffect, useMemo } from "react";
 import _ from "lodash";
 import { usePlotFeedbackStore } from "state/plotFeedback";
 
-export const useProfilePlots = (uid?: string) => {
+export const useProfilePlots = (uid?: number) => {
   const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
   const { syncFeedback } = usePlotFeedbackStore();

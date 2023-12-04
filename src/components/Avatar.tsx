@@ -12,7 +12,11 @@ export const Avatar: AvatarComponent = ({ address, ensImage, size }) => {
   return address.startsWith("http") || !!profile?.profile_picture_uri ? (
     <Image
       alt="profile"
-      src={address.startsWith("http") ? address : profile?.profile_picture_uri}
+      src={
+        address.startsWith("http")
+          ? address
+          : profile?.profile_picture_uri ?? ""
+      }
       className={clsx("rounded-full select-none")}
       width={size}
       height={size}

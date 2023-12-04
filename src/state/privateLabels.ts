@@ -1,3 +1,5 @@
+"use client";
+
 import { create } from "zustand";
 import { useAuthStore } from "state/auth";
 import { useEffect } from "react";
