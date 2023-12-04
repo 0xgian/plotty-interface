@@ -23,7 +23,6 @@ import { Slate, Editable, ReactEditor, withReact } from "slate-react";
 import textProcessor from "lib/textProcessor";
 import { toast } from "react-hot-toast";
 import { selectFiles } from "lib/selectFiles";
-import EmojiData from "@emoji-mart/data/sets/14/twitter.json";
 import Picker from "@emoji-mart/react";
 import MediaRenderer from "components/MediaRenderer";
 import AvatarCard from "components/AvatarCard";
@@ -295,9 +294,7 @@ export default function RichTextEditor({
           />
           <div className="absolute top-[100%] -left-[100%] z-[2] w-full mt-[6px]">
             <Picker
-              data={EmojiData}
               theme="light"
-              set="twitter"
               onEmojiSelect={(emoji: any) => editor.insertText(emoji.native)}
             />
           </div>
