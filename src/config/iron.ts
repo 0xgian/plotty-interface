@@ -1,6 +1,6 @@
-import { IronSessionOptions } from "iron-session";
+import { SessionOptions } from "iron-session";
 
-export const ironOptions: IronSessionOptions = {
+export const ironOptions: SessionOptions = {
   cookieName: "siwessck",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",

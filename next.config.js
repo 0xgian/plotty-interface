@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
   async rewrites() {
     const envUrl = process.env.NEXT_PUBLIC_URL;
     return envUrl

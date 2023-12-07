@@ -1,15 +1,17 @@
 import { ironOptions } from "config/iron";
-import { getIronSession } from "iron-session/edge";
+import { getIronSession } from "iron-session";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { SessionUserServer } from "state/types";
 
 export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next();
-  const reqSession = await getIronSession(req, res, ironOptions);
+  const session = await getIronSession<SessionUserServer>(
+    cookies(),
+    ironOptions
+  );
   const { pathname, searchParams } = req.nextUrl;
-  // @ts-ignore
-  const session = reqSession[ironOptions.cookieName] as SessionUserServer;
 
   let params = "";
   searchParams.forEach((_, key) => {

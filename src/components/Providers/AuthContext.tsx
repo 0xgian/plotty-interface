@@ -73,7 +73,8 @@ export default function AuthContext({ children }: AuthContextProps) {
     return createAuthenticationAdapter({
       getNonce: async () => {
         const response = await fetch(`/api/nonce?address=${address}`);
-        return await response.text();
+        const json = await response.json();
+        return json.nonce;
       },
 
       createMessage: ({ nonce, address, chainId }) => {
