@@ -10,6 +10,7 @@ import ProfileSuggestions from "components/ProfileSuggestions";
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <>
+      {/* @ts-expect-error Async Server Component */}
       <UserInitializer />
       <Providers>
         <section className="flex h-full">
