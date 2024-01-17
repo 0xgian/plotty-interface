@@ -4,6 +4,7 @@ export default function Button({
   kind = "primary",
   size = "lg",
   px = "px-4",
+  active = true,
   onClick,
   className,
   disabled,
@@ -13,16 +14,17 @@ export default function Button({
   kind?: KINDS;
   size?: SIZES;
   px?: string;
+  active?: boolean;
 }) {
   return (
     <div
       className={clsx(
         "flex cursor-pointer items-center justify-center select-none gap-[6px] font-semibold rounded-full",
-        KIND_VARIANTS[kind],
+        KIND_VARIANTS[kind].base,
+        KIND_VARIANTS[kind][disabled || !active ? "inactive" : "active"],
         SIZE_VARIANTS[size],
         px,
-        className,
-        disabled && "opacity-50"
+        className
       )}
       onClick={(e) => !disabled && onClick && onClick(e)}
       {...props}
@@ -37,17 +39,48 @@ type KINDS =
   | "transparent"
   | "solid-black"
   | "outline-black"
-  | "outline-negative";
+  | "outline-negative"
+  | "outline-positive"
+  | "outline-active-positive";
 
-const KIND_VARIANTS: { [kind in KINDS]: string } = {
-  primary: "bg-primary text-primary-white",
-  transparent:
-    "screen-hover:hover:bg-secondary-text screen-hover:hover:bg-opacity-10 active:bg-secondary-text active:bg-opacity-10 transition-opacity",
-  "solid-black": "bg-primary-text text-primary-white",
-  "outline-black":
-    "screen-hover:hover:bg-secondary-text screen-hover:hover:bg-opacity-10 active:bg-secondary-text active:bg-opacity-10 transition-opacity border border-secondary-text border-opacity-20",
-  "outline-negative":
-    "screen-hover:hover:bg-red-500 screen-hover:hover:bg-opacity-10 active:bg-red-500 active:bg-opacity-10 transition-opacity border border-secondary-text border-opacity-20 screen-hover:hover:text-red-500",
+const KIND_VARIANTS: {
+  [kind in KINDS]: { [key in "base" | "active" | "inactive"]: string };
+} = {
+  primary: {
+    base: "bg-primary text-primary-white",
+    active: "",
+    inactive: "opacity-50",
+  },
+  transparent: {
+    base: "screen-hover:hover:bg-secondary-text screen-hover:hover:bg-opacity-10 active:bg-secondary-text active:bg-opacity-10 transition-opacity",
+    active: "",
+    inactive: "opacity-50",
+  },
+  "solid-black": {
+    base: "bg-primary-text text-primary-white",
+    active: "",
+    inactive: "opacity-50",
+  },
+  "outline-black": {
+    base: "screen-hover:hover:bg-secondary-text screen-hover:hover:bg-opacity-10 active:bg-secondary-text active:bg-opacity-10 transition-opacity border border-secondary-text border-opacity-20",
+    active: "",
+    inactive: "opacity-50",
+  },
+  "outline-negative": {
+    base: "screen-hover:hover:bg-red-500 screen-hover:hover:bg-opacity-10 transition-opacity border border-secondary-text border-opacity-20 screen-hover:hover:text-red-500",
+    active: "",
+    inactive: "opacity-50",
+  },
+  "outline-positive": {
+    base: "screen-hover:hover:bg-green-500 screen-hover:hover:bg-opacity-10 transition-opacity border border-secondary-text border-opacity-20 screen-hover:hover:text-green-500",
+    active: "",
+    inactive: "opacity-50",
+  },
+  "outline-active-positive": {
+    base: "transition-opacity border",
+    active: "border-secondary-text border-opacity-20 text-green-500",
+    inactive: "bg-secondary-text bg-opacity-10 screen-hover:hover:bg-primary-white border border-opacity-0 border-secondary-text screen-hover:hover:border-opacity-20 text-secondary-text screen-hover:hover:text-green-500",
+  },
 };
 
 type SIZES = "lg" | "md" | "sm" | "xs" | "fit";

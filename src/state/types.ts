@@ -72,3 +72,13 @@ export const fbDataTofbStore = (nodes: any[]): FeedbackStore => {
     };
   }, {});
 };
+
+export enum FeedTabTypes {
+  Following = "Following",
+  Foryou = "Foryou",
+}
+
+export interface Topic {
+  topic_id: string;
+  topic_name: string;
+}

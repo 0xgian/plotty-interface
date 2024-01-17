@@ -31,7 +31,7 @@ export default function Dropdown({
           >
             <Popover.Panel
               className={clsx(
-                "absolute z-[1] w-screen",
+                "absolute z-[2] w-screen",
                 maxWidth,
                 customPosition ?? POSITIONS_CLASS[position]
               )}

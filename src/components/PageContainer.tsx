@@ -15,7 +15,7 @@ export default function PageContainer({
   return (
     <div
       className={clsx(
-        "w-screen sm:w-[calc(100vw-73px)] lg:w-[calc(100vw-255px)] relative",
+        "w-screen sm:w-[calc(100vw-73px)] xl:w-[calc(100vw-255px)] relative",
         px,
         className
       )}

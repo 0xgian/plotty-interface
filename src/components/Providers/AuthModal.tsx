@@ -25,7 +25,7 @@ export default function AuthModal() {
     <Transition appear show={isShowing("auth") || needsInstall} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-[1]"
+        className="relative z-[2]"
         onClose={() => closeModal("auth")}
       >
         <div className="fixed inset-0">

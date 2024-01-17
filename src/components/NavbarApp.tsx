@@ -8,16 +8,13 @@ export default function NavbarApp({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <nav className="flex h-[60px] items-center">
-      <div
-        className={clsx(
-          "w-full lg:w-[calc(100vw-255px)] px-4 h-full",
-          "border-b border-secondary-text border-opacity-10"
-        )}
-      >
+      <div className={clsx("w-full sm:w-[calc(100vw-73px)] xl:w-[calc(100vw-255px)] h-full")}>
         <div
           className={clsx(
             "flex justify-between items-center",
-            "max-w-[930px] mx-auto gap-[6px] h-full"
+            "max-w-[930px] mx-auto gap-[6px] h-full",
+            "px-4 sm:pr-0 xl:px-0",
+            "border-b border-secondary-text border-opacity-10"
           )}
         >
           <div className="flex gap-3">

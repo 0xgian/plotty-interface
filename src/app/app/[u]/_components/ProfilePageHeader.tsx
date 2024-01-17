@@ -16,7 +16,9 @@ export default function ProfilePageHeader() {
         <PageContainer py="pt-6" className="mb-3">
           <ProfileHeader />
         </PageContainer>
-        <ProfileTabs />
+        <PageContainer py="py-0" px="px-0">
+          <ProfileTabs />
+        </PageContainer>
       </div>
     </HeaderPortal>
   ) : null;

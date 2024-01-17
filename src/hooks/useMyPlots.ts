@@ -4,8 +4,9 @@ import { useInfiniteQuery, useQueryClient } from "wagmi";
 import { useEffect, useMemo } from "react";
 import _ from "lodash";
 import { usePlotFeedbackStore } from "state/plotFeedback";
+import { FeedTabTypes } from "state/types";
 
-export const useMyPlots = () => {
+export const useMyPlots = (type: FeedTabTypes, topicId?: string) => {
   const { session, account } = useAuthStore();
   const queryClient = useQueryClient();
   const { syncFeedback } = usePlotFeedbackStore();
@@ -13,8 +14,8 @@ export const useMyPlots = () => {
   const token = account && session?.accounts?.[account]?.access_token;
 
   const queryKey = useMemo(
-    () => ["myPlots", account, !!token],
-    [account, token]
+    () => ["myPlots", type, topicId, account, !!token],
+    [account, type, topicId, token]
   );
 
   useEffect(
@@ -26,9 +27,17 @@ export const useMyPlots = () => {
     queryKey,
     queryFn: async ({ pageParam }) => {
       if (!!account) {
-        const paramCursor = !_.isEmpty(pageParam) ? `?after=${pageParam}` : "";
+        const paramCursor = !_.isEmpty(pageParam) ? `after=${pageParam}` : "";
         const res = await fetch(
-          getAPI(`/api/myfeed${paramCursor}`),
+          type === FeedTabTypes.Following
+            ? getAPI(`/api/myfeed${paramCursor ? "?" + paramCursor : ""}`)
+            : getAPI(
+                `/api/user/topics/timeline${
+                  topicId && topicId !== "all"
+                    ? "?topic_id=" + topicId + "&"
+                    : "?"
+                }${paramCursor}`
+              ),
           token
             ? {
                 headers: {
@@ -38,19 +47,19 @@ export const useMyPlots = () => {
             : {}
         );
         const json = await res.json();
-        syncFeedback(json.data?.data?.timeline?.edges);
-        return json;
+        const { timeline, topic_timeline } = json.data?.data;
+        const timelineData = timeline || topic_timeline;
+        syncFeedback(timelineData?.edges);
+        return timelineData;
       }
       return {};
     },
-    getNextPageParam: (lastPage, pages) => {
-      return lastPage?.data?.data?.timeline?.pageInfo?.next_cursor ?? null;
-    },
+    getNextPageParam: (lastPage, pages) =>
+      lastPage.pageInfo?.next_cursor ?? null,
   });
 
   const plotsPages = useMemo(
-    () =>
-      data ? data.pages.map((group) => group.data?.data?.timeline?.edges) : [],
+    () => (data ? data.pages.map((group) => group.edges) : []),
     [data]
   );
 

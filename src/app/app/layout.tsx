@@ -10,12 +10,11 @@ import ProfileSuggestions from "components/ProfileSuggestions";
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      {/* @ts-expect-error Async Server Component */}
       <UserInitializer />
       <Providers>
         <section className="flex h-full">
           <SidebarApp />
-          <div className="mb-[100dvh]">
+          <div className="mb-[100dvh] relative">
             <NavbarApp />
             <div id="header-layout" className="flex flex-col-reverse">
               <PageContainer py="pt-0" px="lg:px-4">

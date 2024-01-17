@@ -26,7 +26,7 @@ export default function Search() {
   const [isInit, setIsInit] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const show = ["/search"].includes(pathname);
+  const alwaysShow = ["/search"].includes(pathname);
   const { sm } = useWindowDimensions();
 
   const { searchResults, searchWords } = useSearch(query);
@@ -95,7 +95,7 @@ export default function Search() {
         <div
           className={clsx(
             "w-full sm:w-screen sm:max-w-[348px]",
-            show || sm ? "flex" : "hidden"
+            alwaysShow || sm ? "flex" : "hidden"
           )}
         >
           <div className="relative w-full">

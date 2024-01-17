@@ -7,16 +7,18 @@ export default function Modal({
   children,
   preventClick = false,
   viewOnly = false,
+  show = false,
 }: {
-  buttonRender: (renderProps: { openModal: () => void }) => ReactNode;
+  buttonRender?: (renderProps: { openModal: () => void }) => ReactNode;
   children: (renderProps: {
     openModal: () => void;
     closeModal: () => void;
   }) => ReactNode;
   preventClick?: boolean;
   viewOnly?: boolean;
+  show?: boolean;
 }) {
-  let [isOpen, setIsOpen] = useState(false);
+  let [isOpen, setIsOpen] = useState(show);
 
   function closeModal() {
     setIsOpen(false);
@@ -28,10 +30,16 @@ export default function Modal({
 
   return (
     <>
-      <div onClick={openModal}>{buttonRender({ openModal })}</div>
+      <div onClick={openModal}>
+        {buttonRender && buttonRender({ openModal })}
+      </div>
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-[1]" onClose={closeModal}>
+        <Dialog
+          as="div"
+          className="relative z-[2]"
+          onClose={() => !show && closeModal()}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

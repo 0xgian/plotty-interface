@@ -7,10 +7,12 @@ import { useMyPlots } from "hooks/useMyPlots";
 import _ from "lodash";
 import { Fragment } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useFeedTab } from "state/feedTab";
 
 export default function Page() {
+  const { feedTabType, topic } = useFeedTab();
   const { plotsPages, fetchNextPage, hasNextPage, status, queryKey } =
-    useMyPlots();
+    useMyPlots(feedTabType, topic.topic_id);
 
   return status === "loading" ? (
     <BrandLoading listView />

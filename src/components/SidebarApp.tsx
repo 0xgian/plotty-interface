@@ -50,7 +50,7 @@ export default function SidebarApp({
       <div
         className={clsx(
           "pr-0 sm:pr-3 flex-col gap-6 justify-between bg-white select-none",
-          "w-full sm:w-auto lg:w-[255px] sm:h-[100dvh] fixed bottom-0 sm:sticky sm:top-0 z-[1]",
+          "w-full sm:w-auto xl:w-[255px] sm:h-[100dvh] fixed bottom-0 sm:sticky sm:top-0 z-[1]",
           "border-secondary-text border-opacity-10 border-t sm:border-t-0 sm:border-r",
           show ? "flex" : "hidden sm:flex"
         )}
@@ -81,7 +81,7 @@ export default function SidebarApp({
                     href={path}
                     onClick={rippleEffect}
                     className={clsx(
-                      "flex items-center justify-center lg:justify-start gap-3 py-4 sm:py-3 lg:p-3",
+                      "flex items-center justify-center xl:justify-start gap-3 py-4 sm:py-3 xl:p-3",
                       "screen-hover:hover:bg-secondary-text screen-hover:hover:bg-opacity-10 transition-all",
                       "sm:rounded-full w-full relative overflow-hidden",
                       active && "font-semibold"
@@ -90,7 +90,7 @@ export default function SidebarApp({
                     {active ? menu.activeIcon : menu.icon}
                     <div
                       className={clsx(
-                        "hidden text-lg lg:flex items-center",
+                        "hidden text-lg xl:flex items-center",
                         active ? "font-semibold" : "font-medium"
                       )}
                     >
@@ -104,21 +104,21 @@ export default function SidebarApp({
           {account && (
             <Button
               className={clsx(
-                "hidden sm:flex min-w-0 ml-3 mt-3 aspect-square lg:aspect-auto h-12"
+                "hidden sm:flex min-w-0 ml-3 mt-3 aspect-square xl:aspect-auto h-12"
               )}
               px="px-0"
               kind="primary"
               onClick={() => openPlotModal()}
             >
-              <span className="hidden lg:block">New Plot</span>
-              <HiOutlinePlus className="lg:hidden" size={24} />
+              <span className="hidden xl:block">New Plot</span>
+              <HiOutlinePlus className="xl:hidden" size={24} />
             </Button>
           )}
         </div>
 
         <div className="items-center justify-between hidden w-full p-3 pl-6 text-secondary-text sm:flex">
-          <div className="hidden text-xs lg:block">Find us on</div>
-          <div className="flex flex-col items-center gap-3 mx-auto lg:mx-0 lg:flex-row">
+          <div className="hidden text-xs xl:block">Find us on</div>
+          <div className="flex flex-col items-center gap-3 mx-auto xl:mx-0 xl:flex-row">
             <Link href="https://twitter.com/PlottyFi" target="_blank">
               <RiTwitterFill />
             </Link>

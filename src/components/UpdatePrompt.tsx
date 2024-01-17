@@ -14,7 +14,7 @@ export default function UpdatePrompt() {
   return show ? (
     <div
       className={clsx(
-        "fixed inset-0 z-[1] bg-primary-text bg-opacity-25",
+        "fixed inset-0 z-[2] bg-primary-text bg-opacity-25",
         "flex flex-col justify-end"
       )}
     >

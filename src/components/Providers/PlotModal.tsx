@@ -13,7 +13,7 @@ export default function PlotModal() {
   const { showPlotModal, closePlotModal, replyingTo } = usePlotModal();
   return (
     <Transition appear show={showPlotModal} as={Fragment}>
-      <Dialog as="div" className="relative z-[1]" onClose={closePlotModal}>
+      <Dialog as="div" className="relative z-[2]" onClose={closePlotModal}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
