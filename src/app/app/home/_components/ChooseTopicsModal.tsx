@@ -56,7 +56,7 @@ export default function ChooseTopicsModal({
           </Dialog.Title>
 
           <div className="w-full px-2 pt-2 pb-3 my-3 text-center">
-            {topics.map((topic: Topic, i: number) => {
+            {topics?.map((topic: Topic, i: number) => {
               const isSelected = chosenTopics.some(
                 (chosen) => chosen.topic_id === topic.topic_id
               );
