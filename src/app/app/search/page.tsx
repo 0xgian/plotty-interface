@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { Metadata, ResolvingMetadata } from "next";
 import SearchPage from "./_components/SearchPage";
+import { Suspense } from "react";
 
 export async function generateMetadata(
   { searchParams }: { searchParams?: { [key: string]: string | string[] } },
@@ -13,5 +14,9 @@ export async function generateMetadata(
 }
 
 export default function Page() {
-  return <SearchPage />;
+  return (
+    <Suspense>
+      <SearchPage />
+    </Suspense>
+  );
 }

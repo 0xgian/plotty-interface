@@ -1,6 +1,6 @@
 import RootInitializer from "components/RootInitializer";
 import { Metadata } from "next";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import "styles/globals.css";
 
 export const metadata: Metadata = {
@@ -39,7 +39,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
       <body>
         {children}
-        <RootInitializer />
+        <Suspense>
+          <RootInitializer />
+        </Suspense>
       </body>
     </html>
   );
