@@ -23,7 +23,7 @@ export default function NavbarApp({
           )}
         >
           <Suspense>
-            <div >
+            <div className="flex gap-3">
               <BackButton />
               <Search />
             </div>
